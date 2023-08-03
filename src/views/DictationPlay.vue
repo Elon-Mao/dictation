@@ -42,10 +42,10 @@ function onKeydown(event: KeyboardEvent) {
     }
   } else if (event.key === 'ArrowLeft') {
     event.preventDefault()
-    player.seekTo(currentTime - 5, true)
+    player.seekTo(currentTime - 3, true)
   } else if (event.key === 'ArrowRight') {
     event.preventDefault()
-    player.seekTo(currentTime + 5, true)
+    player.seekTo(currentTime + 3, true)
   }
 }
 onMounted(() => {
@@ -82,9 +82,9 @@ function onPlayerReady() {
     if (findIndex === -1 || findIndex === currentIndex) {
       return
     }
-    scrollbarView.children[currentIndex]?.classList.remove('caption-text-current')
+    scrollbarView.children[currentIndex]?.children[0].classList.remove('caption-text-current')
     currentIndex = findIndex
-    const currentCaption = scrollbarView.children[findIndex] as HTMLDivElement
+    const currentCaption = scrollbarView.children[findIndex].children[0] as HTMLDivElement
     currentCaption.classList.add('caption-text-current')
     if (!recentlyWheel) {
       scrollbar.value!.setScrollTop(Math.max(currentCaption.offsetTop - 177, 0))
@@ -106,19 +106,19 @@ function captionOnclick(captionText: CaptionText) {
 }
 
 function mouseenterCaption(event: MouseEvent) {
-  (event.target as HTMLDivElement).classList.add('caption-text-hover')
+  (event.target as HTMLDivElement).parentElement!.classList.add('caption-text-hover')
 }
 
 function mouseleaveCaption(event: MouseEvent) {
-  (event.target as HTMLDivElement).classList.remove('caption-text-hover')
+  (event.target as HTMLDivElement).parentElement!.classList.remove('caption-text-hover')
 }
 
 function mouseenterInput(event: MouseEvent) {
-  (event.target as HTMLDivElement).parentElement!.parentElement!.parentElement!.classList.remove('caption-text-hover')
+  (event.target as HTMLDivElement).parentElement!.parentElement!.parentElement!.parentElement!.classList.remove('caption-text-hover')
 }
 
 function mouseleaveInput(event: MouseEvent) {
-  (event.target as HTMLDivElement).parentElement!.parentElement!.parentElement!.classList.add('caption-text-hover')
+  (event.target as HTMLDivElement).parentElement!.parentElement!.parentElement!.parentElement!.classList.add('caption-text-hover')
 }
 
 let recentlyWheel = 0
@@ -163,23 +163,27 @@ function captionOnWheel() {
         <el-switch v-show="showCaption" v-model="showAnswer" inline-prompt active-text="隐藏答案" inactive-text="显示答案" />
       </el-row>
       <el-scrollbar v-show="showCaption" ref="scrollbar" @wheel="captionOnWheel">
-        <div v-for="(captionText, captionIndex) in captionTexts" class="caption-text" @click="captionOnclick(captionText)"
-          @mouseenter="mouseenterCaption" @mouseleave="mouseleaveCaption">
-          <span class="caption-number">{{ captionIndex + 1 }}</span>{{ captionText.firstSeparator }}
-          <div class="caption-row">
-            <template v-for="(word, wordIndex) in captionText.words">
-              <div v-if="userInputs[captionIndex][wordIndex] !== undefined" class="caption-word">
-                <div class="caption-input-wrapper" @click.stop @mouseenter="mouseenterInput" @mouseleave="mouseleaveInput">
-                  <div v-show="showAnswer && userInputs[captionIndex][wordIndex] !== word.value"
-                    class="caption-answer-error"></div>
-                  <auto-width-input size="large" v-model:modelvalue="userInputs[captionIndex][wordIndex]"
-                    class="caption-input" maxlength="16" />
+        <div v-for="(captionText, captionIndex) in captionTexts">
+          <div class="caption-text" @click="captionOnclick(captionText)" @mouseenter="mouseenterCaption"
+            @mouseleave="mouseleaveCaption">
+            <span class="caption-number">{{ captionIndex + 1 }}</span>
+            <span>{{ captionText.firstSeparator }}</span>
+            <div class="caption-row">
+              <template v-for="(word, wordIndex) in captionText.words">
+                <div v-if="userInputs[captionIndex][wordIndex] !== undefined" class="caption-word">
+                  <div class="caption-input-wrapper" @click.stop @mouseenter="mouseenterInput"
+                    @mouseleave="mouseleaveInput">
+                    <div v-show="showAnswer && userInputs[captionIndex][wordIndex] !== word.value"
+                      class="caption-answer-error"></div>
+                    <auto-width-input size="large" v-model:modelvalue="userInputs[captionIndex][wordIndex]"
+                      class="caption-input" maxlength="16" />
+                  </div>
+                  <span v-show="showAnswer" class="caption-word-answer">{{ word.value }}</span>
                 </div>
-                <span v-show="showAnswer" class="caption-word-answer">{{ word.value }}</span>
-              </div>
-              <span v-else class="caption-word-span">{{ word.value }}</span>
-              <span class="caption-word-span">{{ word.separator }}</span>
-            </template>
+                <span v-else class="caption-word-span">{{ word.value }}</span>
+                <span class="caption-word-span">{{ word.separator }}</span>
+              </template>
+            </div>
           </div>
         </div>
       </el-scrollbar>
@@ -235,17 +239,21 @@ function captionOnWheel() {
   flex-direction: column;
 }
 
+.player-main span {
+  vertical-align: top;
+}
+
 .show-caption-switch {
   margin: 0 20px 20px 0;
 }
 
 .caption-text {
-  display: flex;
+  display: inline-block;
   cursor: pointer;
 }
 
 .caption-text-current {
-  color: #409eff !important;
+  color: #409eff;
 }
 
 .caption-text-hover {
@@ -253,10 +261,12 @@ function captionOnWheel() {
 }
 
 .caption-number {
+  display: inline-block;
   width: 40px;
 }
 
 .caption-row {
+  display: inline-block;
   white-space: pre-wrap;
 }
 
@@ -290,7 +300,6 @@ function captionOnWheel() {
 
 .caption-word-span {
   padding: 1px 0px;
-  vertical-align: top;
 }
 </style>
 <style>

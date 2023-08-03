@@ -49,6 +49,7 @@ function selectWord(captionIndex: number, wordIndex: number) {
 <template>
   <div v-for="(captionText, captionIndex) in captionTexts">
     <div class="caption-row">
+      {{ captionText.firstSeparator }}
       <template v-for="(word, wordIndex) in captionText.words">
         <span :class="['caption-word-span', { 'caption-word-selected': userInputs[captionIndex][wordIndex] }]"
           @click="selectWord(captionIndex, wordIndex)">{{ word.value }}</span>{{ word.separator }}
