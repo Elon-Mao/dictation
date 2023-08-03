@@ -1,0 +1,300 @@
+<script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import parseXMLCaption from '@/core/CaptionXMLParser'
+import { getVideoInfo, getVideosOrderByDate } from '@/fetch/videoData'
+import AutoWidthInput from '@/components/AutoWidthInput.vue'
+import VideoCompact from '@/components/VideoCompact.vue'
+import type CaptionText from '@/types/CaptionText'
+import type { ScrollbarInstance } from 'element-plus'
+import type VideoInfo from '@/types/VideoInfo'
+declare const YT: any
+
+const route = useRoute()
+const videoId = route.params.videoId as string
+const captionTexts = ref<CaptionText[]>([])
+const userInputs = ref<string[][]>([])
+const videoInfo = ref<VideoInfo | undefined>()
+const lastVideos = ref<VideoInfo[]>([])
+parseXMLCaption(videoId).then((parseResult: CaptionText[]) => {
+  for (const captionText of parseResult) {
+    captionTexts.value.push(captionText)
+    userInputs.value.push([])
+  }
+  videoInfo.value = getVideoInfo(videoId)
+  for (const userinput of videoInfo.value?.userInputs || []) {
+    userInputs.value[userinput[0]][userinput[1]] = ''
+  }
+  lastVideos.value = getVideosOrderByDate()
+})
+
+const scrollbar = ref<ScrollbarInstance>()
+let scrollbarView: HTMLDivElement
+let player: any
+function onKeydown(event: KeyboardEvent) {
+  if (event.key === ' ') {
+    event.preventDefault()
+    const playerState = player.getPlayerState()
+    if (playerState === 1) {
+      player.pauseVideo()
+    } else if (playerState === 2) {
+      player.playVideo()
+    }
+  } else if (event.key === 'ArrowLeft') {
+    event.preventDefault()
+    player.seekTo(currentTime - 5, true)
+  } else if (event.key === 'ArrowRight') {
+    event.preventDefault()
+    player.seekTo(currentTime + 5, true)
+  }
+}
+onMounted(() => {
+  scrollbarView = scrollbar.value!.wrapRef!.children[0] as HTMLDivElement
+  const tag = document.createElement('script')
+  tag.src = "https://www.youtube.com/iframe_api"
+  const firstScriptTag = document.getElementsByTagName('script')[0]
+  firstScriptTag.parentNode!.insertBefore(tag, firstScriptTag);
+  (window as any).onYouTubeIframeAPIReady = () => {
+    player = new YT.Player('player', {
+      height: '360',
+      width: '640',
+      videoId,
+      playerVars: {
+        'cc_lang_pref': 'en',
+        'iv_load_policy': 3,
+        'modestbranding': 1,
+      },
+      events: {
+        'onReady': onPlayerReady,
+      }
+    })
+    document.addEventListener('keydown', onKeydown)
+  }
+})
+
+let playerTimeInterval = ref(0)
+let currentIndex = -1
+let currentTime = -1
+function onPlayerReady() {
+  playerTimeInterval.value = setInterval(() => {
+    currentTime = player.getCurrentTime()
+    const findIndex = captionTexts.value.findIndex(captionText => captionText.start <= currentTime && currentTime < captionText.start + captionText.dur)
+    if (findIndex === -1 || findIndex === currentIndex) {
+      return
+    }
+    scrollbarView.children[currentIndex]?.classList.remove('caption-text-current')
+    currentIndex = findIndex
+    const currentCaption = scrollbarView.children[findIndex] as HTMLDivElement
+    currentCaption.classList.add('caption-text-current')
+    if (!recentlyWheel) {
+      scrollbar.value!.setScrollTop(Math.max(currentCaption.offsetTop - 177, 0))
+    }
+  }, 100)
+}
+onUnmounted(() => {
+  clearInterval(playerTimeInterval.value)
+  document.removeEventListener('keydown', onKeydown)
+})
+
+const showCaption = ref(true)
+const showAnswer = ref(false)
+
+function captionOnclick(captionText: CaptionText) {
+  recentlyWheel = setTimeout(stopWheel, 4000)
+  player.playVideo()
+  player.seekTo(captionText.start, true)
+}
+
+function mouseenterCaption(event: MouseEvent) {
+  (event.target as HTMLDivElement).classList.add('caption-text-hover')
+}
+
+function mouseleaveCaption(event: MouseEvent) {
+  (event.target as HTMLDivElement).classList.remove('caption-text-hover')
+}
+
+function mouseenterInput(event: MouseEvent) {
+  (event.target as HTMLDivElement).parentElement!.parentElement!.parentElement!.classList.remove('caption-text-hover')
+}
+
+function mouseleaveInput(event: MouseEvent) {
+  (event.target as HTMLDivElement).parentElement!.parentElement!.parentElement!.classList.add('caption-text-hover')
+}
+
+let recentlyWheel = 0
+function stopWheel() {
+  recentlyWheel = 0
+}
+function captionOnWheel() {
+  clearTimeout(recentlyWheel)
+  recentlyWheel = setTimeout(stopWheel, 4000)
+}
+
+</script>
+<template>
+  <el-container v-loading="!playerTimeInterval" class="player-container">
+    <el-aside width="660px" class="player-side">
+      <div class="player-wrapper">
+        <div id="player"></div>
+        <el-row>
+          <el-col :span="18">
+            <span class="video-title">{{ videoInfo?.title }}</span>
+          </el-col>
+          <el-col :span="6">
+            <span class="video-upload-date">上传时间: {{ videoInfo?.uploadDate }}</span>
+          </el-col>
+        </el-row>
+      </div>
+      <el-row class="more-video">
+        <el-col :span="12">
+          <el-scrollbar height="calc(100vh - 500px)">
+            <VideoCompact v-for="videoInfo in lastVideos" :key="videoInfo.videoId" :video-info="videoInfo"></VideoCompact>
+          </el-scrollbar>
+        </el-col>
+        <el-col :span="12">
+
+        </el-col>
+      </el-row>
+    </el-aside>
+    <el-main class="player-main">
+      <el-row>
+        <el-switch v-model="showCaption" class="show-caption-switch" inline-prompt active-text="隐藏字幕"
+          inactive-text="显示字幕" />
+        <el-switch v-show="showCaption" v-model="showAnswer" inline-prompt active-text="隐藏答案" inactive-text="显示答案" />
+      </el-row>
+      <el-scrollbar v-show="showCaption" ref="scrollbar" @wheel="captionOnWheel">
+        <div v-for="(captionText, captionIndex) in captionTexts" class="caption-text" @click="captionOnclick(captionText)"
+          @mouseenter="mouseenterCaption" @mouseleave="mouseleaveCaption">
+          <span class="caption-number">{{ captionIndex + 1 }}</span>{{ captionText.firstSeparator }}
+          <div class="caption-row">
+            <template v-for="(word, wordIndex) in captionText.words">
+              <div v-if="userInputs[captionIndex][wordIndex] !== undefined" class="caption-word">
+                <div class="caption-input-wrapper" @click.stop @mouseenter="mouseenterInput" @mouseleave="mouseleaveInput">
+                  <div v-show="showAnswer && userInputs[captionIndex][wordIndex] !== word.value"
+                    class="caption-answer-error"></div>
+                  <auto-width-input size="large" v-model:modelvalue="userInputs[captionIndex][wordIndex]"
+                    class="caption-input" maxlength="16" />
+                </div>
+                <span v-show="showAnswer" class="caption-word-answer">{{ word.value }}</span>
+              </div>
+              <span v-else class="caption-word-span">{{ word.value }}</span>
+              <span class="caption-word-span">{{ word.separator }}</span>
+            </template>
+          </div>
+        </div>
+      </el-scrollbar>
+    </el-main>
+  </el-container>
+</template>
+  
+<style scoped>
+.player-container {
+  height: calc(100vh - 16px);
+  line-height: 40px;
+  font-size: 24px;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+}
+
+.player-side {
+  padding: 40px 0 0 20px;
+}
+
+.player-wrapper {
+  line-height: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.player-wrapper .el-col {
+  height: 30px;
+}
+
+#player {
+  height: 360px;
+  width: 640px;
+}
+
+.video-title {
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.video-upload-date {
+  float: right;
+  font-size: 14px;
+}
+
+.more-video {
+  margin-top: 20px;
+}
+
+.player-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.show-caption-switch {
+  margin: 0 20px 20px 0;
+}
+
+.caption-text {
+  display: flex;
+  cursor: pointer;
+}
+
+.caption-text-current {
+  color: #409eff !important;
+}
+
+.caption-text-hover {
+  color: #909399;
+}
+
+.caption-number {
+  width: 40px;
+}
+
+.caption-row {
+  white-space: pre-wrap;
+}
+
+.caption-word {
+  display: inline-block;
+  height: 82px;
+}
+
+.caption-input-wrapper {
+  position: relative;
+}
+
+.caption-answer-error {
+  box-shadow: 0 0 0 2px var(--el-color-danger) inset;
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.caption-input {
+  min-width: 100px;
+}
+
+.caption-word-answer {
+  padding: 1px 15px;
+}
+
+.caption-word-span {
+  padding: 1px 0px;
+  vertical-align: top;
+}
+</style>
+<style>
+.el-input {
+  font-size: 24px !important;
+}
+</style>
