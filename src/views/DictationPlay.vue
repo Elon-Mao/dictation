@@ -1,36 +1,75 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import parseXMLCaption from '@/core/CaptionXMLParser'
 import { getVideoInfo, getVideosOrderByDate } from '@/fetch/videoData'
 import AutoWidthInput from '@/components/AutoWidthInput.vue'
 import VideoCompact from '@/components/VideoCompact.vue'
+import { ElMessageBox } from 'element-plus'
 import type CaptionText from '@/types/CaptionText'
 import type { ScrollbarInstance } from 'element-plus'
 import type VideoInfo from '@/types/VideoInfo'
 declare const YT: any
 
 const route = useRoute()
-const videoId = route.params.videoId as string
-const captionTexts = ref<CaptionText[]>([])
-const userInputs = ref<string[][]>([])
-const videoInfo = ref<VideoInfo | undefined>()
-const lastVideos = ref<VideoInfo[]>([])
-parseXMLCaption(videoId).then((parseResult: CaptionText[]) => {
-  for (const captionText of parseResult) {
-    captionTexts.value.push(captionText)
-    userInputs.value.push([])
-  }
-  videoInfo.value = getVideoInfo(videoId)
-  for (const userinput of videoInfo.value?.userInputs || []) {
-    userInputs.value[userinput[0]][userinput[1]] = ''
-  }
-  lastVideos.value = getVideosOrderByDate()
-})
+const router = useRouter()
+let videoId = route.params.videoId as string
 
 const scrollbar = ref<ScrollbarInstance>()
 let scrollbarView: HTMLDivElement
 let player: any
+onMounted(() => {
+  scrollbarView = scrollbar.value!.wrapRef!.children[0] as HTMLDivElement
+  const tag = document.createElement('script')
+  tag.src = "https://www.youtube.com/iframe_api"
+  const firstScriptTag = document.getElementsByTagName('script')[0]
+  firstScriptTag.parentNode!.insertBefore(tag, firstScriptTag);
+  (window as any).onYouTubeIframeAPIReady = () => {
+    player = new YT.Player('player', {
+      height: '360',
+      width: '640',
+      playerVars: {
+        'cc_lang_pref': 'en',
+        'iv_load_policy': 3,
+        'modestbranding': 1,
+      },
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    })
+  }
+})
+
+const playerReady = ref(false)
+const playerState = ref(-2)
+let playerTimeInterval = ref(0)
+let currentIndex = -1
+let currentTime = -1
+function onPlayerReady() {
+  playerReady.value = true
+  loadVideo()
+  playerTimeInterval.value = setInterval(() => {
+    currentTime = player.getCurrentTime()
+    const findIndex = captionTexts.value.findIndex(captionText => captionText.start <= currentTime && currentTime < captionText.start + captionText.dur)
+    if (findIndex === -1 || findIndex === currentIndex) {
+      return
+    }
+    scrollbarView.children[currentIndex]?.children[0].classList.remove('caption-text-current')
+    currentIndex = findIndex
+    const currentCaption = scrollbarView.children[findIndex].children[0] as HTMLDivElement
+    currentCaption.classList.add('caption-text-current')
+    if (!recentlyWheel) {
+      scrollbar.value!.setScrollTop(Math.max(currentCaption.offsetTop - 200, 0))
+    }
+  }, 100)
+  document.addEventListener('keydown', onKeydown)
+}
+function onPlayerStateChange(event: {
+  data: number
+}) {
+  playerState.value = event.data
+}
 function onKeydown(event: KeyboardEvent) {
   if (event.key === ' ') {
     event.preventDefault()
@@ -48,53 +87,27 @@ function onKeydown(event: KeyboardEvent) {
     player.seekTo(currentTime + 3, true)
   }
 }
-onMounted(() => {
-  scrollbarView = scrollbar.value!.wrapRef!.children[0] as HTMLDivElement
-  const tag = document.createElement('script')
-  tag.src = "https://www.youtube.com/iframe_api"
-  const firstScriptTag = document.getElementsByTagName('script')[0]
-  firstScriptTag.parentNode!.insertBefore(tag, firstScriptTag);
-  (window as any).onYouTubeIframeAPIReady = () => {
-    player = new YT.Player('player', {
-      height: '360',
-      width: '640',
-      videoId,
-      playerVars: {
-        'cc_lang_pref': 'en',
-        'iv_load_policy': 3,
-        'modestbranding': 1,
-      },
-      events: {
-        'onReady': onPlayerReady,
-      }
-    })
-    document.addEventListener('keydown', onKeydown)
-  }
-})
 
-let playerTimeInterval = ref(0)
-let currentIndex = -1
-let currentTime = -1
-function onPlayerReady() {
-  playerTimeInterval.value = setInterval(() => {
-    currentTime = player.getCurrentTime()
-    const findIndex = captionTexts.value.findIndex(captionText => captionText.start <= currentTime && currentTime < captionText.start + captionText.dur)
-    if (findIndex === -1 || findIndex === currentIndex) {
-      return
+const captionTexts = ref<CaptionText[]>([])
+const userInputs = ref<string[][]>([])
+const videoInfo = ref<VideoInfo | undefined>()
+const lastVideos = ref<VideoInfo[]>([])
+function loadVideo() {
+  parseXMLCaption(videoId).then((parseResult: CaptionText[]) => {
+    captionTexts.value = []
+    userInputs.value = []
+    for (const captionText of parseResult) {
+      captionTexts.value.push(captionText)
+      userInputs.value.push([])
     }
-    scrollbarView.children[currentIndex]?.children[0].classList.remove('caption-text-current')
-    currentIndex = findIndex
-    const currentCaption = scrollbarView.children[findIndex].children[0] as HTMLDivElement
-    currentCaption.classList.add('caption-text-current')
-    if (!recentlyWheel) {
-      scrollbar.value!.setScrollTop(Math.max(currentCaption.offsetTop - 177, 0))
+    videoInfo.value = getVideoInfo(videoId)
+    for (const userinput of videoInfo.value?.userInputs || []) {
+      userInputs.value[userinput[0]][userinput[1]] = ''
     }
-  }, 100)
+    lastVideos.value = getVideosOrderByDate()
+    player.loadVideoById(videoId)
+  })
 }
-onUnmounted(() => {
-  clearInterval(playerTimeInterval.value)
-  document.removeEventListener('keydown', onKeydown)
-})
 
 const showCaption = ref(true)
 const showAnswer = ref(false)
@@ -130,37 +143,61 @@ function captionOnWheel() {
   recentlyWheel = setTimeout(stopWheel, 4000)
 }
 
+function moreVideoOnclick(videoInfo: VideoInfo) {
+  ElMessageBox.confirm('Your inputs will not be saved?')
+    .then(() => {
+      playerState.value = -2
+      router.push(`/dictation/${videoInfo.videoId}/play`)
+      videoId = videoInfo.videoId
+      loadVideo()
+    })
+}
+
+onUnmounted(() => {
+  clearInterval(playerTimeInterval.value)
+  document.removeEventListener('keydown', onKeydown)
+})
 </script>
 <template>
-  <el-container v-loading="!playerTimeInterval" class="player-container">
+  <el-container class="player-container" v-loading="playerState === -2">
     <el-aside width="660px" class="player-side">
-      <div class="player-wrapper">
-        <div id="player"></div>
-        <el-row>
-          <el-col :span="18">
-            <span class="video-title">{{ videoInfo?.title }}</span>
+      <div style="height: 100%;">
+        <div class="player-wrapper">
+          <div id="player"></div>
+          <el-row>
+            <el-col :span="18">
+              <span class="video-title">{{ videoInfo?.title }}</span>
+            </el-col>
+            <el-col :span="6">
+              <span class="video-upload-date">upload date: {{ videoInfo?.uploadDate }}</span>
+            </el-col>
+          </el-row>
+        </div>
+        <el-row class="more-video">
+          <el-col :span="12" class="lastest-videos">
+            <el-scrollbar height="100%">
+              <VideoCompact v-for="videoInfo in lastVideos" :key="videoInfo.videoId" @click="moreVideoOnclick(videoInfo)"
+                :video-info="videoInfo">
+              </VideoCompact>
+            </el-scrollbar>
           </el-col>
-          <el-col :span="6">
-            <span class="video-upload-date">上传时间: {{ videoInfo?.uploadDate }}</span>
+          <el-col :span="12" class="dated-videos">
+            <el-scrollbar height="100%">
+              <VideoCompact v-for="videoInfo in lastVideos" :key="videoInfo.videoId" @click="moreVideoOnclick(videoInfo)"
+                :video-info="videoInfo">
+              </VideoCompact>
+            </el-scrollbar>
           </el-col>
         </el-row>
       </div>
-      <el-row class="more-video">
-        <el-col :span="12">
-          <el-scrollbar height="calc(100vh - 500px)">
-            <VideoCompact v-for="videoInfo in lastVideos" :key="videoInfo.videoId" :video-info="videoInfo"></VideoCompact>
-          </el-scrollbar>
-        </el-col>
-        <el-col :span="12">
 
-        </el-col>
-      </el-row>
     </el-aside>
     <el-main class="player-main">
       <el-row>
-        <el-switch v-model="showCaption" class="show-caption-switch" inline-prompt active-text="隐藏字幕"
-          inactive-text="显示字幕" />
-        <el-switch v-show="showCaption" v-model="showAnswer" inline-prompt active-text="隐藏答案" inactive-text="显示答案" />
+        <el-switch v-model="showCaption" class="show-caption-switch" inline-prompt active-text="hide caption"
+          inactive-text="show caption" />
+        <el-switch v-show="showCaption" v-model="showAnswer" inline-prompt active-text="hide answer"
+          inactive-text="show answer" />
       </el-row>
       <el-scrollbar v-show="showCaption" ref="scrollbar" @wheel="captionOnWheel">
         <div v-for="(captionText, captionIndex) in captionTexts">
@@ -200,7 +237,7 @@ function captionOnWheel() {
 }
 
 .player-side {
-  padding: 40px 0 0 20px;
+  padding: 20px 0 0 20px;
 }
 
 .player-wrapper {
@@ -232,6 +269,17 @@ function captionOnWheel() {
 
 .more-video {
   margin-top: 20px;
+  height: calc(100% - 430px);
+}
+
+.lastest-videos {
+  height: 100%;
+  padding-right: 5px;
+}
+
+.dated-videos {
+  height: 100%;
+  padding-left: 5px;
 }
 
 .player-main {
@@ -244,12 +292,13 @@ function captionOnWheel() {
 }
 
 .show-caption-switch {
-  margin: 0 20px 20px 0;
+  margin: 0 20px 20px 30px;
 }
 
 .caption-text {
-  display: inline-block;
+  display: inline-flex;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .caption-text-current {
@@ -262,7 +311,9 @@ function captionOnWheel() {
 
 .caption-number {
   display: inline-block;
+  margin-right: 10px;
   width: 40px;
+  text-align: right;
 }
 
 .caption-row {

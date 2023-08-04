@@ -24,6 +24,8 @@ const src = `/${props.videoInfo.videoId}/hqdefault.jpg`
 <style scoped>
 .video-compact {
   display: flex;
+  cursor: pointer;
+  margin-bottom: 10px;
 }
 
 .video-cover-wrapper {
