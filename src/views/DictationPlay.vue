@@ -29,7 +29,6 @@ onMounted(() => {
       height: '360',
       width: '640',
       playerVars: {
-        'cc_lang_pref': 'en',
         'iv_load_policy': 3,
         'modestbranding': 1,
       },
@@ -166,7 +165,7 @@ onUnmounted(() => {
           <div id="player"></div>
           <el-row>
             <el-col :span="18">
-              <span class="video-title">{{ videoInfo?.title }}</span>
+              <span v-if="videoInfo" class="video-title" :title="videoInfo.title">{{ videoInfo.title }}</span>
             </el-col>
             <el-col :span="6">
               <span class="video-upload-date">upload date: {{ videoInfo?.uploadDate }}</span>
@@ -190,7 +189,6 @@ onUnmounted(() => {
           </el-col>
         </el-row>
       </div>
-
     </el-aside>
     <el-main class="player-main">
       <el-row>
