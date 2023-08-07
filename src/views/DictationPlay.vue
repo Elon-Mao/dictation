@@ -11,6 +11,21 @@ import type { ScrollbarInstance } from 'element-plus'
 import type VideoInfo from '@/types/VideoInfo'
 declare const YT: any
 
+const voiceInput = ref('')
+const recognition = new (window as any).webkitSpeechRecognition()
+recognition.lang = 'en-US'
+recognition.continuous = true
+let results: SpeechRecognitionResult[] = []
+recognition.onresult = (event: {
+  results: SpeechRecognitionResult[]
+}) => {
+  results = [...event.results]
+}
+recognition.onend = () => {
+  voiceInput.value = results.map(result => result[0].transcript).join()
+  speeching.value = false
+}
+
 const route = useRoute()
 const router = useRouter()
 let videoId = route.params.videoId as string
@@ -63,12 +78,15 @@ function onPlayerReady() {
     }
   }, 100)
   document.addEventListener('keydown', onKeydown)
+  document.addEventListener('keyup', onKeyup)
 }
 function onPlayerStateChange(event: {
   data: number
 }) {
   playerState.value = event.data
 }
+let altDown = false
+const speeching = ref(false)
 function onKeydown(event: KeyboardEvent) {
   if (event.key === ' ') {
     event.preventDefault()
@@ -84,6 +102,19 @@ function onKeydown(event: KeyboardEvent) {
   } else if (event.key === 'ArrowRight') {
     event.preventDefault()
     player.seekTo(currentTime + 3, true)
+  } else if (event.key === 'Alt') {
+    altDown = true
+  } else if (event.key === 'l' && altDown && !speeching.value) {
+    recognition.start()
+    speeching.value = true
+    voiceInput.value = ''
+  }
+}
+function onKeyup(event: KeyboardEvent) {
+  if (event.key === 'Alt') {
+    altDown = false
+  } else if (event.key === 'l' && speeching.value) {
+    recognition.stop()
   }
 }
 
@@ -155,6 +186,7 @@ function moreVideoOnclick(videoInfo: VideoInfo) {
 onUnmounted(() => {
   clearInterval(playerTimeInterval.value)
   document.removeEventListener('keydown', onKeydown)
+  document.removeEventListener('keyup', onKeyup)
 })
 </script>
 <template>
@@ -196,6 +228,32 @@ onUnmounted(() => {
           inactive-text="show caption" />
         <el-switch v-show="showCaption" v-model="showAnswer" inline-prompt active-text="hide answer"
           inactive-text="show answer" />
+      </el-row>
+      <el-row>
+        <div v-show="speeching" class="speeching-wrapper">
+          <div style="--d: 0"></div>
+          <div style="--d: 1"></div>
+          <div style="--d: 2"></div>
+          <div style="--d: 3"></div>
+          <div style="--d: 4"></div>
+          <div style="--d: 5"></div>
+          <div style="--d: 4"></div>
+          <div style="--d: 3"></div>
+          <div style="--d: 2"></div>
+          <div style="--d: 1"></div>
+          <div style="--d: 0"></div>
+          <div style="--d: 1"></div>
+          <div style="--d: 2"></div>
+          <div style="--d: 3"></div>
+          <div style="--d: 4"></div>
+          <div style="--d: 5"></div>
+          <div style="--d: 4"></div>
+          <div style="--d: 3"></div>
+          <div style="--d: 2"></div>
+          <div style="--d: 1"></div>
+          <div style="--d: 0"></div>
+        </div>
+        <el-input v-model="voiceInput" class="voice-input" type="textarea" placeholder="hold down 'Alt+L' to speech" />
       </el-row>
       <el-scrollbar v-show="showCaption" ref="scrollbar" @wheel="captionOnWheel">
         <div v-for="(captionText, captionIndex) in captionTexts">
@@ -289,8 +347,48 @@ onUnmounted(() => {
   vertical-align: top;
 }
 
+.speeching-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.speeching-wrapper div {
+  background: #409eff;
+  width: 6px;
+  height: 20%;
+  margin-right: 10px;
+  animation: loading 1s infinite linear;
+  animation-delay: calc(0.1s * var(--d));
+}
+
+@keyframes loading {
+  0% {
+    height: 20%;
+  }
+
+  50% {
+    height: 50%;
+  }
+
+  100% {
+    height: 20%;
+  }
+}
+
+.voice-input {
+  width: calc(100% - 50px);
+  padding-left: 25px;
+  padding-bottom: 10px;
+}
+
 .show-caption-switch {
-  margin: 0 20px 20px 30px;
+  margin: 0 20px 5px 30px;
 }
 
 .caption-text {
@@ -353,6 +451,11 @@ onUnmounted(() => {
 </style>
 <style>
 .el-input {
+  font-size: 24px !important;
+}
+
+.el-textarea__inner {
+  line-height: 40px;
   font-size: 24px !important;
 }
 </style>

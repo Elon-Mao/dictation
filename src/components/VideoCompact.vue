@@ -15,7 +15,7 @@ const src = `/${props.videoInfo.videoId}/hqdefault.jpg`
       <span class="video-overplay">{{ props.videoInfo.overplay }}</span>
     </div>
     <div class="video-info">
-      <span class="video-title">{{ props.videoInfo.title }}</span>
+      <span class="video-title" :title="props.videoInfo.title">{{ props.videoInfo.title }}</span>
       <span class="video-upload-date">{{ props.videoInfo.uploadDate }}</span>
     </div>
   </div>
