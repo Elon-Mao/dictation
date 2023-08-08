@@ -2,7 +2,7 @@ import type CaptionText from '@/types/CaptionText'
 import type CaptionWord from '@/types/CaptionWord'
 
 const xhr = new XMLHttpRequest()
-const trimStart = /^[ ,!?()/"“”\.\s\[\]-]+/
+const trimStart = /^[^a-zA-Z]+/
 
 export default function parseXMLCaption(videoId: string) {
   return new Promise<CaptionText[]>((resolve, reject) => {
@@ -28,7 +28,7 @@ export default function parseXMLCaption(videoId: string) {
           content = content.substring(firstSeparator.length)
           const words: CaptionWord[] = []
           let lastIndex = 0
-          for (const match of content.matchAll(/[ ,!?()/"“”\.\s\[\]-]+/g)) {
+          for (const match of content.matchAll(/[^a-zA-Z]+/g)) {
             const matchIndex = match.index!
             words.push({
               value: content.substring(lastIndex, matchIndex),

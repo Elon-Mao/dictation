@@ -87,6 +87,7 @@ function onPlayerStateChange(event: {
 }
 let altDown = false
 const speeching = ref(false)
+const speechKeyPress = ref(false)
 function onKeydown(event: KeyboardEvent) {
   if (event.key === ' ') {
     event.preventDefault()
@@ -105,16 +106,18 @@ function onKeydown(event: KeyboardEvent) {
   } else if (event.key === 'Alt') {
     altDown = true
   } else if (event.key === 'l' && altDown && !speeching.value) {
+    speechKeyPress.value = true
+    voiceInput.value = ''
     recognition.start()
     speeching.value = true
-    voiceInput.value = ''
   }
 }
 function onKeyup(event: KeyboardEvent) {
   if (event.key === 'Alt') {
     altDown = false
-  } else if (event.key === 'l' && speeching.value) {
+  } else if (event.key === 'l' && speechKeyPress) {
     recognition.stop()
+    speechKeyPress.value = false
   }
 }
 
@@ -230,7 +233,7 @@ onUnmounted(() => {
           inactive-text="show answer" />
       </el-row>
       <el-row>
-        <div v-show="speeching" class="speeching-wrapper">
+        <div v-show="speechKeyPress" class="speeching-wrapper">
           <div style="--d: 0"></div>
           <div style="--d: 1"></div>
           <div style="--d: 2"></div>
@@ -253,7 +256,8 @@ onUnmounted(() => {
           <div style="--d: 1"></div>
           <div style="--d: 0"></div>
         </div>
-        <el-input v-model="voiceInput" class="voice-input" type="textarea" placeholder="hold down 'Alt+L' to speech" />
+        <el-input v-model="voiceInput" v-loading="speeching" class="voice-input" type="textarea"
+          placeholder="hold down 'Alt+L' to speech" />
       </el-row>
       <el-scrollbar v-show="showCaption" ref="scrollbar" @wheel="captionOnWheel">
         <div v-for="(captionText, captionIndex) in captionTexts">
