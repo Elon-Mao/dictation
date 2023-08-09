@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { objectStorage } from '@/core/setting'
 import type VideoInfo from '@/types/VideoInfo'
 
 const props = defineProps<{
   videoInfo: VideoInfo
 }>()
 
-const src = `/${props.videoInfo.videoId}/hqdefault.jpg`
+const src = `${objectStorage}/${props.videoInfo.videoId}/hqdefault.jpg`
 </script>
 
 <template>

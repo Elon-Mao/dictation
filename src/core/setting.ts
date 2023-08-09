@@ -1,0 +1,1 @@
+export const objectStorage = 'https://raw.githubusercontent.com/Elon-Mao/Object-Storage/main/dictation'

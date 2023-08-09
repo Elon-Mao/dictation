@@ -1,12 +1,14 @@
 import type CaptionText from '@/types/CaptionText'
 import type CaptionWord from '@/types/CaptionWord'
+import { objectStorage } from './setting'
 
 const xhr = new XMLHttpRequest()
+xhr.overrideMimeType("text/xml");
 const trimStart = /^[^a-zA-Z]+/
 
 export default function parseXMLCaption(videoId: string) {
   return new Promise<CaptionText[]>((resolve, reject) => {
-    xhr.open("GET", `/${videoId}/caption.xml`)
+    xhr.open("GET", `${objectStorage}/${videoId}/caption.xml`)
     xhr.onload = () => {
       if (xhr.readyState === xhr.DONE && xhr.status === 200 && xhr.responseXML) {
         const texts = Array.from(xhr.responseXML.getElementsByTagName('text'))
