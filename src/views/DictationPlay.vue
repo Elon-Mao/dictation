@@ -2,7 +2,7 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import parseXMLCaption from '@/core/CaptionXMLParser'
-import { getVideoInfo, getVideosOrderByDate } from '@/fetch/videoData'
+import { getRecommendedVideos, getVideoInfo, getVideosOrderByDate } from '@/fetch/videoData'
 import AutoWidthInput from '@/components/AutoWidthInput.vue'
 import VideoCompact from '@/components/VideoCompact.vue'
 import { ElMessageBox } from 'element-plus'
@@ -124,6 +124,7 @@ function onKeyup(event: KeyboardEvent) {
 const captionTexts = ref<CaptionText[]>([])
 const userInputs = ref<string[][]>([])
 const videoInfo = ref<VideoInfo | undefined>()
+const recommendedVideos = ref<VideoInfo[]>([])
 const lastVideos = ref<VideoInfo[]>([])
 function loadVideo() {
   parseXMLCaption(videoId).then((parseResult: CaptionText[]) => {
@@ -137,6 +138,7 @@ function loadVideo() {
     for (const userinput of videoInfo.value?.userInputs || []) {
       userInputs.value[userinput[0]][userinput[1]] = ''
     }
+    recommendedVideos.value = getRecommendedVideos()
     lastVideos.value = getVideosOrderByDate()
     player.loadVideoById(videoId)
   })
@@ -210,7 +212,7 @@ onUnmounted(() => {
         <el-row class="more-video">
           <el-col :span="12" class="lastest-videos">
             <el-scrollbar height="100%">
-              <VideoCompact v-for="videoInfo in lastVideos" :key="videoInfo.videoId" @click="moreVideoOnclick(videoInfo)"
+              <VideoCompact v-for="videoInfo in recommendedVideos" :key="videoInfo.videoId" @click="moreVideoOnclick(videoInfo)"
                 :video-info="videoInfo">
               </VideoCompact>
             </el-scrollbar>
