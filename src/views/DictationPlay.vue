@@ -275,7 +275,7 @@ onUnmounted(() => {
                     <div v-show="showAnswer && userInputs[captionIndex][wordIndex] !== word.value"
                       class="caption-answer-error"></div>
                     <auto-width-input size="large" v-model:modelvalue="userInputs[captionIndex][wordIndex]"
-                      class="caption-input" maxlength="16" />
+                      class="caption-input" maxlength="32" />
                   </div>
                   <span v-show="showAnswer" class="caption-word-answer">{{ word.value }}</span>
                 </div>
