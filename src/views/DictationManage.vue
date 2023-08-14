@@ -10,12 +10,30 @@ const userInputs = ref<string[][]>([])
 
 const route = useRoute()
 const videoId = route.params.videoId as string
+const wordMap = new Map()
 parseXMLCaption(videoId).then((parseResult: CaptionText[]) => {
-  for (const captionText of parseResult) {
+  parseResult.forEach((captionText, x) => {
     captionTexts.value.push(captionText)
     userInputs.value.push([])
+    captionText.words.forEach((word, y) => {
+      const key = word.value.toLowerCase()
+      const indexes = wordMap.get(key)
+      if (indexes === undefined) {
+        wordMap.set(key, [[x, y]])
+      } else {
+        indexes.push([x, y])
+      }
+    })
+  })
+  const userInputIndexes = getVideoInfo(videoId)?.userInputs || []
+  if (userInputIndexes.length === 0) {
+    for (const [key, value] of wordMap) {
+      if (value.length === 1 && key.length > 10) {
+        userInputs.value[value[0][0]][value[0][1]] = 'a'
+      }
+    }
   }
-  for (const userinput of getVideoInfo(videoId)?.userInputs || []) {
+  for (const userinput of userInputIndexes) {
     userInputs.value[userinput[0]][userinput[1]] = 'a'
   }
 })
@@ -35,14 +53,14 @@ function output() {
 function selectWord(captionIndex: number, wordIndex: number) {
   const userInput = userInputs.value[captionIndex][wordIndex] ? '' : 'a'
   const wordValue = captionTexts.value[captionIndex].words[wordIndex].value.toLowerCase()
-  captionTexts.value.forEach((captionText, x) => {
-    captionText.words.forEach((word, y) => {
-      if (word.value.toLowerCase() === wordValue) {
-        userInputs.value[x][y] = userInput
-      }
-    })
-  })
+  for (const indexes of wordMap.get(wordValue)) {
+    userInputs.value[indexes[0]][indexes[1]] = userInput
+  }
   output()
+}
+
+function getNum(word: string) {
+  return wordMap.get(word.toLowerCase()).length
 }
 </script>
 
@@ -51,8 +69,10 @@ function selectWord(captionIndex: number, wordIndex: number) {
     <div class="caption-row">
       {{ captionText.firstSeparator }}
       <template v-for="(word, wordIndex) in captionText.words">
-        <span :class="['caption-word-span', { 'caption-word-selected': userInputs[captionIndex][wordIndex] }]"
-          @click="selectWord(captionIndex, wordIndex)">{{ word.value }}</span>{{ word.separator }}
+        <span
+          :class="['caption-word-span', { 'caption-word-selected': userInputs[captionIndex][wordIndex] }, { 'caption-word-once': getNum(word.value) === 1 }]"
+          :title="getNum(word.value)" @click="selectWord(captionIndex, wordIndex)">{{ word.value }}</span>{{
+            word.separator }}
       </template>
     </div>
   </div>
@@ -74,5 +94,9 @@ function selectWord(captionIndex: number, wordIndex: number) {
 
 .caption-word-selected {
   color: #409eff !important;
+}
+
+.caption-word-once {
+  font-size: 40px;
 }
 </style>

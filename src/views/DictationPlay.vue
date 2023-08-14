@@ -141,6 +141,8 @@ function loadVideo() {
     recommendedVideos.value = getRecommendedVideos()
     lastVideos.value = getVideosOrderByDate()
     player.loadVideoById(videoId)
+    showCaption.value = true
+    showAnswer.value = false
   })
 }
 
