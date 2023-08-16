@@ -268,8 +268,8 @@ onUnmounted(() => {
           <div class="caption-text" @click="captionOnclick(captionText)" @mouseenter="mouseenterCaption"
             @mouseleave="mouseleaveCaption">
             <span class="caption-number">{{ captionIndex + 1 }}</span>
-            <span>{{ captionText.firstSeparator }}</span>
             <div class="caption-row">
+              <span>{{ captionText.firstSeparator }}</span>
               <template v-for="(word, wordIndex) in captionText.words">
                 <div v-if="userInputs[captionIndex][wordIndex] !== undefined" class="caption-word">
                   <div class="caption-input-wrapper" @click.stop @mouseenter="mouseenterInput"
