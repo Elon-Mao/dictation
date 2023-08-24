@@ -5,9 +5,9 @@ import parseXMLCaption from '@/core/CaptionXMLParser'
 import { getRecommendedVideos, getVideoInfo, getVideosOrderByDate } from '@/fetch/videoData'
 import AutoWidthInput from '@/components/AutoWidthInput.vue'
 import VideoCompact from '@/components/VideoCompact.vue'
-import { ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import type CaptionText from '@/types/CaptionText'
-import type { ScrollbarInstance } from 'element-plus'
+import type { MessageHandler, ScrollbarInstance } from 'element-plus'
 import type VideoInfo from '@/types/VideoInfo'
 declare const YT: any
 
@@ -60,6 +60,7 @@ const playerState = ref(-2)
 let playerTimeInterval = ref(0)
 let currentIndex = -1
 let currentTime = -1
+let volumeMessage: MessageHandler
 function onPlayerReady() {
   playerReady.value = true
   loadVideo()
@@ -103,6 +104,18 @@ function onKeydown(event: KeyboardEvent) {
   } else if (event.key === 'ArrowRight') {
     event.preventDefault()
     player.seekTo(currentTime + 3, true)
+  } else if (event.key === 'ArrowUp') {
+    event.preventDefault()
+    const volume = player.getVolume() + 5
+    player.setVolume(volume)
+    volumeMessage?.close()
+    volumeMessage = ElMessage(`volume:${volume}%`)
+  } else if (event.key === 'ArrowDown') {
+    event.preventDefault()
+    const volume = player.getVolume() - 5
+    player.setVolume(volume)
+    volumeMessage?.close()
+    volumeMessage = ElMessage(`volume:${volume}%`)
   } else if (event.key === 'Alt') {
     altDown = true
   } else if (event.key === 'l' && altDown && !speeching.value) {
@@ -214,8 +227,8 @@ onUnmounted(() => {
         <el-row class="more-video">
           <el-col :span="12" class="lastest-videos">
             <el-scrollbar height="100%">
-              <VideoCompact v-for="videoInfo in recommendedVideos" :key="videoInfo.videoId" @click="moreVideoOnclick(videoInfo)"
-                :video-info="videoInfo">
+              <VideoCompact v-for="videoInfo in recommendedVideos" :key="videoInfo.videoId"
+                @click="moreVideoOnclick(videoInfo)" :video-info="videoInfo">
               </VideoCompact>
             </el-scrollbar>
           </el-col>
