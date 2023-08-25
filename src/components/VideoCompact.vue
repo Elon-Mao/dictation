@@ -7,10 +7,16 @@ const props = defineProps<{
 }>()
 
 const src = `${objectStorage}/${props.videoInfo.videoId}/hqdefault.jpg`
+const bodyStyle = {
+  padding: '0',
+  display: 'flex',
+  cursor: 'pointer',
+  height: '94px',
+}
 </script>
 
 <template>
-  <div class="video-compact">
+  <el-card :body-style="bodyStyle" class="video-compact">
     <div class="video-cover-wrapper">
       <el-image :src="src" />
       <span class="video-overplay">{{ props.videoInfo.overplay }}</span>
@@ -19,25 +25,24 @@ const src = `${objectStorage}/${props.videoInfo.videoId}/hqdefault.jpg`
       <span class="video-title" :title="props.videoInfo.title">{{ props.videoInfo.title }}</span>
       <span class="video-upload-date">{{ props.videoInfo.uploadDate }}</span>
     </div>
-  </div>
+  </el-card>
 </template>
 
 <style scoped>
 .video-compact {
-  display: flex;
-  cursor: pointer;
   margin-bottom: 10px;
+  width: calc(100% - 12px);
 }
 
 .video-cover-wrapper {
   width: 168px;
-  height: 94px;
+  height: 100%;
   position: relative;
 }
 
 .video-overplay {
   position: absolute;
-  bottom: 0;
+  bottom: 1px;
   right: 0;
   background-color: rgba(0, 0, 0, 0.8);
   color: white;
@@ -48,18 +53,28 @@ const src = `${objectStorage}/${props.videoInfo.videoId}/hqdefault.jpg`
 }
 
 .video-info {
+  padding-left: 5px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: calc(100% - 168px);
+  height: 100%;
 }
 
 .video-title {
   font-size: 16px;
   line-height: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .video-upload-date {
+  padding-right: 2px;
   font-size: 14px;
-  line-height: 14px;
+  line-height: 16px;
+  text-align: right;
 }
 </style>

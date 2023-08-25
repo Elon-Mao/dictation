@@ -1,6 +1,12 @@
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "WJZQGGZ64oI",
+  title: 'Learning to smile again: BBC News Review',
+  overplay: '05:30',
+  uploadDate: '2023-08-25',
+  userInputs: [[9,4],[13,0],[33,1],[39,6],[41,1],[44,0],[44,6],[46,3],[47,8],[48,13],[51,2],[52,7],[63,1],[69,0],[69,2]]
+}, {
   videoId: "dLyo5M2swUo",
   title: 'First Arab Woman in Space: BBC News Review',
   overplay: '05:23',
