@@ -1,39 +1,26 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import parseXMLCaption from '@/core/CaptionXMLParser'
 import { getRecommendedVideos, getVideoInfo, getVideosOrderByDate } from '@/fetch/videoData'
 import AutoWidthInput from '@/components/AutoWidthInput.vue'
 import VideoCompact from '@/components/VideoCompact.vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import SpeechToText from '@/components/SpeechToText.vue'
+import { ElMessage } from 'element-plus'
 import type CaptionText from '@/types/CaptionText'
 import type { MessageHandler, ScrollbarInstance } from 'element-plus'
 import type VideoInfo from '@/types/VideoInfo'
+import { addUnloadConfirm } from '@/core/EventListener'
 declare const YT: any
 
-const voiceInput = ref('')
-const recognition = new (window as any).webkitSpeechRecognition()
-recognition.lang = 'en-US'
-recognition.continuous = true
-let results: SpeechRecognitionResult[] = []
-recognition.onresult = (event: {
-  results: SpeechRecognitionResult[]
-}) => {
-  results = [...event.results]
-}
-recognition.onend = () => {
-  voiceInput.value = results.map(result => result[0].transcript).join()
-  speeching.value = false
-}
-
 const route = useRoute()
-const router = useRouter()
 let videoId = route.params.videoId as string
 
 const scrollbar = ref<ScrollbarInstance>()
 let scrollbarView: HTMLDivElement
 let player: any
 onMounted(() => {
+  addUnloadConfirm()
   scrollbarView = scrollbar.value!.wrapRef!.children[0] as HTMLDivElement
   const tag = document.createElement('script')
   tag.src = "https://www.youtube.com/iframe_api"
@@ -79,16 +66,12 @@ function onPlayerReady() {
     }
   }, 100)
   document.addEventListener('keydown', onKeydown)
-  document.addEventListener('keyup', onKeyup)
 }
 function onPlayerStateChange(event: {
   data: number
 }) {
   playerState.value = event.data
 }
-let altDown = false
-const speeching = ref(false)
-const speechKeyPress = ref(false)
 function onKeydown(event: KeyboardEvent) {
   if (event.key === ' ') {
     event.preventDefault()
@@ -116,21 +99,6 @@ function onKeydown(event: KeyboardEvent) {
     player.setVolume(volume)
     volumeMessage?.close()
     volumeMessage = ElMessage(`volume:${volume}%`)
-  } else if (event.key === 'Alt') {
-    altDown = true
-  } else if (event.key === 'l' && altDown && !speeching.value) {
-    speechKeyPress.value = true
-    voiceInput.value = ''
-    recognition.start()
-    speeching.value = true
-  }
-}
-function onKeyup(event: KeyboardEvent) {
-  if (event.key === 'Alt') {
-    altDown = false
-  } else if (event.key === 'l' && speechKeyPress) {
-    recognition.stop()
-    speechKeyPress.value = false
   }
 }
 
@@ -140,9 +108,9 @@ const videoInfo = ref<VideoInfo | undefined>()
 const recommendedVideos = ref<VideoInfo[]>([])
 const lastVideos = ref<VideoInfo[]>([])
 function loadVideo() {
+  captionTexts.value = []
+  userInputs.value = []
   parseXMLCaption(videoId).then((parseResult: CaptionText[]) => {
-    captionTexts.value = []
-    userInputs.value = []
     for (const captionText of parseResult) {
       captionTexts.value.push(captionText)
       userInputs.value.push([])
@@ -151,6 +119,7 @@ function loadVideo() {
     for (const userinput of videoInfo.value?.userInputs || []) {
       userInputs.value[userinput[0]][userinput[1]] = ''
     }
+  }).finally(() => {
     recommendedVideos.value = getRecommendedVideos()
     lastVideos.value = getVideosOrderByDate()
     player.loadVideoById(videoId)
@@ -193,20 +162,16 @@ function captionOnWheel() {
   recentlyWheel = setTimeout(stopWheel, 4000)
 }
 
+
 function moreVideoOnclick(videoInfo: VideoInfo) {
-  ElMessageBox.confirm('Your inputs will not be saved?')
-    .then(() => {
-      playerState.value = -2
-      router.push(`/dictation/${videoInfo.videoId}/play`)
-      videoId = videoInfo.videoId
-      loadVideo()
-    })
+  if (videoInfo.videoId !== videoId) {
+    window.location.href = `/dictation/${videoInfo.videoId}/play`
+  }
 }
 
 onUnmounted(() => {
   clearInterval(playerTimeInterval.value)
   document.removeEventListener('keydown', onKeydown)
-  document.removeEventListener('keyup', onKeyup)
 })
 </script>
 <template>
@@ -242,39 +207,15 @@ onUnmounted(() => {
         </el-row>
       </div>
     </el-aside>
-    <el-main class="player-main">
+    <el-main ref="playerMain" class="player-main">
       <el-row>
         <el-switch v-model="showCaption" class="show-caption-switch" inline-prompt active-text="hide caption"
           inactive-text="show caption" />
         <el-switch v-show="showCaption" v-model="showAnswer" inline-prompt active-text="hide answer"
           inactive-text="show answer" />
       </el-row>
-      <el-row>
-        <div v-show="speechKeyPress" class="speeching-wrapper">
-          <div style="--d: 0"></div>
-          <div style="--d: 1"></div>
-          <div style="--d: 2"></div>
-          <div style="--d: 3"></div>
-          <div style="--d: 4"></div>
-          <div style="--d: 5"></div>
-          <div style="--d: 4"></div>
-          <div style="--d: 3"></div>
-          <div style="--d: 2"></div>
-          <div style="--d: 1"></div>
-          <div style="--d: 0"></div>
-          <div style="--d: 1"></div>
-          <div style="--d: 2"></div>
-          <div style="--d: 3"></div>
-          <div style="--d: 4"></div>
-          <div style="--d: 5"></div>
-          <div style="--d: 4"></div>
-          <div style="--d: 3"></div>
-          <div style="--d: 2"></div>
-          <div style="--d: 1"></div>
-          <div style="--d: 0"></div>
-        </div>
-        <el-input v-model="voiceInput" v-loading="speeching" class="voice-input" type="textarea"
-          placeholder="hold down 'Alt+L' to speech" />
+      <el-row class="voice-input">
+        <SpeechToText />
       </el-row>
       <el-scrollbar v-show="showCaption" ref="scrollbar" @wheel="captionOnWheel">
         <div v-for="(captionText, captionIndex) in captionTexts">
@@ -366,40 +307,6 @@ onUnmounted(() => {
 
 .player-main span {
   vertical-align: top;
-}
-
-.speeching-wrapper {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  background-color: rgba(255, 255, 255, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.speeching-wrapper div {
-  background: #409eff;
-  width: 6px;
-  height: 20%;
-  margin-right: 10px;
-  animation: loading 1s infinite linear;
-  animation-delay: calc(0.1s * var(--d));
-}
-
-@keyframes loading {
-  0% {
-    height: 20%;
-  }
-
-  50% {
-    height: 50%;
-  }
-
-  100% {
-    height: 20%;
-  }
 }
 
 .voice-input {

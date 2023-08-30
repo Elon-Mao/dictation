@@ -12,6 +12,11 @@ const router = createRouter({
       path: '/dictation/:videoId/manage',
       name: 'dictationManage',
       component: () => import('@/views/DictationManage.vue')
+    },
+    {
+      path: '/recite',
+      name: 'recite',
+      component: () => import('@/views/Recite.vue')
     }
   ]
 })
