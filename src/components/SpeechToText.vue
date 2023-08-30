@@ -1,53 +1,27 @@
 <script setup lang="ts">
-import { ref, onUnmounted } from 'vue'
+import { voiceInstall, voiceUninstall } from '@/core/SpeechToText'
+import { ref } from 'vue'
 
 const voiceInput = ref('')
-const recognition = new (window as any).webkitSpeechRecognition()
-recognition.lang = 'en-US'
-recognition.continuous = true
-let results: SpeechRecognitionResult[] = []
-recognition.onresult = (event: {
-  results: SpeechRecognitionResult[]
-}) => {
-  results = [...event.results]
-}
-recognition.onend = () => {
-  voiceInput.value = results.map(result => result[0].transcript).join()
-  speeching.value = false
-}
-
-const speechKeyPress = ref(false)
 const speeching = ref(false)
-let altDown = false
-function onKeydown(event: KeyboardEvent) {
-  if (event.key === 'Alt') {
-    altDown = true
-  } else if (event.key === 'l' && altDown && !speeching.value) {
-    speechKeyPress.value = true
-    voiceInput.value = ''
-    recognition.start()
-    speeching.value = true
-  }
-}
-function onKeyup(event: KeyboardEvent) {
-  if (event.key === 'Alt') {
-    altDown = false
-  } else if (event.key === 'l' && speechKeyPress) {
-    recognition.stop()
-    speechKeyPress.value = false
-  }
-}
-document.addEventListener('keydown', onKeydown)
-document.addEventListener('keyup', onKeyup)
+const loading = ref(false)
 
-onUnmounted(() => {
-  document.removeEventListener('keydown', onKeydown)
-  document.removeEventListener('keyup', onKeyup)
-})
+function onFocus() {
+  voiceInstall(() => {
+    speeching.value = true
+    loading.value = true
+    voiceInput.value = ''
+  }, results => {
+    loading.value = false
+    voiceInput.value = results
+  }, () => {
+    speeching.value = false
+  })
+}
 </script>
 
 <template>
-  <div v-show="speechKeyPress" class="speeching-wrapper">
+  <div v-show="speeching" class="speeching-wrapper">
     <div style="--d: 0"></div>
     <div style="--d: 1"></div>
     <div style="--d: 2"></div>
@@ -70,7 +44,7 @@ onUnmounted(() => {
     <div style="--d: 1"></div>
     <div style="--d: 0"></div>
   </div>
-  <el-input v-model="voiceInput" v-loading="speeching" type="textarea"
+  <el-input v-model="voiceInput" v-loading="loading" type="textarea" @focus="onFocus" @blur="voiceUninstall"
     placeholder="hold down 'Alt+L' to speech" />
 </template>
 

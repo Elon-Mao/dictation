@@ -174,5 +174,5 @@ export function getVideosOrderByDate() {
 }
 
 export function getRecommendedVideos() {
-  return filterItem<VideoInfo>(videoList, (video) => video.uploadDate)
+  return filterItem<VideoInfo>(videoList, video => video.uploadDate)
 }
