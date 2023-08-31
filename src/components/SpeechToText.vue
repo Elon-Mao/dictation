@@ -1,8 +1,18 @@
 <script setup lang="ts">
 import { voiceInstall, voiceUninstall } from '@/core/SpeechToText'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
-const voiceInput = ref('')
+const props = defineProps(['modelvalue'])
+const emit = defineEmits(['update:modelvalue'])
+const voiceInput = computed({
+  get() {
+    return props.modelvalue
+  },
+  set(value) {
+    emit('update:modelvalue', value)
+  }
+})
+
 const speeching = ref(false)
 const loading = ref(false)
 
@@ -44,8 +54,8 @@ function onFocus() {
     <div style="--d: 1"></div>
     <div style="--d: 0"></div>
   </div>
-  <el-input v-model="voiceInput" v-loading="loading" type="textarea" @focus="onFocus" @blur="voiceUninstall"
-    placeholder="hold down 'Alt+L' to speech" />
+  <el-input v-model="voiceInput" v-loading="!speeching && loading" type="textarea" :autosize="{ minRows: 2 }"
+    @focus="onFocus" @blur="voiceUninstall" placeholder="hold down 'Alt+L' to speech" />
 </template>
 
 <style scoped>

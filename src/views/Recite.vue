@@ -5,34 +5,51 @@ import type Question from '@/types/Question'
 import SpeechToText from '@/components/SpeechToText.vue'
 import { addUnloadConfirm } from '@/core/EventListener'
 
+interface ReciteItem {
+  question: Question
+  userInput: string
+}
+
+function convertToItem(questions: Question[]): ReciteItem[] {
+  return questions.map(question => {
+    return {
+      question,
+      userInput: ''
+    }
+  })
+}
+
 const categoryData = getCategories()
 categoryData.unshift('schedule')
 const categories = ref<string[]>(categoryData)
 const selectedCategory = ref('schedule')
 const selectedDate = ref('')
-const reciteData = ref<Question[]>(listBySchedule())
+const reciteData = ref<ReciteItem[]>(convertToItem(listBySchedule()))
 
 function onTagChange(category: string) {
   selectedCategory.value = category
   selectedDate.value = ''
   if (category === 'schedule') {
-    reciteData.value = listBySchedule()
+    reciteData.value = convertToItem(listBySchedule())
   } else {
-    reciteData.value = listByCategory(category)
+    reciteData.value = convertToItem(listByCategory(category))
   }
 }
 
 function onDateChange() {
   selectedCategory.value = ''
-  reciteData.value = listByDate(selectedDate.value)
+  reciteData.value = convertToItem(listByDate(selectedDate.value))
 }
 
 onMounted(() => {
   addUnloadConfirm()
 })
+
+const showAnswer = ref(false)
 </script>
 
 <template>
+  <el-switch v-model="showAnswer" size="large" active-text="show answer" class="recite-switch" />
   <el-container>
     <el-header>
       <el-row class="recite-tag">
@@ -45,11 +62,14 @@ onMounted(() => {
       </el-row>
     </el-header>
     <el-main class="recite-main">
-      <div v-for="question in reciteData" :key="question.id" class="question">
-        {{ question.id }} {{ question.context }}
-        <el-row>
-          <SpeechToText />
+      <div v-for="reciteItem in reciteData" :key="reciteItem.question.id" class="question">
+        {{ reciteItem.question.id }} {{ reciteItem.question.context }}
+        <el-row :class="{ 'answer-error': showAnswer && reciteItem.userInput !== reciteItem.question.answer }">
+          <SpeechToText v-model:modelvalue="reciteItem.userInput" />
         </el-row>
+        <div v-show="showAnswer" class="answer">
+          {{ reciteItem.question.answer }}
+        </div>
       </div>
     </el-main>
   </el-container>
@@ -58,7 +78,7 @@ onMounted(() => {
   
 <style scoped>
 .recite-tag {
-  margin-top: 50px;
+  margin-top: 30px;
   justify-content: center;
 }
 
@@ -75,6 +95,15 @@ onMounted(() => {
 
 .question {
   margin-top: 20px;
+}
+
+.answer {
+  padding: 5px 11px;
+}
+
+.recite-switch {
+  margin-top: 20px;
+  margin-left: 50px;
 }
 </style>
 <style>
@@ -93,5 +122,9 @@ onMounted(() => {
 .el-textarea__inner {
   line-height: 40px;
   font-size: 24px !important;
+}
+
+.answer-error textarea {
+  background-color: #fef0f0;
 }
 </style>

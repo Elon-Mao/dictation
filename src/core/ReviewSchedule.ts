@@ -4,7 +4,6 @@ export default function filterItem<T>(list: T[], getFormatDate: (t: T) => string
   let e = 0
   let i = 0
   rootLoop: do {
-    date.setDate(date.getDate() - Math.pow(2, e++))
     const formatDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`
     do {
       if (i === list.length) {
@@ -13,12 +12,13 @@ export default function filterItem<T>(list: T[], getFormatDate: (t: T) => string
       const item = list[i]
       const itemFormatDate = getFormatDate(item)
       if (itemFormatDate === formatDate) {
-        result.push(item)
+        result.unshift(item)
       } else if (itemFormatDate < formatDate) {
         break
       }
       i++
     } while (true)
+    date.setDate(date.getDate() - Math.pow(2, e++))
   } while (true)
   return result
 }
