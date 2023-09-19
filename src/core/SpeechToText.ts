@@ -10,12 +10,10 @@ recognition.onresult = (event: {
 
 let onStart: (() => void) | null = null
 let onStopSpeech: (() => void) | null = null
-let altDown = false
+// let altDown = false
 let speechKeyPress = false
 function onKeydown(event: KeyboardEvent) {
-  if (event.key === 'Alt') {
-    altDown = true
-  } else if (event.key === 'l' && altDown && !speechKeyPress) {
+  if (event.key === 'l' && event.altKey && !speechKeyPress) {
     speechKeyPress = true
     if (onStart) {
       onStart()
@@ -24,9 +22,7 @@ function onKeydown(event: KeyboardEvent) {
   }
 }
 function onKeyup(event: KeyboardEvent) {
-  if (event.key === 'Alt') {
-    altDown = false
-  } else if (event.key === 'l' && speechKeyPress) {
+  if (event.key === 'Alt' || event.key === 'l' && speechKeyPress) {
     speechKeyPress = false
     recognition.stop()
     if (onStopSpeech) {

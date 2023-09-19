@@ -4,14 +4,14 @@ import { ref, computed } from 'vue'
 
 const props = defineProps(['modelvalue'])
 const emit = defineEmits(['update:modelvalue'])
-const voiceInput = computed({
+const voiceInput = props.modelvalue !== undefined ? computed({
   get() {
     return props.modelvalue
   },
   set(value) {
     emit('update:modelvalue', value)
   }
-})
+}) : ref('')
 
 const speeching = ref(false)
 const loading = ref(false)

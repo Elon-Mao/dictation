@@ -89,13 +89,13 @@ function onKeydown(event: KeyboardEvent) {
     player.seekTo(currentTime + 3, true)
   } else if (event.key === 'ArrowUp') {
     event.preventDefault()
-    const volume = player.getVolume() + 5
+    const volume = Math.min(player.getVolume() + 5, 100) 
     player.setVolume(volume)
     volumeMessage?.close()
     volumeMessage = ElMessage(`volume:${volume}%`)
   } else if (event.key === 'ArrowDown') {
     event.preventDefault()
-    const volume = player.getVolume() - 5
+    const volume = Math.max(player.getVolume() - 5, 0) 
     player.setVolume(volume)
     volumeMessage?.close()
     volumeMessage = ElMessage(`volume:${volume}%`)

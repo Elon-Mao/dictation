@@ -10,11 +10,13 @@ interface ReciteItem {
   userInput: string
 }
 
+const inputCache = new Map()
+
 function convertToItem(questions: Question[]): ReciteItem[] {
   return questions.map(question => {
     return {
       question,
-      userInput: ''
+      userInput: inputCache.get(question.id) || ''
     }
   })
 }
@@ -29,6 +31,7 @@ const reciteData = ref<ReciteItem[]>(convertToItem(listBySchedule()))
 function onTagChange(category: string) {
   selectedCategory.value = category
   selectedDate.value = ''
+  reciteData.value.forEach(reciteItem => inputCache.set(reciteItem.question.id, reciteItem.userInput))
   if (category === 'schedule') {
     reciteData.value = convertToItem(listBySchedule())
   } else {
@@ -38,6 +41,7 @@ function onTagChange(category: string) {
 
 function onDateChange() {
   selectedCategory.value = ''
+  reciteData.value.forEach(reciteItem => inputCache.set(reciteItem.question.id, reciteItem.userInput))
   reciteData.value = convertToItem(listByDate(selectedDate.value))
 }
 

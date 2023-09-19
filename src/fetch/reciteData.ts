@@ -2,65 +2,203 @@ import filterItem from '@/core/ReviewSchedule'
 import type Question from '@/types/Question'
 
 const reciteData: Question[] = [{
-  id: 10,
-  category: 'Spring',
-  uploadDate: '2023-09-01',
-  context: 'How does Spring support declarative transaction management?',
-  answer: 'Spring provides support for declarative transaction management through AOP. You can define transactional behavior using annotations or XML configuration, and Spring manages the transactions behind the scenes.'
+  "id": 119,
+  "category": "Spring",
+  "uploadDate": "2023-09-06",
+  "context": "What is Spring Web MVC?",
+  "answer": "Spring Web MVC is like a traffic cop for your web app. It's a framework for building web applications using the Model-View-Controller architectural pattern."
+},
+{
+  "id": 120,
+  "category": "Spring",
+  "uploadDate": "2023-09-06",
+  "context": "Explain Spring Boot Profiles.",
+  "answer": "Spring Boot Profiles are like customized settings for your app. They allow you to define different configurations for different environments, making your app adaptable."
 }, {
-  id: 9,
-  category: 'Spring',
-  uploadDate: '2023-09-01',
-  context: 'Explain the Spring Data JPA framework.',
-  answer: 'Spring Data JPA is a part of the Spring Data project that provides simplified data access for JPA (Java Persistence API) based repositories. It eliminates much of the boilerplate code required for data access.'
+  "id": 111,
+  "category": "Spring",
+  "uploadDate": "2023-09-05",
+  "context": "What is Spring Boot Auto-configuration?",
+  "answer": "Spring Boot Auto-configuration acts like a helpful assistant. It configures beans automatically based on project dependencies, saving developers from manual setup."
+},
+{
+  "id": 112,
+  "category": "Spring",
+  "uploadDate": "2023-09-05",
+  "context": "Explain the Spring IoC Container.",
+  "answer": "The Spring IoC Container is like a magic box for your objects. It manages their creation, configuration, and lifecycle, promoting flexibility and easy testing."
+},
+{
+  "id": 113,
+  "category": "Spring",
+  "uploadDate": "2023-09-05",
+  "context": "What is a Spring Bean Scope?",
+  "answer": "Bean Scope defines how long a bean lives in Spring. It's like deciding if an object should be short-lived or persist through the application's lifetime."
+},
+{
+  "id": 114,
+  "category": "Spring",
+  "uploadDate": "2023-09-05",
+  "context": "Explain Spring Boot Starters.",
+  "answer": "Spring Boot Starters are like recipe cards for your project. They provide predefined templates for common tasks, saving time and simplifying development."
+},
+{
+  "id": 115,
+  "category": "Spring",
+  "uploadDate": "2023-09-05",
+  "context": "What is Spring Data JPA?",
+  "answer": "Spring Data JPA simplifies database access using the Java Persistence API, reducing boilerplate code in data-related operations."
+},
+{
+  "id": 116,
+  "category": "Spring",
+  "uploadDate": "2023-09-05",
+  "context": "Explain the Spring Boot Actuator.",
+  "answer": "Spring Boot Actuator is like a health monitor for your app. It provides insights into application metrics, health, and various runtime information."
+},
+{
+  "id": 117,
+  "category": "Spring",
+  "uploadDate": "2023-09-05",
+  "context": "What is Spring Cloud?",
+  "answer": "Spring Cloud is like a cloud conductor. It offers tools and libraries for building cloud-native microservices, handling common tasks like service discovery and configuration."
+},
+{
+  "id": 118,
+  "category": "Spring",
+  "uploadDate": "2023-09-05",
+  "context": "Explain the Spring Boot DevTools.",
+  "answer": "Spring Boot DevTools are like a developer's best friend. They enhance development by providing features like automatic restarts and live reloading."
+},
+{
+  "id": 101,
+  "category": "Spring",
+  "uploadDate": "2023-09-04",
+  "context": "What are the core modules of Spring Framework?",
+  "answer": "Spring Framework includes essential parts like Spring Core Container, which manages objects, Spring AOP for handling concerns, Spring Data Access and Integration, and Spring Web."
+},
+{
+  "id": 102,
+  "category": "Spring",
+  "uploadDate": "2023-09-04",
+  "context": "What is Spring Framework?",
+  "answer": "Spring Framework is like a trusty companion for Java developers. It's open-source and simplifies the creation of strong and flexible Java applications."
+},
+{
+  "id": 103,
+  "category": "Spring",
+  "uploadDate": "2023-09-04",
+  "context": "Explain Dependency Injection in Spring.",
+  "answer": "Dependency Injection is all about providing your classes with what they need in Spring. It enhances code flexibility and makes development smoother."
+},
+{
+  "id": 104,
+  "category": "Spring",
+  "uploadDate": "2023-09-04",
+  "context": "What is Inversion of Control (IoC) in Spring?",
+  "answer": "IoC means Spring takes charge. It manages object creation and handling, allowing you to focus on writing clean, efficient code."
+},
+{
+  "id": 105,
+  "category": "Spring",
+  "uploadDate": "2023-09-04",
+  "context": "What is a Bean in Spring?",
+  "answer": "In Spring, a Bean is like a ready-to-use ingredient in a recipe. It's a managed Java object defined in Spring's configuration, ready for use."
+},
+{
+  "id": 106,
+  "category": "Spring",
+  "uploadDate": "2023-09-04",
+  "context": "What is Aspect-Oriented Programming (AOP) in Spring?",
+  "answer": "AOP helps keep your code organized by separating concerns like logging or security from your main logic."
+},
+{
+  "id": 107,
+  "category": "Spring",
+  "uploadDate": "2023-09-04",
+  "context": "What is Spring Boot?",
+  "answer": "Spring Boot is like a fast pass at an amusement park. It simplifies building Java apps, reducing setup work and getting you started quickly."
+},
+{
+  "id": 108,
+  "category": "Spring",
+  "uploadDate": "2023-09-04",
+  "context": "What is the purpose of the Spring BeanFactory?",
+  "answer": "The Spring BeanFactory acts like a manager for your beans. It creates, configures, and oversees beans in the Spring setup, ensuring they're ready for action."
+},
+{
+  "id": 109,
+  "category": "Spring",
+  "uploadDate": "2023-09-04",
+  "context": "Explain the concept of Spring MVC (Model-View-Controller).",
+  "answer": "Spring MVC is like orchestrating a dance. It's a framework for building web apps, with models for data, views for presentation, and controllers for handling user input."
+},
+{
+  "id": 110,
+  "category": "Spring",
+  "uploadDate": "2023-09-04",
+  "context": "What is Spring Security?",
+  "answer": "Spring Security acts as a protective shield for your app. It handles authentication, authorization, and guards against security threats, ensuring your Spring app stays secure."
 }, {
-  id: 8,
-  category: 'Spring',
-  uploadDate: '2023-09-01',
-  context: 'What is Spring Security?',
-  answer: 'Spring Security is a powerful and customizable security framework for securing Spring-based applications. It provides authentication, authorization, and protection against common security vulnerabilities.'
+  "id": 21,
+  "category": "English",
+  "uploadDate": "2023-09-02",
+  "context": "很高兴认识你。",
+  "answer": "Nice to meet you."
 }, {
-  id: 7,
-  category: 'Spring',
-  uploadDate: '2023-09-01',
-  context: 'What is the difference between Spring MVC and Spring Boot?',
-  answer: 'Spring MVC is a module within the Spring Framework for building web applications. Spring Boot, on the other hand, is a separate project that simplifies the configuration and deployment of Spring applications, including Spring MVC.'
+  "id": 22,
+  "category": "English",
+  "uploadDate": "2023-09-02",
+  "context": "我爱你。",
+  "answer": "I love you."
 }, {
-  id: 6,
-  category: 'Spring',
-  uploadDate: '2023-09-01',
-  context: 'What is the Spring Bean lifecycle?',
-  answer: 'The Spring Bean lifecycle consists of several stages: Instantiation, Initialization, Usage, and Destruction. Spring provides methods (callbacks) for customization at each stage.'
+  "id": 23,
+  "category": "English",
+  "uploadDate": "2023-09-02",
+  "context": "你最喜欢的食物是什么？",
+  "answer": "What's your favorite food?"
 }, {
-  id: 5,
-  category: 'Spring',
-  uploadDate: '2023-09-01',
-  context: 'What is AOP in Spring?',
-  answer: 'Aspect-Oriented Programming (AOP) is a technique in Spring that allows separating cross-cutting concerns, such as logging and security, from the main business logic. It enables modularization of concerns.'
+  "id": 24,
+  "category": "English",
+  "uploadDate": "2023-09-02",
+  "context": "我喜欢披萨。",
+  "answer": "I like pizza."
 }, {
-  id: 4,
-  category: 'Spring',
-  uploadDate: '2023-08-31',
-  context: 'What is Inversion of Control (IoC) in Spring?',
-  answer: 'IoC is a principle where the control over the flow of a program\'s execution is shifted from the program itself to a container. Spring\'s IoC container manages the instantiation and configuration of objects.'
+  "id": 25,
+  "category": "English",
+  "uploadDate": "2023-09-02",
+  "context": "你会说英语吗？",
+  "answer": "Do you speak English?"
 }, {
-  id: 3,
-  category: 'Spring',
-  uploadDate: '2023-08-31',
-  context: 'Explain Dependency Injection in Spring.',
-  answer: 'Dependency Injection is a design pattern in Spring where the dependencies of an object are provided by an external entity rather than being created within the object itself. It promotes loose coupling and easier testing.'
+  "id": 26,
+  "category": "English",
+  "uploadDate": "2023-09-02",
+  "context": "是的，我会。",
+  "answer": "Yes, I do."
 }, {
-  id: 2,
-  category: 'Spring',
-  uploadDate: '2023-08-31',
-  context: 'What are the core modules of Spring Framework?',
-  answer: 'The core modules of Spring Framework are: Spring Core Container, Spring AOP (Aspect-Oriented Programming), Spring Data Access/Integration, and Spring Web.'
+  "id": 27,
+  "category": "English",
+  "uploadDate": "2023-09-02",
+  "context": "不，我不会。",
+  "answer": "No, I don't."
 }, {
-  id: 1,
-  category: 'Spring',
-  uploadDate: '2023-08-31',
-  context: 'What is Spring Framework?',
-  answer: 'Spring Framework is an open-source Java platform that provides comprehensive infrastructure support for developing robust and flexible Java applications.'
+  "id": 28,
+  "category": "English",
+  "uploadDate": "2023-09-02",
+  "context": "这要多久？",
+  "answer": "How long will it take?"
+}, {
+  "id": 29,
+  "category": "English",
+  "uploadDate": "2023-09-02",
+  "context": "我不知道。",
+  "answer": "I don't know."
+}, {
+  "id": 30,
+  "category": "English",
+  "uploadDate": "2023-09-02",
+  "context": "你能重复一遍吗？",
+  "answer": "Can you repeat that?"
 }]
 
 export function getCategories() {
