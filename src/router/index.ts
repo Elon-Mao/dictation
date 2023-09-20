@@ -5,17 +5,17 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/dictation/Tefu_NvcC0k/play'
+      redirect: '/youtube/Tefu_NvcC0k/play'
     },
     {
-      path: '/dictation/:videoId/play',
-      name: 'dictationPlay',
-      component: () => import('@/views/DictationPlay.vue')
+      path: '/youtube/:videoId/play',
+      name: 'youtubePlay',
+      component: () => import('@/views/YoutubePlay.vue')
     },
     {
-      path: '/dictation/:videoId/manage',
-      name: 'dictationManage',
-      component: () => import('@/views/DictationManage.vue')
+      path: '/youtube/:videoId/manage',
+      name: 'youtubeManage',
+      component: () => import('@/views/YoutubeManage.vue')
     },
     {
       path: '/recite',
