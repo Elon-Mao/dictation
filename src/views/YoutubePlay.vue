@@ -165,7 +165,7 @@ function captionOnWheel() {
 
 function moreVideoOnclick(videoInfo: VideoInfo) {
   if (videoInfo.videoId !== videoId) {
-    window.location.href = `/dictation/${videoInfo.videoId}/play`
+    window.location.href = `/dictation/youtube/${videoInfo.videoId}/play`
   }
 }
 

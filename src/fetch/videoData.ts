@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "0m5Go6gvys0",
+  title: 'Laughter helps the heart - BBC News Review',
+  overplay: '05:43',
+  uploadDate: '2023-09-26',
+  userInputs: [[10,1],[12,2],[13,5],[13,8],[32,5],[33,1],[49,7],[50,12],[79,13]]
+}, {
   videoId: "fmqTJO_OJ9M",
   title: 'Donald Trump charged: BBC News Review',
   overplay: '06:38',
