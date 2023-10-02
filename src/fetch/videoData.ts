@@ -2,6 +2,36 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "9FbdvL2RYPQ",
+  title: 'Is there plastic in your blood?: BBC News Review',
+  overplay: '10:52',
+  uploadDate: '2023-10-02',
+  userInputs: [[9,7],[29,10],[38,5],[45,12],[56,5],[57,10],[58,4],[63,6],[67,4],[108,4],[156,10]]
+}, {
+  videoId: "lAUivF-NEuM",
+  title: 'Lego gives up on recycled bricks: BBC News Review',
+  overplay: '06:07',
+  uploadDate: '2023-10-01',
+  userInputs: [[10,9],[14,1]]
+}, {
+  videoId: "V0dFKMVs9sg",
+  title: 'Improving maths with music: BBC News Review',
+  overplay: '06:28',
+  uploadDate: '2023-10-01',
+  userInputs: [[9,6],[18,5],[20,12],[43,9],[54,2],[82,3],[86,2]]
+}, {
+  videoId: "duRGF7e_lg4",
+  title: 'Rubiales quits: BBC News Review',
+  overplay: '05:31',
+  uploadDate: '2023-09-29',
+  userInputs: [[0,3],[1,6],[1,7],[10,5],[10,7],[11,2],[12,1],[13,4],[15,8],[23,1],[24,0],[24,1],[26,1],[39,11],[47,2],[49,5],[56,4],[61,7],[70,2],[80,1]]
+}, {
+  videoId: "Y6HYDUr1ZPU",
+  title: 'Banning \'steak\': BBC News Review',
+  overplay: '06:33',
+  uploadDate: '2023-09-27',
+  userInputs: [[7,13],[14,3],[14,5],[18,2],[18,3],[46,1],[46,4],[47,6],[49,3],[51,2],[51,6],[53,3],[59,12],[60,2],[64,3],[67,9],[71,1],[71,2],[72,0],[72,1],[73,9],[77,5],[79,1],[83,8],[87,2],[89,9],[92,8],[94,2],[96,3],[97,8],[102,0],[103,1]]
+}, {
   videoId: "0m5Go6gvys0",
   title: 'Laughter helps the heart - BBC News Review',
   overplay: '05:43',
