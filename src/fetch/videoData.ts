@@ -2,6 +2,18 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "Ag7-U4ga9mA",
+  title: 'The right way to say sorry ⏲️ 6 Minute English',
+  overplay: '06:23',
+  uploadDate: '2023-10-03',
+  userInputs: [[5,7],[9,11],[13,9],[29,4],[32,0],[46,6],[49,6],[55,3],[57,4],[62,2],[63,2],[65,4],[67,2],[68,4],[75,8],[75,9],[87,2],[92,6],[95,6],[103,13],[105,3],[105,5],[107,0],[107,4]]
+}, {
+  videoId: "rCrfyX5aANA",
+  title: '8 ways to live longer: BBC News Review',
+  overplay: '06:35',
+  uploadDate: '2023-10-03',
+  userInputs: [[10,2],[10,8],[13,1],[13,6],[25,5],[28,4],[31,13],[38,9],[61,5],[90,6],[92,6],[92,9]]
+}, {
   videoId: "9FbdvL2RYPQ",
   title: 'Is there plastic in your blood?: BBC News Review',
   overplay: '10:52',
@@ -187,18 +199,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:23',
   uploadDate: '2023-08-06',
   userInputs: [[2, 2], [2, 3], [2, 5], [6, 7], [9, 3], [11, 2], [18, 7], [19, 1], [21, 4], [24, 3], [26, 4], [26, 7], [27, 12], [28, 5], [29, 2], [34, 9], [40, 3], [42, 4], [42, 7], [43, 12], [44, 5], [45, 2], [52, 2], [52, 14], [53, 5], [54, 6], [57, 2], [57, 14], [58, 2], [58, 14], [60, 2], [60, 14], [61, 2], [61, 14], [63, 2], [65, 2], [69, 5], [72, 2], [72, 11], [78, 3], [79, 8], [79, 12], [82, 4], [82, 12], [85, 5], [85, 6], [88, 2], [89, 8], [90, 5], [90, 6], [92, 8], [93, 0], [94, 6], [96, 9], [102, 5]]
-}, {
-  videoId: "Ag7-U4ga9mA",
-  title: 'The right way to say sorry ⏲️ 6 Minute English',
-  overplay: '06:23',
-  uploadDate: '2023-08-01',
-  userInputs: [[5,7],[9,11],[13,9],[29,4],[32,0],[43,11],[46,6],[46,8],[48,4],[49,6],[55,3],[57,4],[62,2],[63,2],[65,4],[67,2],[68,4],[75,9],[85,3],[87,2],[91,3],[92,6],[95,6],[103,13],[105,3],[105,5],[107,0],[107,4]]
-}, {
-  videoId: "rCrfyX5aANA",
-  title: '8 ways to live longer: BBC News Review',
-  overplay: '06:35',
-  uploadDate: '2023-08-01',
-  userInputs: [[3,9],[5,3],[10,2],[10,8],[11,6],[13,1],[13,6],[17,3],[21,4],[23,0],[25,5],[28,4],[30,12],[31,13],[32,2],[38,9],[61,5],[90,6],[92,6],[92,9]]
 }]
 
 export function getVideoInfo(videoId: string): VideoInfo | undefined {
