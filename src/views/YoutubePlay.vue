@@ -89,13 +89,13 @@ function onKeydown(event: KeyboardEvent) {
     player.seekTo(currentTime + 3, true)
   } else if (event.key === 'ArrowUp') {
     event.preventDefault()
-    const volume = Math.min(player.getVolume() + 5, 100) 
+    const volume = Math.min(player.getVolume() + 5, 100)
     player.setVolume(volume)
     volumeMessage?.close()
     volumeMessage = ElMessage(`volume:${volume}%`)
   } else if (event.key === 'ArrowDown') {
     event.preventDefault()
-    const volume = Math.max(player.getVolume() - 5, 0) 
+    const volume = Math.max(player.getVolume() - 5, 0)
     player.setVolume(volume)
     volumeMessage?.close()
     volumeMessage = ElMessage(`volume:${volume}%`)
@@ -107,6 +107,7 @@ const userInputs = ref<string[][]>([])
 const videoInfo = ref<VideoInfo | undefined>()
 const recommendedVideos = ref<VideoInfo[]>([])
 const lastVideos = ref<VideoInfo[]>([])
+const familiarWords = new Set()
 function loadVideo() {
   captionTexts.value = []
   userInputs.value = []
@@ -116,8 +117,27 @@ function loadVideo() {
       userInputs.value.push([])
     }
     videoInfo.value = getVideoInfo(videoId)
-    for (const userinput of videoInfo.value?.userInputs || []) {
-      userInputs.value[userinput[0]][userinput[1]] = ''
+    if (!videoInfo.value) {
+      return
+    }
+    if (videoInfo.value.userInputs.length === 0) {
+      const xhr = new XMLHttpRequest()
+      xhr.open("GET", '/familiarWords.csv')
+      xhr.onload = () => {
+        xhr.response.split(',\n').forEach((word: string) => familiarWords.add(word))
+        parseResult.forEach((captionText, i) => {
+          captionText.words.forEach((word, j) => {
+            if (word.value.length !== 1 && !familiarWords.has(word.value.toLowerCase())) {
+              userInputs.value[i][j] = ''
+            }
+          })
+        })
+      }
+      xhr.send()
+    } else {
+      for (const userinput of videoInfo.value.userInputs) {
+        userInputs.value[userinput[0]][userinput[1]] = ''
+      }
     }
   }).finally(() => {
     recommendedVideos.value = getRecommendedVideos()
@@ -169,6 +189,35 @@ function moreVideoOnclick(videoInfo: VideoInfo) {
   }
 }
 
+function onAnswerShow() {
+  const json: number[][] = []
+  captionTexts.value.forEach((captionText, i) => {
+    captionText.words.forEach((word, j) => {
+      if (userInputs.value[i][j] !== undefined) {
+        if (userInputs.value[i][j] === word.value) {
+          familiarWords.add(word.value.toLowerCase())
+        } else {
+          json.push([i, j])
+        }
+      }
+    })
+  })
+  console.log(JSON.stringify(json))
+  if (videoInfo.value!.userInputs.length !== 0) {
+    return
+  }
+  const blob = new Blob([Array.from(familiarWords).join(',\n')], { type: "application/octet-stream" })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement("a")
+  a.href = url
+  a.download = "familiarWords.csv"
+  a.style.display = "none"
+  document.body.appendChild(a)
+  a.click()
+  URL.revokeObjectURL(url)
+  document.body.removeChild(a)
+}
+
 onUnmounted(() => {
   clearInterval(playerTimeInterval.value)
   document.removeEventListener('keydown', onKeydown)
@@ -212,7 +261,7 @@ onUnmounted(() => {
         <el-switch v-model="showCaption" class="show-caption-switch" inline-prompt active-text="hide caption"
           inactive-text="show caption" />
         <el-switch v-show="showCaption" v-model="showAnswer" inline-prompt active-text="hide answer"
-          inactive-text="show answer" />
+          inactive-text="show answer" @change="onAnswerShow" />
       </el-row>
       <el-row class="voice-input">
         <SpeechToText />
