@@ -107,7 +107,7 @@ const userInputs = ref<string[][]>([])
 const videoInfo = ref<VideoInfo | undefined>()
 const recommendedVideos = ref<VideoInfo[]>([])
 const lastVideos = ref<VideoInfo[]>([])
-const familiarWords = new Set()
+const familiarWords = new Map()
 function loadVideo() {
   captionTexts.value = []
   userInputs.value = []
@@ -124,10 +124,14 @@ function loadVideo() {
       const xhr = new XMLHttpRequest()
       xhr.open("GET", '/familiarWords.csv')
       xhr.onload = () => {
-        xhr.response.split(',\n').forEach((word: string) => familiarWords.add(word))
+        xhr.response.split(',\n').forEach((row: string) => {
+          const [familiarWord, times] = row.split(',')
+          familiarWords.set(familiarWord, Number(times))
+        })
         parseResult.forEach((captionText, i) => {
           captionText.words.forEach((word, j) => {
-            if (word.value.length !== 1 && !familiarWords.has(word.value.toLowerCase())) {
+            const wordLowerCase = word.value.toLowerCase()
+            if (word.value.length !== 1 && (!familiarWords.has(wordLowerCase) || familiarWords.get(wordLowerCase) < 3)) {
               userInputs.value[i][j] = ''
             }
           })
@@ -191,22 +195,31 @@ function moreVideoOnclick(videoInfo: VideoInfo) {
 
 function onAnswerShow() {
   const json: number[][] = []
+  const correctWords = new Set()
   captionTexts.value.forEach((captionText, i) => {
     captionText.words.forEach((word, j) => {
       if (userInputs.value[i][j] !== undefined) {
         if (userInputs.value[i][j] === word.value) {
-          familiarWords.add(word.value.toLowerCase())
+          correctWords.add(word.value.toLowerCase())
         } else {
           json.push([i, j])
         }
       }
     })
   })
+  Array.from(correctWords).forEach(correctWord => {
+    if (familiarWords.has(correctWord)) {
+      familiarWords.set(correctWord, familiarWords.get(correctWord) + 1)
+    } else {
+      familiarWords.set(correctWord, 1)
+    }
+  })
+
   console.log(JSON.stringify(json))
   if (videoInfo.value!.userInputs.length !== 0) {
     return
   }
-  const blob = new Blob([Array.from(familiarWords).join(',\n')], { type: "application/octet-stream" })
+  const blob = new Blob([Array.from(familiarWords.entries()).join(',\n')], { type: "application/octet-stream" })
   const url = URL.createObjectURL(blob)
   const a = document.createElement("a")
   a.href = url
