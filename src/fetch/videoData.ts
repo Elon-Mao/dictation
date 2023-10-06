@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "9FbdvL2RYPQ",
+  title: 'Is there plastic in your blood?: BBC News Review',
+  overplay: '10:52',
+  uploadDate: '2023-10-06',
+  userInputs: [[8,5],[9,7],[9,8],[10,1],[10,5],[11,8],[13,8],[21,7],[26,4],[29,10],[33,5],[34,1],[34,8],[38,5],[43,7],[45,12],[50,7],[56,5],[57,10],[58,4],[63,5],[67,4],[71,5],[74,11],[77,4],[82,2],[84,5],[90,9],[104,5],[108,4],[113,4],[114,8],[119,6],[122,1],[129,1],[139,6],[142,10],[144,10],[145,8],[148,3],[150,2],[156,10],[159,5],[163,7]]
+}, {
   videoId: "rCrfyX5aANA",
   title: '8 ways to live longer: BBC News Review',
   overplay: '06:35',
@@ -19,12 +25,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:23',
   uploadDate: '2023-10-05',
   userInputs: [[5,7],[9,11],[13,4],[21,7],[29,4],[36,8],[39,11],[39,12],[45,7],[45,8],[46,6],[49,6],[50,7],[51,7],[53,4],[55,3],[57,4],[57,9],[59,3],[62,2],[63,2],[65,4],[68,2],[68,4],[70,0],[75,8],[78,10],[82,1],[87,2],[92,1],[92,2],[92,5],[92,6],[95,6],[103,1],[103,13],[105,3],[107,0]]
-}, {
-  videoId: "9FbdvL2RYPQ",
-  title: 'Is there plastic in your blood?: BBC News Review',
-  overplay: '10:52',
-  uploadDate: '2023-10-05',
-  userInputs: []
 }, {
   videoId: "hGzKWfQOKeQ",
   title: 'Foraging for wild food ⏲️ 6 Minute English',
