@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "rCrfyX5aANA",
+  title: '8 ways to live longer: BBC News Review',
+  overplay: '06:35',
+  uploadDate: '2023-10-06',
+  userInputs: [[10,8],[13,1],[13,6],[18,4],[25,5],[31,13],[36,3],[38,9],[39,5],[61,5],[63,6],[69,5],[70,6],[73,7],[73,10],[74,0],[78,1],[79,5],[82,6],[83,4],[85,11],[89,10],[90,3],[90,6],[91,6],[92,6],[93,6],[100,1],[106,2],[106,4]]
+}, {
   videoId: "duRGF7e_lg4",
   title: 'Rubiales quits: BBC News Review',
   overplay: '05:31',
@@ -18,7 +24,7 @@ const videoList: VideoInfo[] = [{
   title: 'Is there plastic in your blood?: BBC News Review',
   overplay: '10:52',
   uploadDate: '2023-10-05',
-  userInputs: [[9,7],[29,10],[38,5],[45,12],[56,5],[57,10],[58,4],[63,5],[67,4],[108,4],[156,10]]
+  userInputs: []
 }, {
   videoId: "hGzKWfQOKeQ",
   title: 'Foraging for wild food ⏲️ 6 Minute English',
@@ -37,12 +43,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:23',
   uploadDate: '2023-10-05',
   userInputs: [[1,12],[2,5],[5,8],[6,10],[8,4],[10,8],[10,10],[11,7],[12,1],[13,5],[14,6],[17,3],[17,6],[17,8],[18,8],[19,12],[20,3],[23,5],[24,0],[26,0],[26,4],[26,7],[30,3],[33,2],[36,3],[40,0],[42,0],[42,4],[42,7],[46,3],[47,12],[49,7],[54,8],[59,4],[60,16],[61,16],[64,12],[65,3],[68,2],[69,7],[70,0],[70,3],[72,13],[74,3],[75,9],[78,3],[79,1],[79,4],[79,12],[81,4],[82,12],[83,2],[84,5],[89,2],[89,8],[92,2],[92,8],[93,0],[96,9],[97,10],[99,6],[102,5],[102,7]]
-}, {
-  videoId: "rCrfyX5aANA",
-  title: '8 ways to live longer: BBC News Review',
-  overplay: '06:35',
-  uploadDate: '2023-10-03',
-  userInputs: [[10,2],[10,8],[13,1],[13,6],[25,5],[28,4],[31,13],[38,9],[61,5],[90,6],[92,6],[92,9]]
 }, {
   videoId: "lAUivF-NEuM",
   title: 'Lego gives up on recycled bricks: BBC News Review',
