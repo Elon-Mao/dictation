@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "duRGF7e_lg4",
+  title: 'Rubiales quits: BBC News Review',
+  overplay: '05:31',
+  uploadDate: '2023-10-07',
+  userInputs: [[1,1],[11,1],[15,2],[16,3],[23,0],[23,2],[48,3],[54,8],[69,5],[92,2]]
+}, {
   videoId: "hGzKWfQOKeQ",
   title: 'Foraging for wild food ⏲️ 6 Minute English',
   overplay: '06:20',
@@ -19,12 +25,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:35',
   uploadDate: '2023-10-06',
   userInputs: [[10,8],[13,1],[13,6],[18,4],[25,5],[31,13],[36,3],[38,9],[39,5],[61,5],[63,6],[69,5],[70,6],[73,7],[73,10],[74,0],[78,1],[79,5],[82,6],[83,4],[85,11],[89,10],[90,3],[90,6],[91,6],[92,6],[93,6],[100,1],[106,2],[106,4]]
-}, {
-  videoId: "duRGF7e_lg4",
-  title: 'Rubiales quits: BBC News Review',
-  overplay: '05:31',
-  uploadDate: '2023-10-06',
-  userInputs: [[1,1],[11,1],[15,2],[16,3],[23,0],[23,2],[48,3],[54,8],[69,5],[92,2]]
 }, {
   videoId: "Ag7-U4ga9mA",
   title: 'The right way to say sorry ⏲️ 6 Minute English',
@@ -54,7 +54,7 @@ const videoList: VideoInfo[] = [{
   title: 'Improving maths with music: BBC News Review',
   overplay: '06:28',
   uploadDate: '2023-10-01',
-  userInputs: [[9,6],[18,5],[20,12],[43,9],[54,2],[82,3],[86,2]]
+  userInputs: [[9,6],[11,7],[14,1],[18,5],[20,12],[35,6],[36,10],[40,9],[43,9],[45,1],[48,3],[50,4],[50,9],[51,7],[52,5],[53,7],[54,2],[55,8],[57,5],[61,8],[61,10],[62,3],[67,3],[67,4],[76,7],[77,9],[82,2],[82,3],[86,2],[93,6],[97,1],[98,4],[100,3]]
 }, {
   videoId: "Y6HYDUr1ZPU",
   title: 'Banning \'steak\': BBC News Review',
