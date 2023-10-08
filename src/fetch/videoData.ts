@@ -2,6 +2,18 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "lAUivF-NEuM",
+  title: 'Lego gives up on recycled bricks: BBC News Review',
+  overplay: '06:07',
+  uploadDate: '2023-10-08',
+  userInputs: [[8,4],[9,2],[10,8],[10,9],[13,6],[14,2],[20,3],[26,6],[29,1],[33,10],[34,8],[37,7],[40,7],[41,5],[56,3],[82,5],[91,12]]
+}, {
+  videoId: "V0dFKMVs9sg",
+  title: 'Improving maths with music: BBC News Review',
+  overplay: '06:28',
+  uploadDate: '2023-10-08',
+  userInputs: [[9,6],[11,7],[14,1],[18,5],[20,12],[35,6],[36,10],[40,9],[43,9],[45,1],[48,3],[50,4],[50,9],[51,7],[52,5],[53,7],[54,2],[55,8],[57,5],[61,8],[61,10],[62,3],[67,3],[67,4],[76,7],[77,9],[82,2],[82,3],[86,2],[93,6],[97,1],[98,4],[100,3]]
+}, {
   videoId: "duRGF7e_lg4",
   title: 'Rubiales quits: BBC News Review',
   overplay: '05:31',
@@ -43,18 +55,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:23',
   uploadDate: '2023-10-05',
   userInputs: [[1,12],[2,5],[5,8],[6,10],[8,4],[10,8],[10,10],[11,7],[12,1],[13,5],[14,6],[17,3],[17,6],[17,8],[18,8],[19,12],[20,3],[23,5],[24,0],[26,0],[26,4],[26,7],[30,3],[33,2],[36,3],[40,0],[42,0],[42,4],[42,7],[46,3],[47,12],[49,7],[54,8],[59,4],[60,16],[61,16],[64,12],[65,3],[68,2],[69,7],[70,0],[70,3],[72,13],[74,3],[75,9],[78,3],[79,1],[79,4],[79,12],[81,4],[82,12],[83,2],[84,5],[89,2],[89,8],[92,2],[92,8],[93,0],[96,9],[97,10],[99,6],[102,5],[102,7]]
-}, {
-  videoId: "lAUivF-NEuM",
-  title: 'Lego gives up on recycled bricks: BBC News Review',
-  overplay: '06:07',
-  uploadDate: '2023-10-01',
-  userInputs: [[10,9],[14,1]]
-}, {
-  videoId: "V0dFKMVs9sg",
-  title: 'Improving maths with music: BBC News Review',
-  overplay: '06:28',
-  uploadDate: '2023-10-01',
-  userInputs: [[9,6],[11,7],[14,1],[18,5],[20,12],[35,6],[36,10],[40,9],[43,9],[45,1],[48,3],[50,4],[50,9],[51,7],[52,5],[53,7],[54,2],[55,8],[57,5],[61,8],[61,10],[62,3],[67,3],[67,4],[76,7],[77,9],[82,2],[82,3],[86,2],[93,6],[97,1],[98,4],[100,3]]
 }, {
   videoId: "Y6HYDUr1ZPU",
   title: 'Banning \'steak\': BBC News Review',
