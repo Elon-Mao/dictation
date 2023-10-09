@@ -203,6 +203,9 @@ function onAnswerShow() {
           correctWords.add(word.value.toLowerCase())
         } else {
           json.push([i, j])
+          if (familiarWords.has(word.value.toLowerCase())) {
+            console.log(word.value.toLowerCase())
+          }
         }
       }
     })
