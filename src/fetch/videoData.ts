@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "0m5Go6gvys0",
+  title: 'Laughter helps the heart - BBC News Review',
+  overplay: '05:43',
+  uploadDate: '2023-10-11',
+  userInputs: [[9,5],[10,2],[10,6],[10,8],[12,1],[12,2],[13,2],[13,5],[13,8],[24,5],[32,8],[33,2],[40,2],[49,7],[50,12],[61,10],[79,13],[83,6]]
+}, {
   videoId: "x1sSaGXOokE",
   title: 'English Rewind - Weekender: Later language learning',
   overplay: '06:27',
@@ -79,12 +85,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:33',
   uploadDate: '2023-09-27',
   userInputs: [[7,13],[14,3],[14,5],[18,2],[18,3],[46,1],[46,4],[47,6],[49,3],[51,2],[51,6],[53,3],[59,12],[60,2],[64,3],[67,9],[71,1],[71,2],[72,0],[72,1],[73,9],[77,5],[79,1],[83,8],[87,2],[89,9],[92,8],[94,2],[96,3],[97,8],[102,0],[103,1]]
-}, {
-  videoId: "0m5Go6gvys0",
-  title: 'Laughter helps the heart - BBC News Review',
-  overplay: '05:43',
-  uploadDate: '2023-09-26',
-  userInputs: [[10,1],[12,2],[13,5],[13,8],[32,5],[33,1],[49,7],[50,12],[79,13]]
 }, {
   videoId: "fmqTJO_OJ9M",
   title: 'Donald Trump charged: BBC News Review',
