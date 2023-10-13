@@ -2,6 +2,18 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "0m5Go6gvys0",
+  title: 'Laughter helps the heart - BBC News Review',
+  overplay: '05:43',
+  uploadDate: '2023-10-13',
+  userInputs: [[9,5],[10,2],[10,6],[10,8],[12,1],[12,2],[13,2],[13,5],[13,8],[24,5],[32,8],[33,2],[40,2],[49,7],[50,12],[61,10],[79,13],[83,6]]
+}, {
+  videoId: "x1sSaGXOokE",
+  title: 'English Rewind - Weekender: Later language learning',
+  overplay: '06:27',
+  uploadDate: '2023-10-13',
+  userInputs: [[16,10],[19,3],[30,7],[30,9],[36,3],[54,4],[55,12],[56,7],[56,8],[57,4],[60,1],[60,3],[60,10],[63,4],[65,8],[65,11],[77,2],[92,3],[93,5]]
+}, {
   videoId: "4yaIOaOzkTE",
   title: 'English Rewind - 6 Minute English: Love letters',
   overplay: '06:27',
@@ -13,12 +25,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:10',
   uploadDate: '2023-10-12',
   userInputs: [[9,0],[10,0],[13,4],[15,6],[23,4],[26,5],[32,2],[35,3],[37,8],[44,2],[45,10],[48,7],[49,6],[49,8],[56,8],[58,9],[59,8],[61,14],[62,7],[66,4],[68,0],[70,2],[74,6],[75,5],[81,8],[86,4],[88,1],[88,2],[88,5],[93,10],[95,7],[96,2],[96,8],[104,2],[106,7],[108,10],[109,10]]
-}, {
-  videoId: "0m5Go6gvys0",
-  title: 'Laughter helps the heart - BBC News Review',
-  overplay: '05:43',
-  uploadDate: '2023-10-12',
-  userInputs: [[9,5],[10,2],[10,6],[10,8],[12,1],[12,2],[13,2],[13,5],[13,8],[24,5],[32,8],[33,2],[40,2],[49,7],[50,12],[61,10],[79,13],[83,6]]
 }, {
   videoId: "9FbdvL2RYPQ",
   title: 'Is there plastic in your blood?: BBC News Review',
@@ -38,12 +44,6 @@ const videoList: VideoInfo[] = [{
   uploadDate: '2023-10-12',
   userInputs: [[7,1],[7,2],[7,4],[10,5],[14,3],[28,10],[38,7],[40,7],[46,1],[46,5],[47,6],[51,0],[51,2],[57,7],[57,8],[59,12],[60,2],[61,5],[63,6],[64,3],[67,9],[82,6],[85,1],[85,2],[91,3],[102,0]]
 }, {
-  videoId: "x1sSaGXOokE",
-  title: 'English Rewind - Weekender: Later language learning',
-  overplay: '06:27',
-  uploadDate: '2023-10-10',
-  userInputs: [[16,10],[19,3],[30,7],[30,9],[36,3],[54,4],[55,12],[56,7],[56,8],[57,4],[60,1],[60,3],[60,10],[63,4],[65,8],[65,11],[77,2],[92,3],[93,5]]
-},  {
   videoId: "dpJv8RTEuNQ",
   title: 'Alzheimer\'s drug hope: BBC News Review',
   overplay: '06:06',
