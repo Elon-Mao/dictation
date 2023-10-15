@@ -204,7 +204,7 @@ function onAnswerShow() {
         } else {
           json.push([i, j])
           if (familiarWords.has(word.value.toLowerCase())) {
-            console.log(word.value.toLowerCase())
+            console.log(word.value.toLowerCase(), userInputs.value[i][j])
           }
         }
       }
