@@ -5,8 +5,14 @@ const videoList: VideoInfo[] = [{
   videoId: "hGzKWfQOKeQ",
   title: 'Foraging for wild food ⏲️ 6 Minute English',
   overplay: '06:20',
-  uploadDate: '2023-10-22',
+  uploadDate: '2023-10-23',
   userInputs: [[6,0],[7,12],[8,14],[8,16],[15,3],[17,10],[17,11],[18,17],[19,15],[20,11],[21,14],[22,0],[22,6],[22,7],[22,8],[23,7],[23,12],[23,13],[26,12],[27,11],[28,10],[28,14],[29,1],[29,4],[30,7],[30,8],[30,13],[31,9],[33,11],[34,5],[34,7],[37,1],[38,2],[38,4],[39,10],[39,13],[41,13],[42,2],[43,10],[44,6],[45,12],[45,16],[45,17],[46,0],[46,2],[46,6],[47,0],[48,12],[49,15],[55,6],[56,10],[58,3],[59,1],[60,1],[60,5],[61,0],[62,5],[62,8]]
+}, {
+  videoId: "lAUivF-NEuM",
+  title: 'Lego gives up on recycled bricks: BBC News Review',
+  overplay: '06:07',
+  uploadDate: '2023-10-23',
+  userInputs: [[8,4],[9,2],[10,8],[10,9],[13,6],[14,2],[20,3],[26,6],[29,1],[33,10],[34,8],[37,7],[40,7],[41,5],[56,3],[82,5],[91,12]]
 }, {
   videoId: "rCrfyX5aANA",
   title: '8 ways to live longer: BBC News Review',
@@ -109,12 +115,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:06',
   uploadDate: '2023-10-10',
   userInputs: [[0,1],[0,9],[7,7],[13,3],[13,11],[22,3],[23,0],[36,10],[49,1],[57,9],[61,9],[63,6],[69,4],[79,9],[90,4],[90,6],[95,3],[97,10],[97,12]]
-}, {
-  videoId: "lAUivF-NEuM",
-  title: 'Lego gives up on recycled bricks: BBC News Review',
-  overplay: '06:07',
-  uploadDate: '2023-10-08',
-  userInputs: [[8,4],[9,2],[10,8],[10,9],[13,6],[14,2],[20,3],[26,6],[29,1],[33,10],[34,8],[37,7],[40,7],[41,5],[56,3],[82,5],[91,12]]
 }, {
   videoId: "V0dFKMVs9sg",
   title: 'Improving maths with music: BBC News Review',
