@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "2BdTnL0Gj-Y",
+  title: 'Could we live to 140? BBC News Review',
+  overplay: '07:07',
+  uploadDate: '2023-10-24',
+  userInputs: [[11,4],[15,9],[18,5],[22,1],[25,6],[32,4],[42,4],[43,4],[49,7],[51,7],[56,3],[62,9],[65,3],[67,9],[68,1],[72,9],[76,6],[77,0],[79,0],[80,5],[81,3],[82,5],[87,8],[91,3],[93,1],[97,3],[98,2],[98,7],[100,2],[104,0],[108,3]]
+}, {
   videoId: "hGzKWfQOKeQ",
   title: 'Foraging for wild food ⏲️ 6 Minute English',
   overplay: '06:20',
@@ -187,12 +193,6 @@ const videoList: VideoInfo[] = [{
   overplay: '05:47',
   uploadDate: '2023-08-22',
   userInputs: [[11,9],[12,6],[13,4],[18,0],[38,2],[51,1],[53,7],[54,3],[54,7],[59,2],[59,7],[60,11],[61,12],[62,5],[64,1],[65,5],[69,7],[71,10],[72,1],[75,3],[80,8],[81,11],[82,7],[90,0]]
-}, {
-  videoId: "2BdTnL0Gj-Y",
-  title: 'Could we live to 140? BBC News Review',
-  overplay: '07:07',
-  uploadDate: '2023-08-19',
-  userInputs: [[10,9],[15,9],[18,3],[18,5],[48,1],[49,7],[51,7],[53,10],[66,5],[70,8],[76,7],[77,0],[79,0],[80,5],[81,3],[82,5],[87,3],[87,8],[91,3],[93,1],[95,4],[97,3],[98,2],[100,2],[102,4],[104,0]]
 }, {
   videoId: "Tefu_NvcC0k",
   title: 'Naps: Good for your brain? BBC News Review',
