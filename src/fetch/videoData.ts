@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "mU6Ac1C8OyM",
+  title: 'Shift work linked to depression: BBC News Review',
+  overplay: '06:25',
+  uploadDate: '2023-10-25',
+  userInputs: [[11,5],[19,3],[22,3],[68,9],[71,7],[74,2],[80,4],[81,0],[82,0],[83,1],[84,7],[88,0],[88,3],[90,2],[91,4],[93,0],[98,2],[101,13],[101,15],[106,1]]
+}, {
   videoId: "LXrh2AJa8nU",
   title: 'Late nights: Bad for health?: BBC News Review',
   overplay: '07:02',
@@ -187,12 +193,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:25',
   uploadDate: '2023-08-23',
   userInputs: [[15,5],[15,6],[20,8],[27,7],[32,8],[32,10],[33,7],[35,6],[42,9],[42,14],[46,6],[54,7],[57,8],[59,8],[61,8],[69,4],[72,7],[84,6],[86,0]]
-}, {
-  videoId: "mU6Ac1C8OyM",
-  title: 'Shift work linked to depression: BBC News Review',
-  overplay: '06:25',
-  uploadDate: '2023-08-22',
-  userInputs: [[12,6],[14,7],[15,0],[15,10],[18,2],[22,3],[23,0],[23,2],[23,8],[24,5],[24,8],[25,0],[27,4],[28,4],[28,11],[28,16],[31,2],[31,4],[33,9],[34,0],[37,4],[39,4],[41,5],[41,7],[42,4],[44,10],[45,7],[46,6],[48,7],[53,0],[68,9],[69,3],[71,7],[75,4],[81,4],[85,4],[101,15],[104,3]]
 }, {
   videoId: "FKK-BppSci8",
   title: 'Blood test for 50 cancers: BBC News Review',
