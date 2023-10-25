@@ -2,6 +2,24 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "MZCGs3tAOe4",
+  title: 'Hottest week ever: BBC News Review',
+  overplay: '05:36',
+  uploadDate: '2023-10-25',
+  userInputs: [[0,1],[10,10],[10,11],[12,1],[17,0],[17,3],[22,5],[35,5],[43,2],[44,8],[46,9],[47,5],[48,0],[48,2],[49,1],[49,2],[49,5],[50,6],[51,1],[58,2],[59,4],[65,7],[68,3],[70,3],[71,5],[76,3],[77,2],[79,2],[83,5],[84,11],[85,7],[89,0],[89,4],[90,1]]
+}, {
+  videoId: "dpJv8RTEuNQ",
+  title: 'Alzheimer\'s drug hope: BBC News Review',
+  overplay: '06:06',
+  uploadDate: '2023-10-25',
+  userInputs: [[0,1],[0,9],[7,7],[13,3],[13,11],[22,3],[23,0],[36,10],[49,1],[57,9],[61,9],[63,6],[69,4],[79,9],[90,4],[90,6],[95,3],[97,10],[97,12]]
+}, {
+  videoId: "FKK-BppSci8",
+  title: 'Blood test for 50 cancers: BBC News Review',
+  overplay: '05:47',
+  uploadDate: '2023-10-25',
+  userInputs: [[11,9],[12,6],[18,0],[38,2],[48,4],[48,6],[51,1],[53,7],[54,3],[59,2],[61,12],[62,5],[64,1],[65,5],[66,8],[82,7],[82,11],[90,0]]
+}, {
   videoId: "mU6Ac1C8OyM",
   title: 'Shift work linked to depression: BBC News Review',
   overplay: '06:25',
@@ -80,12 +98,6 @@ const videoList: VideoInfo[] = [{
   uploadDate: '2023-10-20',
   userInputs: [[0,2],[0,6],[12,3],[13,9],[13,11],[17,3],[22,3],[36,4],[40,8],[41,6],[46,9],[46,10],[47,0],[50,1],[51,12],[52,1],[54,7],[57,6],[58,8],[61,4],[63,11],[66,3],[66,8],[68,4],[68,8],[71,9],[72,7],[73,10],[77,13],[80,14],[86,8],[91,3]]
 }, {
-  videoId: "MZCGs3tAOe4",
-  title: 'Hottest week ever: BBC News Review',
-  overplay: '05:36',
-  uploadDate: '2023-10-18',
-  userInputs: [[0,1],[10,10],[10,11],[12,1],[17,0],[17,3],[22,5],[35,5],[43,2],[44,8],[46,9],[47,5],[48,0],[48,2],[49,1],[49,2],[49,5],[50,6],[51,1],[58,2],[59,4],[65,7],[68,3],[70,3],[71,5],[76,3],[77,2],[79,2],[83,5],[84,11],[85,7],[89,0],[89,4],[90,1]]
-}, {
   videoId: "lC_lCOxR5e0",
   title: 'Plants fighting pollution ⏲️ 6 Minute English',
   overplay: '06:16',
@@ -133,12 +145,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:33',
   uploadDate: '2023-10-12',
   userInputs: [[7,1],[7,2],[7,4],[10,5],[14,3],[28,10],[38,7],[40,7],[46,1],[46,5],[47,6],[51,0],[51,2],[57,7],[57,8],[59,12],[60,2],[61,5],[63,6],[64,3],[67,9],[82,6],[85,1],[85,2],[91,3],[102,0]]
-}, {
-  videoId: "dpJv8RTEuNQ",
-  title: 'Alzheimer\'s drug hope: BBC News Review',
-  overplay: '06:06',
-  uploadDate: '2023-10-10',
-  userInputs: [[0,1],[0,9],[7,7],[13,3],[13,11],[22,3],[23,0],[36,10],[49,1],[57,9],[61,9],[63,6],[69,4],[79,9],[90,4],[90,6],[95,3],[97,10],[97,12]]
 }, {
   videoId: "V0dFKMVs9sg",
   title: 'Improving maths with music: BBC News Review',
@@ -193,12 +199,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:25',
   uploadDate: '2023-08-23',
   userInputs: [[15,5],[15,6],[20,8],[27,7],[32,8],[32,10],[33,7],[35,6],[42,9],[42,14],[46,6],[54,7],[57,8],[59,8],[61,8],[69,4],[72,7],[84,6],[86,0]]
-}, {
-  videoId: "FKK-BppSci8",
-  title: 'Blood test for 50 cancers: BBC News Review',
-  overplay: '05:47',
-  uploadDate: '2023-08-22',
-  userInputs: [[11,9],[12,6],[13,4],[18,0],[38,2],[51,1],[53,7],[54,3],[54,7],[59,2],[59,7],[60,11],[61,12],[62,5],[64,1],[65,5],[69,7],[71,10],[72,1],[75,3],[80,8],[81,11],[82,7],[90,0]]
 }]
 
 export function getVideoInfo(videoId: string): VideoInfo | undefined {
