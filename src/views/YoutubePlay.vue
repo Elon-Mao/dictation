@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import parseXMLCaption from '@/core/CaptionXMLParser'
 import { getRecommendedVideos, getVideoInfo, getVideosOrderByDate } from '@/fetch/videoData'
 import AutoWidthInput from '@/components/AutoWidthInput.vue'
 import VideoCompact from '@/components/VideoCompact.vue'
 import SpeechToText from '@/components/SpeechToText.vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import type CaptionText from '@/types/CaptionText'
 import type { MessageHandler, ScrollbarInstance } from 'element-plus'
 import type VideoInfo from '@/types/VideoInfo'
 import { addUnloadConfirm } from '@/core/EventListener'
 declare const YT: any
 
+const router = useRouter()
 const route = useRoute()
 let videoId = route.params.videoId as string
 
@@ -189,7 +190,15 @@ function captionOnWheel() {
 
 function moreVideoOnclick(videoInfo: VideoInfo) {
   if (videoInfo.videoId !== videoId) {
-    window.location.href = `/dictation/youtube/${videoInfo.videoId}/play`
+    ElMessageBox.confirm('Changes you made may not be saved.', 'Leave site?', {
+      customStyle: {
+        verticalAlign: 'top'
+      }
+    }).then(() => {
+      router.push(`/youtube/${videoInfo.videoId}/play`)
+      videoId = videoInfo.videoId
+      loadVideo()
+    })
   }
 }
 
