@@ -2,6 +2,18 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "dLyo5M2swUo",
+  title: 'First Arab Woman in Space: BBC News Review',
+  overplay: '05:23',
+  uploadDate: '2023-10-26',
+  userInputs: []
+}, {
+  videoId: "tZ-Pbwdqlt0",
+  title: 'Can diet improve memory? BBC News Review',
+  overplay: '06:25',
+  uploadDate: '2023-10-26',
+  userInputs: [[0,4],[8,2],[9,1],[10,3],[15,6],[42,9],[42,14],[46,6],[54,7],[59,8],[61,8],[64,6],[65,6],[71,2],[86,0]]
+}, {
   videoId: "MZCGs3tAOe4",
   title: 'Hottest week ever: BBC News Review',
   overplay: '05:36',
@@ -187,18 +199,6 @@ const videoList: VideoInfo[] = [{
   overplay: '05:30',
   uploadDate: '2023-08-25',
   userInputs: [[9,4],[13,0],[33,1],[39,6],[41,1],[44,0],[44,6],[46,3],[47,8],[48,13],[51,2],[52,7],[63,1],[69,0],[69,2]]
-}, {
-  videoId: "dLyo5M2swUo",
-  title: 'First Arab Woman in Space: BBC News Review',
-  overplay: '05:23',
-  uploadDate: '2023-08-24',
-  userInputs: [[1,3],[8,2],[9,3],[10,5],[10,8],[12,1],[12,3],[16,6],[16,8],[21,4],[21,5],[21,6],[42,5],[46,3],[48,0],[49,6],[50,2],[51,1],[54,9],[57,9],[58,7],[59,5],[61,6],[61,9],[66,6],[67,3],[70,5],[74,13],[77,9],[81,3],[81,7],[82,1]]
-}, {
-  videoId: "tZ-Pbwdqlt0",
-  title: 'Can diet improve memory? BBC News Review',
-  overplay: '06:25',
-  uploadDate: '2023-08-23',
-  userInputs: [[15,5],[15,6],[20,8],[27,7],[32,8],[32,10],[33,7],[35,6],[42,9],[42,14],[46,6],[54,7],[57,8],[59,8],[61,8],[69,4],[72,7],[84,6],[86,0]]
 }]
 
 export function getVideoInfo(videoId: string): VideoInfo | undefined {
