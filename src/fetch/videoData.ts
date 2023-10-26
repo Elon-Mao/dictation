@@ -6,7 +6,7 @@ const videoList: VideoInfo[] = [{
   title: 'First Arab Woman in Space: BBC News Review',
   overplay: '05:23',
   uploadDate: '2023-10-26',
-  userInputs: []
+  userInputs: [[13,4],[16,6],[21,0],[46,3],[49,6],[50,2],[51,1],[52,6],[57,0],[57,9],[58,7],[59,2],[59,5],[61,6],[61,9],[67,3],[69,6],[76,9],[81,3],[81,7]]
 }, {
   videoId: "tZ-Pbwdqlt0",
   title: 'Can diet improve memory? BBC News Review',
