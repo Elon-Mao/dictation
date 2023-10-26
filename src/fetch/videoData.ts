@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "WJZQGGZ64oI",
+  title: 'Learning to smile again: BBC News Review',
+  overplay: '05:30',
+  uploadDate: '2023-10-26',
+  userInputs: [[7,9],[24,9],[31,4],[33,1],[66,7],[67,2]]
+}, {
   videoId: "dLyo5M2swUo",
   title: 'First Arab Woman in Space: BBC News Review',
   overplay: '05:23',
@@ -193,12 +199,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:36',
   uploadDate: '2023-08-26',
   userInputs: [[0,0],[1,0],[8,8],[8,10],[10,0],[13,3],[16,2],[21,0],[21,1],[21,4],[21,5],[21,8],[22,5],[23,5],[23,6],[24,1],[24,3],[24,5],[26,9],[28,0],[29,7],[31,3],[34,4],[37,2],[37,4],[37,5],[37,9],[39,5],[39,9],[42,2],[44,3],[46,2],[51,1],[52,5],[56,6],[67,7],[68,8],[89,2],[105,3],[111,1]]
-}, {
-  videoId: "WJZQGGZ64oI",
-  title: 'Learning to smile again: BBC News Review',
-  overplay: '05:30',
-  uploadDate: '2023-08-25',
-  userInputs: [[9,4],[13,0],[33,1],[39,6],[41,1],[44,0],[44,6],[46,3],[47,8],[48,13],[51,2],[52,7],[63,1],[69,0],[69,2]]
 }]
 
 export function getVideoInfo(videoId: string): VideoInfo | undefined {
