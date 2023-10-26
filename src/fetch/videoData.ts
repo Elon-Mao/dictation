@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "DEbYvMHS1c4",
+  title: 'Antarctic ice melting: BBC News Review',
+  overplay: '06:36',
+  uploadDate: '2023-10-26',
+  userInputs: [[0,0],[1,0],[1,4],[8,3],[8,8],[10,0],[13,5],[21,1],[21,8],[24,3],[24,5],[29,8],[37,9],[43,5],[51,10],[67,7],[102,7]]
+}, {
   videoId: "WJZQGGZ64oI",
   title: 'Learning to smile again: BBC News Review',
   overplay: '05:30',
@@ -193,12 +199,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:38',
   uploadDate: '2023-08-28',
   userInputs: [[0,2],[8,4],[10,3],[10,5],[11,4],[12,4],[12,10],[14,4],[17,3],[22,2],[22,4],[24,9],[26,4],[27,1],[27,5],[42,3],[56,2],[57,1],[57,5],[60,9],[62,9],[64,1],[67,2],[69,6],[72,5],[74,8],[75,5],[78,7],[80,2],[85,12],[87,9],[87,10],[88,3],[89,9],[90,1],[98,4],[108,1],[110,4]]
-}, {
-  videoId: "DEbYvMHS1c4",
-  title: 'Antarctic ice melting: BBC News Review',
-  overplay: '06:36',
-  uploadDate: '2023-08-26',
-  userInputs: [[0,0],[1,0],[8,8],[8,10],[10,0],[13,3],[16,2],[21,0],[21,1],[21,4],[21,5],[21,8],[22,5],[23,5],[23,6],[24,1],[24,3],[24,5],[26,9],[28,0],[29,7],[31,3],[34,4],[37,2],[37,4],[37,5],[37,9],[39,5],[39,9],[42,2],[44,3],[46,2],[51,1],[52,5],[56,6],[67,7],[68,8],[89,2],[105,3],[111,1]]
 }]
 
 export function getVideoInfo(videoId: string): VideoInfo | undefined {
