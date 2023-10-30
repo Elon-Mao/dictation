@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "SMN_ZQMtWNM",
+  title: 'Covid vaccine scientists win Nobel: BBC News Review',
+  overplay: '06:12',
+  uploadDate: '2023-10-30',
+  userInputs: [[0,1],[0,6],[10,3],[13,0],[13,1],[16,3],[16,4],[16,6],[21,0],[21,5],[24,2],[25,5],[26,3],[27,2],[31,11],[32,7],[32,8],[34,3],[35,4],[36,1],[38,0],[39,3],[42,3],[47,3],[50,6],[53,5],[56,7],[57,5],[58,12],[60,5],[61,3],[62,8],[68,2],[70,8],[75,3],[75,6],[79,6],[81,6],[84,4],[84,10],[84,12],[85,2],[86,3],[89,0],[92,4],[93,0],[94,4],[94,5]]
+}, {
   videoId: "OW9wHj1Jq0A",
   title: 'Remember When: Dota 2 Heroes',
   overplay: '06:09',
