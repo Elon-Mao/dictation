@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "oxrWCgVL9K4",
+  title: 'We. Are. Gigster.',
+  overplay: '00:37',
+  uploadDate: '2023-11-01',
+  userInputs: [[1,5],[2,4],[5,2],[7,0],[7,2],[9,4],[16,2],[17,7]]
+}, {
   videoId: "mA0qsXSXiYM",
   title: 'Krusty Krab\'s Food Truck Looks for 1st Customer! | Full Scene \'Food PBBFT! Truck\' | SpongeBob',
   overplay: '05:12',
