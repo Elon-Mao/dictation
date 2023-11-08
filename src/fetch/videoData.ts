@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "2BdTnL0Gj-Y",
+  title: 'Could we live to 140? BBC News Review',
+  overplay: '07:07',
+  uploadDate: '2023-11-08',
+  userInputs: [[11,4],[15,9],[18,5],[22,1],[25,6],[32,4],[42,4],[43,4],[49,7],[51,7],[56,3],[62,9],[65,3],[67,9],[68,1],[72,9],[76,6],[77,0],[79,0],[80,5],[81,3],[82,5],[87,8],[91,3],[93,1],[97,3],[98,2],[98,7],[100,2],[104,0],[108,3]]
+}, {
   videoId: "duRGF7e_lg4",
   title: 'Rubiales quits: BBC News Review',
   overplay: '05:31',
@@ -157,12 +163,6 @@ const videoList: VideoInfo[] = [{
   overplay: '05:55',
   uploadDate: '2023-10-24',
   userInputs: [[21,6],[22,2],[36,4],[37,8],[38,4],[65,0],[66,4]]
-}, {
-  videoId: "2BdTnL0Gj-Y",
-  title: 'Could we live to 140? BBC News Review',
-  overplay: '07:07',
-  uploadDate: '2023-10-24',
-  userInputs: [[11,4],[15,9],[18,5],[22,1],[25,6],[32,4],[42,4],[43,4],[49,7],[51,7],[56,3],[62,9],[65,3],[67,9],[68,1],[72,9],[76,6],[77,0],[79,0],[80,5],[81,3],[82,5],[87,8],[91,3],[93,1],[97,3],[98,2],[98,7],[100,2],[104,0],[108,3]]
 }, {
   videoId: "hGzKWfQOKeQ",
   title: 'Foraging for wild food ⏲️ 6 Minute English',
