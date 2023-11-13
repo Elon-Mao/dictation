@@ -2,6 +2,18 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "AcX3KAkikSM",
+  title: 'Green flights? Impossible: BBC News Review',
+  overplay: '06:29',
+  uploadDate: '2023-11-13',
+  userInputs: [[10,8],[17,5],[22,13],[53,4],[54,3],[59,12],[66,5],[67,2],[70,2],[73,8],[73,10],[75,3],[79,4],[80,7],[82,3],[82,11],[82,12],[86,4]]
+}, {
+  videoId: "0m5Go6gvys0",
+  title: 'Laughter helps the heart - BBC News Review',
+  overplay: '05:43',
+  uploadDate: '2023-11-13',
+  userInputs: [[9,5],[10,2],[10,6],[10,8],[12,1],[12,2],[13,2],[13,5],[13,8],[24,5],[32,8],[33,2],[40,2],[49,7],[50,12],[61,10],[79,13],[83,6]]
+}, {
   videoId: "4yaIOaOzkTE",
   title: 'English Rewind - 6 Minute English: Love letters',
   overplay: '06:27',
@@ -13,12 +25,6 @@ const videoList: VideoInfo[] = [{
   overplay: '10:52',
   uploadDate: '2023-11-12',
   userInputs: [[8,5],[9,7],[9,8],[10,1],[10,5],[11,8],[13,8],[21,7],[26,4],[29,10],[33,5],[34,1],[34,8],[38,5],[43,7],[45,12],[50,7],[56,5],[57,10],[58,4],[63,5],[67,4],[71,5],[74,11],[77,4],[82,2],[84,5],[90,9],[104,5],[108,4],[113,4],[114,8],[119,6],[122,1],[129,1],[139,6],[142,10],[144,10],[145,8],[148,3],[150,2],[156,10],[159,5],[163,7]]
-}, {
-  videoId: "AcX3KAkikSM",
-  title: 'Green flights? Impossible: BBC News Review',
-  overplay: '06:29',
-  uploadDate: '2023-11-12',
-  userInputs: [[10,8],[17,5],[22,13],[53,4],[54,3],[59,12],[66,5],[67,2],[70,2],[73,8],[73,10],[75,3],[79,4],[80,7],[82,3],[82,11],[82,12],[86,4]]
 }, {
   videoId: "2BdTnL0Gj-Y",
   title: 'Could we live to 140? BBC News Review',
@@ -223,12 +229,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:27',
   uploadDate: '2023-10-16',
   userInputs: [[16,10],[19,3],[30,7],[30,9],[36,3],[54,4],[55,12],[56,7],[56,8],[57,4],[60,1],[60,3],[60,10],[63,4],[65,8],[65,11],[77,2],[92,3],[93,5]]
-}, {
-  videoId: "0m5Go6gvys0",
-  title: 'Laughter helps the heart - BBC News Review',
-  overplay: '05:43',
-  uploadDate: '2023-10-13',
-  userInputs: [[9,5],[10,2],[10,6],[10,8],[12,1],[12,2],[13,2],[13,5],[13,8],[24,5],[32,8],[33,2],[40,2],[49,7],[50,12],[61,10],[79,13],[83,6]]
 }, {
   videoId: "Y6HYDUr1ZPU",
   title: 'Banning \'steak\': BBC News Review',
