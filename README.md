@@ -1,6 +1,10 @@
-# test
+# Dictation
 
-This template should help get you started developing with Vue 3 in Vite.
+A website for English words dictation from YouTube videos.
+
+## Live Demo
+
+https://elon-mao.github.io/dictation/
 
 ## Recommended IDE Setup
 
