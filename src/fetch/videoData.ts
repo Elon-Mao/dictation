@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "oxrWCgVL9K4",
+  title: 'We. Are. Gigster.',
+  overplay: '00:37',
+  uploadDate: '2023-11-17',
+  userInputs: [[1,5],[2,4],[5,2],[7,0],[7,2],[9,4],[16,2],[17,7]]
+}, {
   videoId: "6USbzIrKJYU",
   title: 'Amazon water emergency: BBC News Review',
   overplay: '06:12',
@@ -97,12 +103,6 @@ const videoList: VideoInfo[] = [{
   overplay: '06:38',
   uploadDate: '2023-11-03',
   userInputs: [[0,0],[8,0],[8,6],[11,4],[22,0],[22,2],[22,4],[22,5],[24,5],[24,9],[26,4],[27,5],[42,0],[50,4],[75,10],[86,0],[87,9],[87,10],[88,3],[89,4],[98,6],[111,6]]
-}, {
-  videoId: "oxrWCgVL9K4",
-  title: 'We. Are. Gigster.',
-  overplay: '00:37',
-  uploadDate: '2023-11-02',
-  userInputs: [[1,5],[2,4],[5,2],[7,0],[7,2],[9,4],[16,2],[17,7]]
 }, {
   videoId: "lC_lCOxR5e0",
   title: 'Plants fighting pollution ⏲️ 6 Minute English',
