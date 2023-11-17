@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "6mSx_KJxcHI",
+  title: 'Introduction to Machine Learning for Beginners [Part 1] | Machine Learning for Beginners',
+  overplay: '03:21',
+  uploadDate: '2023-11-17',
+  userInputs: [[1,0],[3,5],[4,2],[7,3],[12,0],[12,7],[13,5],[14,5],[15,4],[22,2],[24,3],[25,2],[26,0],[27,2],[31,0],[31,1],[34,1],[37,4],[42,0],[42,3],[43,0],[43,1],[48,5],[49,0],[58,0],[58,4],[59,0],[61,4],[63,2],[64,0],[65,1],[66,2],[67,1],[68,1],[68,2],[70,1],[73,2],[75,1],[76,4]]
+}, {
   videoId: "oxrWCgVL9K4",
   title: 'We. Are. Gigster.',
   overplay: '00:37',
