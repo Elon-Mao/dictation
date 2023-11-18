@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "5qGjczWTrDQ",
+  title: 'How to Analyze and Clean a Dataset [Part 8] | Machine Learning for Beginners',
+  overplay: '03:32',
+  uploadDate: '2023-11-18',
+  userInputs: [[3,0],[11,1],[14,3],[21,2],[26,4],[27,3],[31,0],[36,6],[38,0],[38,4],[38,6],[40,6],[42,0],[42,3],[48,4],[51,3],[53,3],[55,3],[58,4],[62,1],[63,3],[66,5],[66,6],[67,2],[67,3],[70,5],[77,4]]
+}, {
   videoId: "2xkXL5EUpS0",
   title: 'Your First Linear Regression Project in Python [Part 7] | Machine Learning for Beginners',
   overplay: '04:10',
