@@ -2,10 +2,16 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "4yaIOaOzkTE",
+  title: 'English Rewind - 6 Minute English: Love letters',
+  overplay: '06:27',
+  uploadDate: '2023-11-19',
+  userInputs: [[6,5],[7,10],[13,5],[24,1],[27,6],[27,7],[32,3],[36,10],[39,5],[42,8],[43,7],[45,7],[54,9],[55,4],[56,8],[57,7],[57,10],[59,5],[59,6],[64,2],[64,6],[65,4],[66,2],[69,4],[75,6],[76,1],[85,4],[88,7],[89,2],[92,2]]
+}, {
   videoId: "5qGjczWTrDQ",
   title: 'How to Analyze and Clean a Dataset [Part 8] | Machine Learning for Beginners',
   overplay: '03:32',
-  uploadDate: '2023-11-18',
+  uploadDate: '2023-11-19',
   userInputs: [[3,0],[11,1],[14,3],[21,2],[26,4],[27,3],[31,0],[36,6],[38,0],[38,4],[38,6],[40,6],[42,0],[42,3],[48,4],[51,3],[53,3],[55,3],[58,4],[62,1],[63,3],[66,5],[66,6],[67,2],[67,3],[70,5],[77,4]]
 }, {
   videoId: "2xkXL5EUpS0",
@@ -55,12 +61,6 @@ const videoList: VideoInfo[] = [{
   overplay: '05:43',
   uploadDate: '2023-11-13',
   userInputs: [[9,5],[10,2],[10,6],[10,8],[12,1],[12,2],[13,2],[13,5],[13,8],[24,5],[32,8],[33,2],[40,2],[49,7],[50,12],[61,10],[79,13],[83,6]]
-}, {
-  videoId: "4yaIOaOzkTE",
-  title: 'English Rewind - 6 Minute English: Love letters',
-  overplay: '06:27',
-  uploadDate: '2023-11-12',
-  userInputs: [[6,5],[7,10],[13,5],[24,1],[27,6],[27,7],[32,3],[36,10],[39,5],[42,8],[43,7],[45,7],[54,9],[55,4],[56,8],[57,7],[57,10],[59,5],[59,6],[64,2],[64,6],[65,4],[66,2],[69,4],[75,6],[76,1],[85,4],[88,7],[89,2],[92,2]]
 }, {
   videoId: "9FbdvL2RYPQ",
   title: 'Is there plastic in your blood?: BBC News Review',
