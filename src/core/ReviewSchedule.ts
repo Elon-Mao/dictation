@@ -1,6 +1,6 @@
 export default function filterItem<T>(list: T[], getFormatDate: (t: T) => string) {
   const result = []
-  const date = new Date('2023-11-22')
+  const date = new Date()
   let e = 0
   let i = 0
   rootLoop: do {
