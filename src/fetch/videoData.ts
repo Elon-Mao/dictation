@@ -2,6 +2,12 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
+  videoId: "sJ_ig9mGcsY",
+  title: 'Tuco Goes Bezerk | Breaking Bad (Bryan Cranston, Aaron Paul)',
+  overplay: '03:51',
+  uploadDate: '2023-11-26',
+  userInputs: [[2,0],[3,8],[3,10],[3,13],[5,14],[5,18],[7,9],[10,22],[11,2],[16,2],[16,5],[17,1],[17,2],[17,10]]
+}, {
   videoId: "p4DNWnnrsmQ",
   title: 'Suddenly Breaking Bad? | Breaking Bad (Aaron Paul, Bryan Cranston)',
   overplay: '01:48',
