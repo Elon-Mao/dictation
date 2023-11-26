@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { objectStorage } from '@/core/setting'
 import type VideoInfo from '@/types/VideoInfo'
 
 const props = defineProps<{
   videoInfo: VideoInfo
 }>()
 
-const src = `${objectStorage}/${props.videoInfo.videoId}/hqdefault.jpg`
+const src = `https://i.ytimg.com/vi/${props.videoInfo.videoId}/mqdefault.jpg`
 const bodyStyle = {
   padding: '0',
   display: 'flex',
