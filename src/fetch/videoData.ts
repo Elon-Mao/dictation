@@ -168,7 +168,7 @@ const videoList: VideoInfo[] = [{
   title: 'Donald Trump charged: BBC News Review',
   overplay: '06:38',
   uploadDate: '2023-11-03',
-  userInputs: [[0,0],[8,0],[8,6],[11,4],[22,0],[22,2],[22,4],[22,5],[24,5],[24,9],[26,4],[27,5],[42,0],[50,4],[75,10],[86,0],[87,9],[87,10],[88,3],[89,4],[98,6],[111,6]]
+  userInputs: [[12,4],[12,10],[13,4],[27,1],[42,3],[47,7],[72,5],[74,8],[80,2],[85,12],[89,9],[90,1]]
 }, {
   videoId: "lC_lCOxR5e0",
   title: 'Plants fighting pollution ⏲️ 6 Minute English',
