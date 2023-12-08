@@ -125,8 +125,8 @@ const videoList: VideoInfo[] = [{
   videoId: "duRGF7e_lg4",
   title: 'Rubiales quits: BBC News Review',
   overplay: '05:31',
-  uploadDate: '2023-11-07',
-  userInputs: [[1,1],[11,1],[15,2],[16,3],[23,0],[23,2],[48,3],[54,8],[69,5],[92,2]]
+  uploadDate: '2023-12-02',
+  userInputs: [[1,4],[1,6],[10,3],[10,5],[11,2],[13,4],[15,2],[15,3],[15,6],[23,1],[52,2],[54,1],[55,7],[56,4],[60,3],[70,4],[82,6]]
 }, {
   videoId: "iahCiYwAjv4",
   title: 'China’s Former Premier Li Keqiang Has Died',
