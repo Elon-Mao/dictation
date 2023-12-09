@@ -119,7 +119,7 @@ const videoList: VideoInfo[] = [{
   videoId: "duRGF7e_lg4",
   title: 'Rubiales quits: BBC News Review',
   overplay: '05:31',
-  uploadDate: '2023-12-02',
+  uploadDate: '2023-12-03',
   userInputs: [[1,4],[1,6],[10,3],[10,5],[11,2],[13,4],[15,2],[15,3],[15,6],[23,1],[52,2],[54,1],[55,7],[56,4],[60,3],[70,4],[82,6]]
 }, {
   videoId: "iahCiYwAjv4",
