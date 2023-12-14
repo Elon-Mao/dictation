@@ -101,8 +101,8 @@ const videoList: VideoInfo[] = [{
   videoId: "AcX3KAkikSM",
   title: 'Green flights? Impossible: BBC News Review',
   overplay: '06:29',
-  uploadDate: '2023-11-13',
-  userInputs: [[10,8],[17,5],[22,13],[53,4],[54,3],[59,12],[66,5],[67,2],[70,2],[73,8],[73,10],[75,3],[79,4],[80,7],[82,3],[82,11],[82,12],[86,4]]
+  uploadDate: '2023-12-08',
+  userInputs: [[10,7],[11,7],[13,14],[22,9],[29,3],[31,3],[31,7],[34,10],[35,12],[50,0],[75,9],[77,1],[86,3],[86,4]]
 }, {
   videoId: "0m5Go6gvys0",
   title: 'Laughter helps the heart - BBC News Review',
