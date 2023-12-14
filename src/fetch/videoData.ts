@@ -107,8 +107,8 @@ const videoList: VideoInfo[] = [{
   videoId: "0m5Go6gvys0",
   title: 'Laughter helps the heart - BBC News Review',
   overplay: '05:43',
-  uploadDate: '2023-11-13',
-  userInputs: [[9,5],[10,2],[10,6],[10,8],[12,1],[12,2],[13,2],[13,5],[13,8],[24,5],[32,8],[33,2],[40,2],[49,7],[50,12],[61,10],[79,13],[83,6]]
+  uploadDate: '2023-12-08',
+  userInputs: [[9,5],[10,1],[12,1],[12,2],[13,2],[13,5],[13,8],[16,4],[24,5],[32,8],[33,1],[33,2],[72,4],[83,6]]
 }, {
   videoId: "9FbdvL2RYPQ",
   title: 'Is there plastic in your blood?: BBC News Review',
