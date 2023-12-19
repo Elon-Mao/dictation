@@ -83,8 +83,8 @@ const videoList: VideoInfo[] = [{
   videoId: "2xkXL5EUpS0",
   title: 'Your First Linear Regression Project in Python [Part 7] | Machine Learning for Beginners',
   overplay: '04:10',
-  uploadDate: '2023-11-18',
-  userInputs: [[5,5],[11,3],[14,1],[16,4],[20,3],[21,4],[24,2],[26,0],[27,0],[28,0],[29,6],[31,6],[36,3],[43,2],[44,0],[47,4],[48,1],[49,2],[49,3],[50,2],[51,4],[52,3],[58,3],[64,3],[64,5],[68,6],[74,3],[76,0],[86,3],[92,2],[92,5]]
+  uploadDate: '2023-12-13',
+  userInputs: [[21,4],[29,6],[30,3],[31,6],[41,5],[49,3],[92,2],[94,3]]
 }, {
   videoId: "6mSx_KJxcHI",
   title: 'Introduction to Machine Learning for Beginners [Part 1] | Machine Learning for Beginners',
