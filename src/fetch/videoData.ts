@@ -71,8 +71,8 @@ const videoList: VideoInfo[] = [{
   videoId: "4yaIOaOzkTE",
   title: 'English Rewind - 6 Minute English: Love letters',
   overplay: '06:27',
-  uploadDate: '2023-11-20',
-  userInputs: [[6,5],[7,10],[13,5],[24,1],[27,6],[27,7],[32,3],[36,10],[39,5],[42,8],[43,7],[45,7],[54,9],[55,4],[56,8],[57,7],[57,10],[59,5],[59,6],[64,2],[64,6],[65,4],[66,2],[69,4],[75,6],[76,1],[85,4],[88,7],[89,2],[92,2]]
+  uploadDate: '2023-12-15',
+  userInputs: [[0,10],[4,4],[6,3],[12,3],[17,11],[30,14],[33,4],[36,4],[36,7],[41,0],[41,3],[47,8],[47,13],[55,2],[58,11],[70,3],[70,4],[70,7],[71,1],[71,9],[76,3],[77,4],[79,13],[90,1],[91,7],[93,3]]
 }, {
   videoId: "5qGjczWTrDQ",
   title: 'How to Analyze and Clean a Dataset [Part 8] | Machine Learning for Beginners',
