@@ -257,8 +257,8 @@ const videoList: VideoInfo[] = [{
   videoId: "jGuEB_X-Mt4",
   title: 'Fukushima Water Release: BBC News Review',
   overplay: '06:47',
-  uploadDate: '2023-10-20',
-  userInputs: [[0,9],[8,5],[12,1],[37,1],[37,6],[37,8],[37,9],[44,5],[47,2],[48,9],[80,4],[89,2]]
+  uploadDate: '2023-12-16',
+  userInputs: [[12,1],[12,5],[44,5],[85,2],[92,0],[94,8],[95,11],[96,4],[97,1],[102,1]]
 }, {
   videoId: "G1GitpVlK3Q",
   title: 'English Rewind - London Life: Rhyming slang',
