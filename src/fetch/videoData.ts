@@ -65,8 +65,8 @@ const videoList: VideoInfo[] = [{
   videoId: "14cNavJCsr8",
   title: 'Rainforests: destruction gets worse: BBC News Review',
   overplay: '06:17',
-  uploadDate: '2023-11-23',
-  userInputs: [[0,2],[0,6],[12,3],[13,9],[13,11],[17,3],[22,3],[36,4],[40,8],[41,6],[46,9],[46,10],[47,0],[50,1],[51,12],[52,1],[54,7],[57,6],[58,8],[61,4],[63,11],[66,3],[66,8],[68,4],[68,8],[71,9],[72,7],[73,10],[77,13],[80,14],[86,8],[91,3]]
+  uploadDate: '2023-12-10',
+  userInputs: [[0,7],[31,3],[34,11],[39,6],[41,6],[41,9],[42,3],[46,5],[56,4],[79,3]]
 }, {
   videoId: "4yaIOaOzkTE",
   title: 'English Rewind - 6 Minute English: Love letters',
