@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import parseXMLCaption from '@/core/CaptionXMLParser'
 import { getRecommendedVideos, getVideoInfo, getVideosOrderByDate } from '@/fetch/videoData'
@@ -100,6 +100,9 @@ function onKeydown(event: KeyboardEvent) {
     player.setVolume(volume)
     volumeMessage?.close()
     volumeMessage = ElMessage(`volume:${volume}%`)
+  } else if (event.key === 'Enter') {
+    event.preventDefault()
+    showAnswer.value = !showAnswer.value
   }
 }
 
@@ -202,7 +205,11 @@ function moreVideoOnclick(videoInfo: VideoInfo) {
   }
 }
 
-function onAnswerShow() {
+watch(showAnswer, () => {
+  if (!showAnswer.value) {
+    return
+  } 
+
   const json: number[][] = []
   const correctWords = new Set()
   captionTexts.value.forEach((captionText, i) => {
@@ -228,6 +235,15 @@ function onAnswerShow() {
   })
 
   console.log(JSON.stringify(json))
+  if (json.length === 0) { 
+    ElMessage({
+      message: `all right`,
+      type: 'success',
+    })
+  } else {
+    player.seekTo(captionTexts.value[json[0][0]].start, true)
+    ElMessage.error(`some mistakes`)
+  }
   if (videoInfo.value!.userInputs.length !== 0) {
     return
   }
@@ -241,7 +257,7 @@ function onAnswerShow() {
   a.click()
   URL.revokeObjectURL(url)
   document.body.removeChild(a)
-}
+})
 
 onUnmounted(() => {
   clearInterval(playerTimeInterval.value)
@@ -286,7 +302,7 @@ onUnmounted(() => {
         <el-switch v-model="showCaption" class="show-caption-switch" inline-prompt active-text="hide caption"
           inactive-text="show caption" />
         <el-switch v-show="showCaption" v-model="showAnswer" inline-prompt active-text="hide answer"
-          inactive-text="show answer" @change="onAnswerShow" />
+          inactive-text="show answer" />
       </el-row>
       <el-row class="voice-input">
         <SpeechToText />
@@ -307,7 +323,9 @@ onUnmounted(() => {
                     <auto-width-input size="large" v-model:modelvalue="userInputs[captionIndex][wordIndex]"
                       class="caption-input" maxlength="32" />
                   </div>
-                  <span v-show="showAnswer" class="caption-word-answer">{{ word.value }}</span>
+                  <span v-show="showAnswer && userInputs[captionIndex][wordIndex]" class="caption-word-answer">
+                    {{ word.value }}
+                  </span>
                 </div>
                 <span v-else class="caption-word-span">{{ word.value }}</span>
                 <span class="caption-word-span">{{ word.separator }}</span>
