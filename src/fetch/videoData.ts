@@ -47,8 +47,8 @@ const videoList: VideoInfo[] = [{
   videoId: "6dKXPONICGw",
   title: 'If SpongeBob was a Black & White Cartoon | "Help Wanted" | SpongeBob: Reimagined S2',
   overplay: '03:30',
-  uploadDate: '2023-11-24',
-  userInputs: [[0,0],[0,3],[0,4],[1,3],[6,1],[7,6],[9,5],[9,7],[10,1],[12,7],[12,8],[12,9],[13,2],[13,4],[13,5],[14,1],[16,0],[16,1],[16,2],[16,4],[16,5],[17,1],[17,3],[17,4],[18,0],[19,7],[20,4],[23,9],[24,1],[24,5],[25,0],[27,0],[29,5],[29,6],[30,0],[30,2],[30,3],[32,0],[32,1],[38,0],[38,3],[38,4],[40,4],[42,4],[42,5],[43,1],[43,3],[43,4],[44,6],[45,8],[46,2]]
+  uploadDate: '2023-12-11',
+  userInputs: [[0,0],[0,4],[12,9],[15,5],[16,4],[16,5],[19,7],[25,0],[27,0]]
 }, {
   videoId: "QDKfrqjSlmY",
   title: 'If SpongeBob was an Anime | "Graveyard Shift" | SpongeBob: Reimagined',
