@@ -124,6 +124,11 @@ function loadVideo() {
     if (!videoInfo.value) {
       return
     }
+    const uploadDate = new Date(videoInfo.value.uploadDate)
+    uploadDate.setDate(uploadDate.getDate() + 30)
+    if (uploadDate < new Date()) {
+      videoInfo.value.userInputs = []
+    }
     if (videoInfo.value.userInputs.length === 0) {
       const xhr = new XMLHttpRequest()
       xhr.open("GET", '/familiarWords.csv')

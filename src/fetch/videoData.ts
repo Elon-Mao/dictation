@@ -251,8 +251,8 @@ const videoList: VideoInfo[] = [{
   videoId: "lAUivF-NEuM",
   title: 'Lego gives up on recycled bricks: BBC News Review',
   overplay: '06:07',
-  uploadDate: '2023-10-23',
-  userInputs: [[8,4],[9,2],[10,8],[10,9],[13,6],[14,2],[20,3],[26,6],[29,1],[33,10],[34,8],[37,7],[40,7],[41,5],[56,3],[82,5],[91,12]]
+  uploadDate: '2023-12-11',
+  userInputs: [[9,1],[10,2],[10,9],[14,2],[17,5],[20,3],[23,1],[27,9],[41,5],[50,8],[56,3],[61,3],[63,0],[75,7],[82,5],[84,5]]
 }, {
   videoId: "jGuEB_X-Mt4",
   title: 'Fukushima Water Release: BBC News Review',
