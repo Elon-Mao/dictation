@@ -83,8 +83,8 @@ const videoList: VideoInfo[] = [{
   videoId: "6mSx_KJxcHI",
   title: 'Introduction to Machine Learning for Beginners [Part 1] | Machine Learning for Beginners',
   overplay: '03:21',
-  uploadDate: '2023-12-01',
-  userInputs: [[1,0],[3,5],[4,2],[7,3],[12,0],[12,7],[13,5],[14,5],[15,4],[22,2],[24,3],[25,2],[26,0],[27,2],[31,0],[31,1],[34,1],[37,4],[42,0],[42,3],[43,0],[43,1],[48,5],[49,0],[58,0],[58,4],[59,0],[61,4],[63,2],[64,0],[65,1],[66,2],[67,1],[68,1],[68,2],[70,1],[73,2],[75,1],[76,4]]
+  uploadDate: '2023-12-18',
+  userInputs: [[7,3],[14,5],[15,4],[22,2],[25,1],[26,3],[27,2],[30,3],[31,0],[31,1],[37,4],[41,0],[42,0],[42,1],[44,1],[46,1],[49,3],[58,0],[65,1],[68,1],[70,1]]
 }, {
   videoId: "6USbzIrKJYU",
   title: 'Amazon water emergency: BBC News Review',
