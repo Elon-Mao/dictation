@@ -143,8 +143,8 @@ const videoList: VideoInfo[] = [{
   videoId: "pASfanRdNUQ",
   title: 'English Rewind - Weekender: handwriting',
   overplay: '05:44',
-  uploadDate: '2023-12-01',
-  userInputs: [[0,1],[5,3],[11,3],[11,4],[11,7],[12,5],[17,9],[18,2],[20,10],[22,3],[25,10],[28,0],[30,4],[32,1],[45,0],[45,14],[49,4],[51,8],[53,12],[61,2],[62,5],[71,0],[71,7],[76,10],[79,0],[91,1]]
+  uploadDate: '2023-12-18',
+  userInputs: [[0,1],[5,4],[20,11],[38,4],[89,3],[90,11],[90,13],[97,6]]
 }, {
   videoId: "mA0qsXSXiYM",
   title: 'Krusty Krab\'s Food Truck Looks for 1st Customer! | Full Scene \'Food PBBFT! Truck\' | SpongeBob',
