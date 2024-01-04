@@ -164,12 +164,6 @@ const videoList: VideoInfo[] = [{
   uploadDate: '2023-12-04',
   userInputs: [[72,10],[73,9],[84,1],[89,1],[108,9]]
 }, {
-  videoId: "SMN_ZQMtWNM",
-  title: 'Covid vaccine scientists win Nobel: BBC News Review',
-  overplay: '06:12',
-  uploadDate: '2023-12-03',
-  userInputs: [[13,0],[13,3],[21,7],[32,8],[73,4],[73,5],[75,3]]
-}, {
   videoId: "wNJQPn-SLk8",
   title: 'Can sounds make food taste better? ⏲️ 6 Minute English',
   overplay: '06:20',
