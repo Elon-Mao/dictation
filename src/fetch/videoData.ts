@@ -161,8 +161,8 @@ const videoList: VideoInfo[] = [{
   videoId: "lC_lCOxR5e0",
   title: 'Plants fighting pollution ⏲️ 6 Minute English',
   overplay: '06:16',
-  uploadDate: '2023-12-04',
-  userInputs: [[72,10],[73,9],[84,1],[89,1],[108,9]]
+  uploadDate: '2023-12-21',
+  userInputs: [[4,0],[6,0],[28,4],[28,5],[28,7],[31,3],[31,7],[36,7],[45,9],[49,3],[50,4],[51,2],[56,5],[56,8],[69,2],[71,4],[71,7],[72,10],[73,3],[75,6],[83,11],[86,2],[86,8],[99,4]]
 }, {
   videoId: "wNJQPn-SLk8",
   title: 'Can sounds make food taste better? ⏲️ 6 Minute English',
