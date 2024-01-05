@@ -133,6 +133,7 @@ function loadVideo() {
       const xhr = new XMLHttpRequest()
       xhr.open("GET", '/familiarWords.csv')
       xhr.onload = () => {
+        familiarWords.clear()
         xhr.response.split(/,\r?\n/).forEach((row: string) => {
           const [familiarWord, times] = row.split(',')
           familiarWords.set(familiarWord, Number(times))

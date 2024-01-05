@@ -149,8 +149,8 @@ const videoList: VideoInfo[] = [{
   videoId: "mA0qsXSXiYM",
   title: 'Krusty Krab\'s Food Truck Looks for 1st Customer! | Full Scene \'Food PBBFT! Truck\' | SpongeBob',
   overplay: '05:12',
-  uploadDate: '2023-12-05',
-  userInputs: [[1,2],[2,3],[8,6],[14,3],[28,3],[28,7],[47,2],[56,2],[70,2],[74,1],[77,3]]
+  uploadDate: '2023-12-22',
+  userInputs: [[1,1],[3,1],[5,7],[7,2],[7,4],[9,9],[19,4],[22,5],[25,0],[33,5],[44,4],[47,2],[54,4],[73,8]]
 }, {
   videoId: "fmqTJO_OJ9M",
   title: 'Donald Trump charged: BBC News Review',
