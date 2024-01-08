@@ -113,8 +113,8 @@ const videoList: VideoInfo[] = [{
   videoId: "0m5Go6gvys0",
   title: 'Laughter helps the heart - BBC News Review',
   overplay: '05:43',
-  uploadDate: '2023-12-08',
-  userInputs: [[9,5],[10,1],[12,1],[12,2],[13,2],[13,5],[13,8],[16,4],[24,5],[32,8],[33,1],[33,2],[72,4],[83,6]]
+  uploadDate: '2023-12-25',
+  userInputs: [[12,1],[13,2],[24,5],[32,5],[32,8],[83,6]]
 }, {
   videoId: "duRGF7e_lg4",
   title: 'Rubiales quits: BBC News Review',
