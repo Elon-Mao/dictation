@@ -245,8 +245,8 @@ const videoList: VideoInfo[] = [{
   videoId: "V0dFKMVs9sg",
   title: 'Improving maths with music: BBC News Review',
   overplay: '06:28',
-  uploadDate: '2023-12-13',
-  userInputs: [[14,1],[17,4],[47,3],[51,7],[75,11],[81,3],[86,2],[90,10]]
+  uploadDate: '2023-12-30',
+  userInputs: [[0,3],[6,5],[8,1],[11,2],[17,4],[26,10],[37,8],[45,8],[56,1],[60,12],[75,11],[77,2],[78,11],[86,2],[90,10]]
 }]
 
 export function getVideoInfo(videoId: string): VideoInfo | undefined {
