@@ -444,7 +444,8 @@ onUnmounted(() => {
 }
 
 .caption-word {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
   height: 82px;
 }
 
