@@ -206,12 +206,6 @@ const videoList: VideoInfo[] = [{
   uploadDate: '2023-12-19',
   userInputs: [[5,7],[12,4],[17,8],[38,1],[46,1],[46,3],[50,8],[53,3],[54,13],[57,1],[57,8],[60,7],[60,8],[61,3],[63,8],[76,3],[77,12],[78,0],[89,2],[94,7],[101,2],[101,4],[101,7],[101,8],[101,10],[102,0]]
 }, {
-  videoId: "Tefu_NvcC0k",
-  title: 'Naps: Good for your brain? BBC News Review',
-  overplay: '05:55',
-  uploadDate: '2023-12-14',
-  userInputs: [[21,6],[22,2],[48,4],[67,7],[68,9],[77,10],[79,9],[88,0],[89,0]]
-}, {
   videoId: "hGzKWfQOKeQ",
   title: 'Foraging for wild food ⏲️ 6 Minute English',
   overplay: '06:20',
