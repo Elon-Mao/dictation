@@ -50,12 +50,6 @@ const videoList: VideoInfo[] = [{
   uploadDate: '2023-12-30',
   userInputs: [[0,10],[1,3],[2,9],[3,0],[3,14],[3,16],[3,17],[7,6]]
 }, {
-  videoId: "PTCyYJplnEk",
-  title: 'Is it wrong to eat plants? ⏲️ 6 Minute English',
-  overplay: '06:23',
-  uploadDate: '2023-12-14',
-  userInputs: [[2,16],[6,10],[7,5],[19,1],[19,6],[19,10],[20,0],[21,12],[24,2],[35,4],[36,9],[40,3],[40,7],[41,8],[42,15],[43,4],[43,10],[48,9],[49,12]]
-}, {
   videoId: "14cNavJCsr8",
   title: 'Rainforests: destruction gets worse: BBC News Review',
   overplay: '06:17',
