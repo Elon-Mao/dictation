@@ -167,8 +167,8 @@ const videoList: VideoInfo[] = [{
   videoId: "DEbYvMHS1c4",
   title: 'Antarctic ice melting: BBC News Review',
   overplay: '06:36',
-  uploadDate: '2023-12-15',
-  userInputs: [[0,0],[21,5],[24,3],[28,6],[29,8],[33,4],[39,9],[43,5],[50,3],[52,5],[67,7]]
+  uploadDate: '2023-01-01',
+  userInputs: [[0,0],[1,0],[1,4],[8,8],[10,0],[12,1],[21,0],[21,8],[24,3],[43,5],[50,3],[51,1],[51,10],[68,8],[78,2]]
 }, {
   videoId: "WJZQGGZ64oI",
   title: 'Learning to smile again: BBC News Review',
