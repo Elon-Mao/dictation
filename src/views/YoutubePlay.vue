@@ -11,10 +11,12 @@ import type CaptionText from '@/types/CaptionText'
 import type { MessageHandler, ScrollbarInstance } from 'element-plus'
 import type VideoInfo from '@/types/VideoInfo'
 import { addUnloadConfirm } from '@/core/EventListener'
+import { useWordStore } from '@/stores/wordInfo'
 declare const YT: any
 
 const router = useRouter()
 const route = useRoute()
+const wordStore = useWordStore()
 let videoId = route.params.videoId as string
 
 const scrollbar = ref<ScrollbarInstance>()
@@ -111,7 +113,6 @@ const userInputs = ref<string[][]>([])
 const videoInfo = ref<VideoInfo | undefined>()
 const recommendedVideos = ref<VideoInfo[]>([])
 const lastVideos = ref<VideoInfo[]>([])
-const familiarWords = new Map()
 function loadVideo() {
   captionTexts.value = []
   userInputs.value = []
@@ -124,35 +125,13 @@ function loadVideo() {
     if (!videoInfo.value) {
       return
     }
-    const uploadDate = new Date(videoInfo.value.uploadDate)
-    uploadDate.setDate(uploadDate.getDate() + 30)
-    if (uploadDate < new Date()) {
-      videoInfo.value.userInputs = []
-    }
-    if (videoInfo.value.userInputs.length === 0) {
-      const xhr = new XMLHttpRequest()
-      xhr.open("GET", '/familiarWords.csv')
-      xhr.onload = () => {
-        familiarWords.clear()
-        xhr.response.split(/,\r?\n/).forEach((row: string) => {
-          const [familiarWord, times] = row.split(',')
-          familiarWords.set(familiarWord, Number(times))
-        })
-        parseResult.forEach((captionText, i) => {
-          captionText.words.forEach((word, j) => {
-            const wordLowerCase = word.value.toLowerCase()
-            if (word.value.length !== 1 && (!familiarWords.has(wordLowerCase) || familiarWords.get(wordLowerCase) < 3)) {
-              userInputs.value[i][j] = ''
-            }
-          })
-        })
-      }
-      xhr.send()
-    } else {
-      for (const userinput of videoInfo.value.userInputs) {
-        userInputs.value[userinput[0]][userinput[1]] = ''
-      }
-    }
+    parseResult.forEach((captionText, i) => {
+      captionText.words.forEach((word, j) => {
+        if (wordStore.needSpell(word.value)) {
+          userInputs.value[i][j] = ''
+        }
+      })
+    })
   }).finally(() => {
     recommendedVideos.value = getRecommendedVideos()
     lastVideos.value = getVideosOrderByDate()
@@ -211,13 +190,9 @@ function moreVideoOnclick(videoInfo: VideoInfo) {
   }
 }
 
-watch(showAnswer, () => {
-  if (!showAnswer.value) {
-    return
-  } 
-
+const saveWords = () => {
   const json: number[][] = []
-  const correctWords = new Set()
+  const correctWords = new Set<string>()
   captionTexts.value.forEach((captionText, i) => {
     captionText.words.forEach((word, j) => {
       if (userInputs.value[i][j] !== undefined) {
@@ -225,19 +200,12 @@ watch(showAnswer, () => {
           correctWords.add(word.value.toLowerCase())
         } else {
           json.push([i, j])
-          if (familiarWords.has(word.value.toLowerCase())) {
-            console.log(word.value.toLowerCase(), userInputs.value[i][j])
-          }
         }
       }
     })
   })
-  Array.from(correctWords).forEach(correctWord => {
-    if (familiarWords.has(correctWord)) {
-      familiarWords.set(correctWord, familiarWords.get(correctWord) + 1)
-    } else {
-      familiarWords.set(correctWord, 1)
-    }
+  Array.from(correctWords).forEach(async correctWord => {
+    await wordStore.addWordSpellTimes(correctWord)
   })
 
   console.log(JSON.stringify(json))
@@ -250,20 +218,7 @@ watch(showAnswer, () => {
     player.seekTo(captionTexts.value[json[0][0]].start, true)
     ElMessage.error(`some mistakes`)
   }
-  if (videoInfo.value!.userInputs.length !== 0) {
-    return
-  }
-  const blob = new Blob([Array.from(familiarWords.entries()).join(',\n')], { type: "application/octet-stream" })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement("a")
-  a.href = url
-  a.download = "familiarWords.csv"
-  a.style.display = "none"
-  document.body.appendChild(a)
-  a.click()
-  URL.revokeObjectURL(url)
-  document.body.removeChild(a)
-})
+}
 
 onUnmounted(() => {
   clearInterval(playerTimeInterval.value)
@@ -309,6 +264,7 @@ onUnmounted(() => {
           inactive-text="show caption" />
         <el-switch v-show="showCaption" v-model="showAnswer" inline-prompt active-text="hide answer"
           inactive-text="show answer" />
+        <el-button @click="saveWords">Save Words</el-button>
       </el-row>
       <el-row class="voice-input">
         <SpeechToText />
@@ -444,6 +400,7 @@ onUnmounted(() => {
 }
 
 .caption-word {
+  vertical-align: top;
   display: inline-flex;
   flex-direction: column;
   height: 82px;
