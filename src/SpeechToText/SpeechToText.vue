@@ -51,7 +51,7 @@ const indices = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0]
 <style scoped>
 .speech-container {
   position: relative;
-  width:100%;
+  width: 100%;
 }
 .speeching-wrapper {
   position: absolute;

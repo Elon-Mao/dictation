@@ -15,7 +15,7 @@ onMounted(() => {
   firstScriptTag.parentNode!.insertBefore(tag, firstScriptTag);
   (window as any).onYouTubeIframeAPIReady = () => {
     player = new YT.Player('player', {
-      height: '450',
+      height: '350',
       width: 'auto',
       playerVars: {
         'iv_load_policy': 3,
@@ -44,14 +44,14 @@ function onPlayerStateChange(event: {
 const text = ref('speak something')
 </script>
 <template>
-  <div class="speech-container" v-loading="playerState === -2">
+  <div class="main-container" v-loading="playerState === -2">
     <div id="player"></div>
     <SpeechToText v-model="text"></SpeechToText>
   </div>
 </template>
   
 <style scoped>
-.speech-container {
+.main-container {
   display: flex;
   flex-direction: column;
   width: 100dvw;
