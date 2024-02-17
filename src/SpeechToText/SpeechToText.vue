@@ -34,7 +34,6 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 }
 
 const onMouseUp = () => {
-  removeEventListener('mouseup', onMouseUp)
   EnglishRecognizer.stopSpeech((results: string) => {
     voiceInput.value = results
     loading.value = false
@@ -45,7 +44,6 @@ const onMouseUp = () => {
 const onMousedown = () => {
   speeching.value = true
   EnglishRecognizer.startSpeech()
-  addEventListener('mouseup', onMouseUp)
 }
 const indices = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0]
 </script>
