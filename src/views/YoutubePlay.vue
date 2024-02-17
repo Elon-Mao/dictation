@@ -203,13 +203,16 @@ const saveWords = async () => {
           json.push([i, j])
           if (userInputs.value[i][j]) {
             wrongWords.add(word.value.toLowerCase())
+            wrongWords.add(userInputs.value[i][j].toLowerCase())
           }
         }
       }
     })
   })
   Array.from(correctWords).forEach(async correctWord => {
-    await wordStore.addWordSpellTimes(correctWord)
+    if (!wrongWords.has(correctWord)) {
+      await wordStore.addWordSpellTimes(correctWord)
+    }
   })
   Array.from(wrongWords).forEach(async wrongWord => {
     await wordStore.minuseWordSpellTimes(wrongWord)

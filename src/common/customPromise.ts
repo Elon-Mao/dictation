@@ -21,7 +21,7 @@ export default (promise: Promise<any>) => {
         showNotify('Network Error')
         reject(new Error('Timed out.'))
       })
-    }, 8000)
+    }, 64000)
     promise.then((result) => {
       onFinal(() => {
         clearTimeout(timeoutId)
