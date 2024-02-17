@@ -23,7 +23,6 @@ const loading = ref(false)
 
 const onMouseUp = () => {
   EnglishRecognizer.stopSpeech((results: string) => {
-    console.log('result2:', results)
     voiceInput.value = results
     loading.value = false
   })
@@ -42,8 +41,8 @@ const indices = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0]
     <div v-show="speeching" class="speeching-wrapper">
       <div v-for="i in indices" :style="{'--d': i}"></div>
     </div>
-    <el-input v-model="voiceInput" v-loading="!speeching && loading" type="textarea" :autosize="{ minRows: 3 }" />
-    <el-button type="primary" class="speech-button" @touchstart="onMousedown" @touchend="onMouseUp">hold to speak</el-button>
+    <el-input v-model="voiceInput" v-loading="!speeching && loading" type="textarea" :autosize="{ minRows: 3 }" :input-style="{ fontSize: 'large'}" />
+    <el-button type="primary" class="speech-button" @touchstart="onMousedown" @touchend="onMouseUp" size="large">hold to speak</el-button>
   </div>
 </template>
 
