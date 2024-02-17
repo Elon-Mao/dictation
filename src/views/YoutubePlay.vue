@@ -190,9 +190,10 @@ function moreVideoOnclick(videoInfo: VideoInfo) {
   }
 }
 
-const saveWords = () => {
+const saveWords = async () => {
   const json: number[][] = []
   const correctWords = new Set<string>()
+  const wrongWords = new Set<string>()
   captionTexts.value.forEach((captionText, i) => {
     captionText.words.forEach((word, j) => {
       if (userInputs.value[i][j] !== undefined) {
@@ -200,12 +201,18 @@ const saveWords = () => {
           correctWords.add(word.value.toLowerCase())
         } else {
           json.push([i, j])
+          if (userInputs.value[i][j]) {
+            wrongWords.add(word.value.toLowerCase())
+          }
         }
       }
     })
   })
   Array.from(correctWords).forEach(async correctWord => {
     await wordStore.addWordSpellTimes(correctWord)
+  })
+  Array.from(wrongWords).forEach(async wrongWord => {
+    await wordStore.minuseWordSpellTimes(wrongWord)
   })
 
   console.log(JSON.stringify(json))
@@ -218,6 +225,27 @@ const saveWords = () => {
     player.seekTo(captionTexts.value[json[0][0]].start, true)
     ElMessage.error(`some mistakes`)
   }
+}
+
+const downloadWords = () => {
+  const words = []
+  for (const word in wordStore.wordMap) {
+    words.push({
+      word,
+      ...wordStore.wordMap[word]
+    })
+  }
+  words.sort((w0, w1) => w0.word > w1.word ? 1: -1)
+  const blob = new Blob([words.map((word) => `${word.word},${word.spellDate},${word.spellTimes}`).join(',\n')], { type: "application/octet-stream" })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement("a")
+  a.href = url
+  a.download = "familiarWords.csv"
+  a.style.display = "none"
+  document.body.appendChild(a)
+  a.click()
+  URL.revokeObjectURL(url)
+  document.body.removeChild(a)
 }
 
 onUnmounted(() => {
@@ -265,6 +293,8 @@ onUnmounted(() => {
         <el-switch v-show="showCaption" v-model="showAnswer" inline-prompt active-text="hide answer"
           inactive-text="show answer" />
         <el-button @click="saveWords">Save Words</el-button>
+        <el-button @click="downloadWords">Download Words</el-button>
+        <el-button @click="loadVideo">Reload</el-button>
       </el-row>
       <el-row class="voice-input">
         <SpeechToText />

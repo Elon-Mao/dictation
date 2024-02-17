@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import {
-  collection,
   doc,
-  query,
+  getDoc,
+  updateDoc,
   setDoc,
-  onSnapshot
+  deleteField
 } from 'firebase/firestore'
 import { db } from '@/config/firebase'
 import customPromise from '@/common/customPromise'
@@ -17,7 +17,7 @@ export interface WordInfo {
 }
 
 const userStore = useUserStore()
-const wordCollection = collection(db, `users/${userStore.user.uid}/dictation/userinfo/words`)
+const wordsDoc = doc(db, `users/${userStore.user.uid}/dictation`, 'words')
 const today = formatDate(new Date())
 
 const useWordStore = defineStore('words', {
@@ -27,12 +27,9 @@ const useWordStore = defineStore('words', {
     }
   },
   actions: {
-    init() {
-      onSnapshot(query(wordCollection), (querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          this.wordMap[doc.id] = doc.data() as WordInfo
-        })
-      })
+    async init() {
+      const words = await getDoc(wordsDoc)
+      this.wordMap = words.data() as Record<string, WordInfo>
     },
     needSpell(word: string) {
       const wordInfo = this.wordMap[word.toLowerCase()]
@@ -47,15 +44,37 @@ const useWordStore = defineStore('words', {
           spellTimes: 0
         }
       }
-      const spellDate = new Date(wordInfo.spellDate)
+      const spellDate = new Date(today)
       spellDate.setDate(spellDate.getDate() + Math.pow(2, wordInfo.spellTimes))
       wordInfo.spellDate = formatDate(spellDate)
       wordInfo.spellTimes += 1
-      await customPromise(setDoc(doc(wordCollection, word), wordInfo))
+      await customPromise(updateDoc(wordsDoc, {
+        [word]: wordInfo
+      }))
+      this.wordMap[word] = wordInfo
+    },
+    async minuseWordSpellTimes(word: string) {
+      word = word.toLowerCase()
+      const wordInfo = this.wordMap[word]
+      if (wordInfo) {
+        if (wordInfo.spellTimes === 1) {
+          await updateDoc(wordsDoc, {
+            [word]: deleteField()
+          })
+        } else {
+          wordInfo.spellTimes -= 1
+          await customPromise(updateDoc(wordsDoc, {
+            [word]: wordInfo
+          }))
+        }
+      }
+    },
+    async saveAll() {
+      await customPromise(setDoc(wordsDoc, this.wordMap))
     }
   }
 })
 
-useWordStore().init()
+await customPromise(useWordStore().init())
 
 export { useWordStore }
