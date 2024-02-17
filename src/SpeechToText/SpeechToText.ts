@@ -23,17 +23,23 @@ export class SpeechRecognizer {
       results: SpeechRecognitionResult[]
     }) => {
       this.results = [...event.results]
+      console.log('result4:', this.results)
     }
   }
 
   startSpeech() {
+    console.log('111111111111')
     this.recognition.start()
   }
 
   stopSpeech(callback: (results: string) => void) {
+    console.log('result1:', this.results)
     this.recognition.onend = () => {
+      debugger
       callback(this.results.map(result => result[0].transcript).join())
+      console.log('result3:', this.results)
     }
+    debugger
     this.recognition.stop()
   }
 }

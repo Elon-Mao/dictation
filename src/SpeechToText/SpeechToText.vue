@@ -23,7 +23,7 @@ const loading = ref(false)
 
 const onMouseUp = () => {
   EnglishRecognizer.stopSpeech((results: string) => {
-    alert('results:' + results)
+    console.log('result2:', results)
     voiceInput.value = results
     loading.value = false
   })
