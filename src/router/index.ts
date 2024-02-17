@@ -18,6 +18,11 @@ const router = createRouter({
       name: 'YoutubePlay',
       component: () => import('@/views/YoutubePlay.vue')
     },
+    {
+      path: '/youtube/:videoId/speech',
+      name: 'YoutubeSpeech',
+      component: () => import('@/views/YoutubeSpeech.vue')
+    },
   ]
 })
 

@@ -26,7 +26,6 @@ export const useUserStore = defineStore('user', {
       }
 
       localStorage.setItem('user', JSON.stringify(user))
-      router.push('/')
       success()
     }
   },

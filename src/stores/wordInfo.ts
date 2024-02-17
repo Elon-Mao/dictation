@@ -57,11 +57,15 @@ const useWordStore = defineStore('words', {
       word = word.toLowerCase()
       const wordInfo = this.wordMap[word]
       if (wordInfo) {
+        if (wordInfo.spellDate === today) {
+          return
+        }
         if (wordInfo.spellTimes === 1) {
           await updateDoc(wordsDoc, {
             [word]: deleteField()
           })
         } else {
+          wordInfo.spellDate = today
           wordInfo.spellTimes -= 1
           await customPromise(updateDoc(wordsDoc, {
             [word]: wordInfo
