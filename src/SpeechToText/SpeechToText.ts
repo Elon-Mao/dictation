@@ -4,6 +4,8 @@ declare interface WebkitSpeechRecognition {
   start: () => void
   stop: () => void
   onend: () => void
+  onaudioend: () => void
+  onerror: (event: { error: string }) => void
   onresult: (event: { results: SpeechRecognitionResult[] }) => void
 }
 
@@ -24,6 +26,12 @@ export class SpeechRecognizer {
     }) => {
       this.results = [...event.results]
       console.log('result4:', this.results)
+    }
+    this.recognition.onerror = function(event) {
+      console.error('error: ', event.error)
+    }
+    this.recognition.onaudioend = () => {
+      console.log("Audio capturing ended")
     }
   }
 
