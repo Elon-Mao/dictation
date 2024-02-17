@@ -21,20 +21,9 @@ const voiceInput = computed({
 const speeching = ref(false)
 const loading = ref(false)
 
-if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-  navigator.mediaDevices.getUserMedia({ audio: true })
-    .then(function(stream) {
-      console.log('麦克风授权成功');
-    })
-    .catch(function(err) {
-      console.error('无法访问麦克风:', err);
-    });
-} else {
-  console.error('您的浏览器不支持 getUserMedia API');
-}
-
 const onMouseUp = () => {
   EnglishRecognizer.stopSpeech((results: string) => {
+    alert('results:' + results)
     voiceInput.value = results
     loading.value = false
   })
