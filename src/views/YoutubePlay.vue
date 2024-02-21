@@ -209,12 +209,16 @@ const saveWords = async () => {
       }
     })
   })
+  console.log('correct-----------------------------------------------------')
   Array.from(correctWords).forEach(async correctWord => {
     if (!wrongWords.has(correctWord)) {
+      console.log(correctWord)
       await wordStore.addWordSpellTimes(correctWord)
     }
   })
+  console.log('wrong-----------------------------------------------------')
   Array.from(wrongWords).forEach(async wrongWord => {
+    console.log(wrongWord)
     await wordStore.minuseWordSpellTimes(wrongWord)
   })
 
