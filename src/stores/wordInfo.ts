@@ -38,7 +38,11 @@ const useWordStore = defineStore('words', {
     async addWordSpellTimes(word: string) {
       word = word.toLowerCase()
       let wordInfo = this.wordMap[word]
-      if (!wordInfo) {
+      if (wordInfo) {
+        if (wordInfo.spellDate === today) {
+          return
+        }
+      } else {
         wordInfo = {
           spellDate: today,
           spellTimes: 0
