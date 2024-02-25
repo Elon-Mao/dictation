@@ -38,11 +38,7 @@ const useWordStore = defineStore('words', {
     async addWordSpellTimes(word: string) {
       word = word.toLowerCase()
       let wordInfo = this.wordMap[word]
-      if (wordInfo) {
-        if (wordInfo.spellDate === today) {
-          return
-        }
-      } else {
+      if (!wordInfo) {
         wordInfo = {
           spellDate: today,
           spellTimes: 0
@@ -57,20 +53,20 @@ const useWordStore = defineStore('words', {
       }))
       this.wordMap[word] = wordInfo
     },
-    async minuseWordSpellTimes(word: string) {
+    async minusWordSpellTimes(word: string) {
       word = word.toLowerCase()
       const wordInfo = this.wordMap[word]
       if (wordInfo) {
         if (wordInfo.spellDate === today) {
           return
         }
-        if (wordInfo.spellTimes === 1) {
+        if (wordInfo.spellTimes < 3) {
           await updateDoc(wordsDoc, {
             [word]: deleteField()
           })
         } else {
           wordInfo.spellDate = today
-          wordInfo.spellTimes -= 1
+          wordInfo.spellTimes -= 2
           await customPromise(updateDoc(wordsDoc, {
             [word]: wordInfo
           }))

@@ -219,7 +219,7 @@ const saveWords = async () => {
   console.log('wrong-----------------------------------------------------')
   Array.from(wrongWords).forEach(async wrongWord => {
     console.log(wrongWord)
-    await wordStore.minuseWordSpellTimes(wrongWord)
+    await wordStore.minusWordSpellTimes(wrongWord)
   })
 
   console.log(JSON.stringify(json))
