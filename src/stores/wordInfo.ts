@@ -64,6 +64,7 @@ const useWordStore = defineStore('words', {
           await updateDoc(wordsDoc, {
             [word]: deleteField()
           })
+          delete this.wordMap[word]
         } else {
           wordInfo.spellDate = today
           wordInfo.spellTimes -= 2

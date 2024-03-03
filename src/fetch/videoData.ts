@@ -2,10 +2,16 @@ import filterItem from '@/core/ReviewSchedule'
 import type VideoInfo from '@/types/VideoInfo'
 
 const videoList: VideoInfo[] = [{
-  videoId: "f1VSqAP1dKc",
-  title: 'Iceland prepares for volcano: BBC News Review',
-  overplay: '05:52',
-  uploadDate: '2024-02-17',
+  videoId: "-m0z1txPbfk",
+  title: '',
+  overplay: '',
+  uploadDate: '2024-03-03',
+  userInputs: []
+}, {
+  videoId: "da4fProkiM8",
+  title: 'Bad bosses make people quit: BBC News Review',
+  overplay: '06:59',
+  uploadDate: '2024-03-02',
   userInputs: []
 }, {
   videoId: "lblvpfgPJnc",
@@ -13,12 +19,6 @@ const videoList: VideoInfo[] = [{
   overplay: '05:58',
   uploadDate: '2023-12-23',
   userInputs: [[0,1],[0,2],[7,7],[7,8],[8,0],[8,2],[8,3],[8,5],[9,6],[10,4],[10,6],[11,1],[11,2],[11,7],[15,4],[15,5],[15,6],[15,8],[19,5],[20,0],[20,4],[20,6],[21,6],[21,13],[24,7],[29,5],[31,1],[31,2],[31,3],[31,4],[32,8],[32,9],[43,0],[44,0],[44,1],[44,3],[44,4],[44,5],[45,1],[45,4],[46,6],[46,7],[47,3],[48,6],[49,5],[51,2],[51,3],[53,5],[53,9],[53,10],[56,1],[56,4],[56,5],[59,2],[59,3],[60,4],[60,6],[64,4],[65,6],[66,8],[67,2],[67,14],[68,3],[70,3],[71,4],[75,8],[76,11],[77,4],[78,1],[82,1],[82,4],[82,5],[83,5],[83,7],[86,6]]
-}, {
-  videoId: "mKZ2LGg8dWo",
-  title: 'Friends say goodbye to Matthew Perry: BBC News Review',
-  overplay: '05:45',
-  uploadDate: '2024-02-23',
-  userInputs: [[0,0],[0,1],[1,6],[2,5],[2,7],[2,8],[6,2],[6,3],[7,6],[7,7],[7,11],[8,7],[9,0],[10,0],[10,3],[10,4],[13,2],[13,4],[13,9],[13,10],[18,1],[18,2],[18,6],[18,7],[19,4],[19,5],[19,6],[20,9],[21,3],[21,4],[22,9],[23,5],[24,3],[26,8],[27,1],[29,0],[29,2],[29,3],[35,3],[36,2],[38,9],[40,10],[44,2],[45,0],[45,1],[46,0],[46,1],[46,2],[46,3],[46,7],[47,1],[48,6],[48,7],[48,9],[50,5],[50,12],[53,5],[53,6],[54,4],[73,0],[73,1],[73,8],[73,9],[74,8],[74,9],[75,4],[76,2],[78,6],[78,7],[83,0],[83,1],[83,10],[84,4],[84,5],[85,4],[89,5],[91,1],[91,5]]
 }, {
   videoId: "eLVAMz8yQx0",
   title: 'Nature destroying nature: BBC News Review',
@@ -43,18 +43,6 @@ const videoList: VideoInfo[] = [{
   overplay: '05:08',
   uploadDate: '2023-12-24',
   userInputs: [[5,9],[8,5],[23,2],[26,7],[39,1],[41,3],[47,6],[48,7],[57,1],[57,2],[59,6],[70,5],[74,3],[77,2],[77,3],[90,2],[90,5],[99,3],[101,1]]
-}, {
-  videoId: "6dKXPONICGw",
-  title: 'If SpongeBob was a Black & White Cartoon | "Help Wanted" | SpongeBob: Reimagined S2',
-  overplay: '03:30',
-  uploadDate: '2023-12-28',
-  userInputs: [[0,3],[0,4],[12,9],[14,1],[16,5],[18,5],[29,5],[29,6],[40,4],[42,5],[45,8]]
-}, {
-  videoId: "14cNavJCsr8",
-  title: 'Rainforests: destruction gets worse: BBC News Review',
-  overplay: '06:17',
-  uploadDate: '2023-12-27',
-  userInputs: [[17,3],[22,2],[46,5],[63,0],[66,8],[74,0],[78,7],[79,3]]
 }, {
   videoId: "4yaIOaOzkTE",
   title: 'English Rewind - 6 Minute English: Love letters',
@@ -86,36 +74,6 @@ const videoList: VideoInfo[] = [{
   uploadDate: '2023-12-22',
   userInputs: [[1,12],[14,4],[16,10],[18,8],[25,5],[26,1],[26,6],[26,10],[26,12],[27,1],[30,0],[32,8],[33,3],[38,2],[41,3],[41,8],[48,2],[56,4],[56,8],[58,5],[59,10],[61,2],[65,5],[66,2],[68,6],[73,5],[74,6],[77,11],[78,4],[79,4],[82,2],[91,5]]
 }, {
-  videoId: "AcX3KAkikSM",
-  title: 'Green flights? Impossible: BBC News Review',
-  overplay: '06:29',
-  uploadDate: '2024-01-03',
-  userInputs: [[10,7],[10,8],[11,7],[13,14],[30,11],[34,10],[35,12],[60,2],[75,9],[80,7]]
-}, {
-  videoId: "0m5Go6gvys0",
-  title: 'Laughter helps the heart - BBC News Review',
-  overplay: '05:43',
-  uploadDate: '2023-12-25',
-  userInputs: [[12,1],[13,2],[24,5],[32,5],[32,8],[83,6]]
-}, {
-  videoId: "duRGF7e_lg4",
-  title: 'Rubiales quits: BBC News Review',
-  overplay: '05:31',
-  uploadDate: '2024-01-02',
-  userInputs: [[1,6],[1,7],[10,7],[11,2],[12,1],[13,4],[23,0]]
-}, {
-  videoId: "iahCiYwAjv4",
-  title: 'China’s Former Premier Li Keqiang Has Died',
-  overplay: '06:23',
-  uploadDate: '2024-01-01',
-  userInputs: [[0,2],[0,3],[5,5],[5,9],[8,12],[10,7],[10,8],[11,8],[12,0],[27,11],[31,2],[32,4],[34,7],[41,2],[41,8],[42,0],[44,10],[46,14],[47,8],[48,4],[55,5],[58,13],[65,2],[69,8],[74,14],[75,8],[77,8],[81,14],[82,6]]
-}, {
-  videoId: "Ag7-U4ga9mA",
-  title: 'The right way to say sorry ⏲️ 6 Minute English',
-  overplay: '06:23',
-  uploadDate: '2024-01-01',
-  userInputs: [[5,7],[6,5],[8,6],[9,11],[13,11],[19,7],[26,6],[27,7],[29,4],[31,10],[38,0],[38,2],[39,5],[39,11],[39,12],[44,8],[46,6],[46,8],[48,4],[50,0],[50,10],[51,7],[59,6],[65,4],[68,2],[70,4],[75,0],[91,3],[92,6],[94,3],[97,10],[104,6],[105,5],[107,4]]
-}, {
   videoId: "pASfanRdNUQ",
   title: 'English Rewind - Weekender: handwriting',
   overplay: '05:44',
@@ -146,18 +104,6 @@ const videoList: VideoInfo[] = [{
   uploadDate: '2023-12-26',
   userInputs: [[12,1],[13,4],[14,3],[18,10],[19,1],[21,6],[23,10],[26,9],[29,4],[32,4],[32,5],[32,6],[34,2],[40,4],[46,5],[47,4],[54,1],[56,8],[60,3],[61,14],[63,3],[64,2],[64,3],[64,4],[74,2],[74,4],[77,3],[78,4],[80,0],[81,8],[87,6],[107,2]]
 }, {
-  videoId: "DEbYvMHS1c4",
-  title: 'Antarctic ice melting: BBC News Review',
-  overplay: '06:36',
-  uploadDate: '2024-01-01',
-  userInputs: [[0,0],[1,0],[1,4],[8,8],[10,0],[12,1],[21,0],[21,8],[24,3],[43,5],[50,3],[51,1],[51,10],[68,8],[78,2]]
-}, {
-  videoId: "WJZQGGZ64oI",
-  title: 'Learning to smile again: BBC News Review',
-  overplay: '05:30',
-  uploadDate: '2023-12-31',
-  userInputs: [[8,13],[11,1],[11,9],[12,15],[13,0],[16,9],[17,12],[18,2],[21,1],[24,9],[24,10],[26,1],[26,3],[26,7],[31,4],[33,6],[37,6],[38,4],[57,7],[59,1],[63,1],[66,7],[68,3]]
-}, {
   videoId: "DxR2waii1Ck",
   title: 'Should we fear chatbots? ⏲️ 6 Minute English',
   overplay: '06:17',
@@ -170,29 +116,11 @@ const videoList: VideoInfo[] = [{
   uploadDate: '2023-12-25',
   userInputs: [[4,10],[6,5],[8,15],[12,13],[13,0],[16,1],[20,10],[20,12],[21,1],[22,13],[24,5],[26,12],[27,4],[27,6],[27,11],[30,7],[32,3],[36,3],[43,8],[45,16],[45,17],[49,2],[50,11],[56,4],[56,11],[60,12]]
 }, {
-  videoId: "lAUivF-NEuM",
-  title: 'Lego gives up on recycled bricks: BBC News Review',
-  overplay: '06:07',
-  uploadDate: '2023-12-28',
-  userInputs: [[10,2],[10,9],[14,2],[20,3],[23,1],[50,8],[91,1]]
-}, {
-  videoId: "jGuEB_X-Mt4",
-  title: 'Fukushima Water Release: BBC News Review',
-  overplay: '06:47',
-  uploadDate: '2024-01-02',
-  userInputs: [[13,2],[13,3],[14,3],[14,5],[44,5],[48,7],[48,9],[67,2],[70,7],[85,2],[89,5],[95,11],[96,4]]
-}, {
   videoId: "G1GitpVlK3Q",
   title: 'English Rewind - London Life: Rhyming slang',
   overplay: '06:23',
   uploadDate: '2023-12-26',
   userInputs: [[0,1],[21,6],[27,12],[28,5],[77,1],[77,7],[80,0],[80,1],[82,9],[82,10],[83,4],[83,6],[83,7],[84,0],[84,3],[85,1],[86,0],[86,1],[87,14],[89,0],[90,1],[95,0],[103,14],[103,17]]
-}, {
-  videoId: "V0dFKMVs9sg",
-  title: 'Improving maths with music: BBC News Review',
-  overplay: '06:28',
-  uploadDate: '2023-12-30',
-  userInputs: [[0,3],[6,5],[8,1],[11,2],[17,4],[26,10],[37,8],[45,8],[56,1],[60,12],[75,11],[77,2],[78,11],[86,2],[90,10]]
 }]
 
 export function getVideoInfo(videoId: string): VideoInfo | undefined {
