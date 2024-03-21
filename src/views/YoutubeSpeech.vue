@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
 import SpeechToText from '@/SpeechToText/SpeechToText.vue'
+import { getRandomList } from '@/fetch/videoData';
 declare const YT: any
 
-const route = useRoute()
-let videoId = route.params.videoId as string
+const videoList = getRandomList()
 
 let player: any
 onMounted(() => {
@@ -33,7 +32,7 @@ const playerReady = ref(false)
 const playerState = ref(-2)
 function onPlayerReady() {
   playerReady.value = true
-  player.loadVideoById(videoId)
+  player.loadPlaylist(videoList)
 }
 function onPlayerStateChange(event: {
   data: number
