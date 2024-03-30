@@ -33,7 +33,7 @@ const playerState = ref(-2)
 let lastVideoId: any
 function onPlayerReady() {
   playerReady.value = true
-  player.loadPlaylist(videoStore.getSortedVideos())
+  player.loadPlaylist(videoStore.getSortedVideos().map((video) => video.videoId))
 }
 function onPlayerStateChange(event: any) {
   playerState.value = event.data
@@ -47,11 +47,26 @@ function onPlayerStateChange(event: any) {
 }
 
 const text = ref('speak something')
+
+const downloadVideoInfo = () => {
+  const videos = videoStore.getSortedVideos()
+  const blob = new Blob([videos.map((video) => `${video.videoId},${video.watchTimes}`).join(',\n')], { type: "application/octet-stream" })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement("a")
+  a.href = url
+  a.download = "videosInfo.csv"
+  a.style.display = "none"
+  document.body.appendChild(a)
+  a.click()
+  URL.revokeObjectURL(url)
+  document.body.removeChild(a)
+}
 </script>
 <template>
   <div class="main-container" v-loading="playerState === -2">
     <div id="player"></div>
     <SpeechToText v-model="text"></SpeechToText>
+    <el-button @click="downloadVideoInfo">Download Videos Info</el-button>
   </div>
 </template>
   

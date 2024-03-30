@@ -9,6 +9,11 @@ import { db } from '@/config/firebase'
 import customPromise from '@/common/customPromise'
 import { useUserStore } from './user'
 
+export interface videoInfo {
+  videoId: string
+  watchTimes: number
+}
+
 const userStore = useUserStore()
 const videosDoc = doc(db, `users/${userStore.user.uid}/dictation`, 'videos')
 
@@ -23,7 +28,7 @@ const useVideoStore = defineStore('videos', {
       const videos = await getDoc(videosDoc)
       this.videoMap = videos.data() as Record<string, number>
     },
-    getSortedVideos(): string[] {
+    getSortedVideos(): videoInfo[] {
       const videos = []
       for (const videoId in this.videoMap) {
         videos.push({
@@ -31,7 +36,7 @@ const useVideoStore = defineStore('videos', {
           watchTimes: this.videoMap[videoId]
         })
       }
-      return videos.sort((v0, v1) => v0.watchTimes - v1.watchTimes).map((video) => video.videoId)
+      return videos.sort((v0, v1) => v0.watchTimes - v1.watchTimes)
     },
     async addWatchTimes(videoId: string) {
       const watchTimes = this.videoMap[videoId] + 1
