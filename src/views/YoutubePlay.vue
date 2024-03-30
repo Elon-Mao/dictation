@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import parseXMLCaption from '@/core/CaptionXMLParser'
 import { getRecommendedVideos, getVideoInfo, getVideosOrderByDate } from '@/fetch/videoData'

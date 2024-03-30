@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import SpeechToText from '@/SpeechToText/SpeechToText.vue'
-import { getRandomList } from '@/fetch/videoData';
+import { useVideoStore } from '@/stores/videoInfo'
 declare const YT: any
 
-const videoList = getRandomList()
+const videoStore = useVideoStore()
 
 let player: any
 onMounted(() => {
@@ -30,14 +30,20 @@ onMounted(() => {
 
 const playerReady = ref(false)
 const playerState = ref(-2)
+let lastVideoId: any
 function onPlayerReady() {
   playerReady.value = true
-  player.loadPlaylist(videoList)
+  player.loadPlaylist(videoStore.getSortedVideos())
 }
-function onPlayerStateChange(event: {
-  data: number
-}) {
+function onPlayerStateChange(event: any) {
   playerState.value = event.data
+  if (event.data === -1) {
+    const currentVideoId = event.target.getVideoData().video_id;
+    if (currentVideoId !== lastVideoId) {
+      lastVideoId && videoStore.addWatchTimes(lastVideoId)
+      lastVideoId = currentVideoId
+    }
+  }
 }
 
 const text = ref('speak something')
