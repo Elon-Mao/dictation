@@ -34,16 +34,20 @@ let lastVideoId: any
 function onPlayerReady() {
   playerReady.value = true
   player.loadPlaylist(videoStore.getSortedVideos().map((video) => video.videoId))
+  setInterval(() => {
+    const currentTime = player.getCurrentTime()
+    const duration = player.getDuration()
+    if (currentTime && duration && duration - currentTime < 3) {
+      const currentVideoId = player.getVideoData().video_id
+      if (currentVideoId !== lastVideoId) {
+        videoStore.addWatchTimes(currentVideoId)
+        lastVideoId = currentVideoId
+      }
+    }
+  }, 1000)
 }
 function onPlayerStateChange(event: any) {
   playerState.value = event.data
-  if (event.data === -1) {
-    const currentVideoId = event.target.getVideoData().video_id;
-    if (currentVideoId !== lastVideoId) {
-      lastVideoId && videoStore.addWatchTimes(lastVideoId)
-      lastVideoId = currentVideoId
-    }
-  }
 }
 
 const text = ref('speak something')
