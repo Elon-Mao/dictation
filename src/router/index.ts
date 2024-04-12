@@ -14,7 +14,7 @@ const router = createRouter({
       component: () => import('@/views/Portal.vue'),
     },
     {
-      path: '/youtube/:videoId/play',
+      path: '/youtube/play/:videoId?',
       name: 'YoutubePlay',
       component: () => import('@/views/YoutubePlay.vue')
     },

@@ -1,8 +1,13 @@
 import router from '@/router'
 import { defineStore } from 'pinia'
-import { auth } from '@/config/firebase'
+import { auth, db } from '@/config/firebase'
 import { useSystemStore } from '@/stores/system'
 import type { User } from 'firebase/auth'
+import { collection } from 'firebase/firestore'
+import { useWordStore } from './word'
+import { useVideoStore } from './video'
+
+const appName = 'dictation'
 
 export const useUserStore = defineStore('user', {
   state: () => {
@@ -26,7 +31,12 @@ export const useUserStore = defineStore('user', {
       }
 
       localStorage.setItem('user', JSON.stringify(user))
+      await useWordStore().init(this.getAppCollection())
+      await useVideoStore().init(this.getAppCollection())
       success()
+    },
+    getAppCollection() {
+      return collection(db, `users/${this.user.uid}/${appName}`)
     }
   },
 })

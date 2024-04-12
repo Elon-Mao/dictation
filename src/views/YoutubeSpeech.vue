@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import SpeechToText from '@/SpeechToText/SpeechToText.vue'
-import { useVideoStore } from '@/stores/videoInfo'
 declare const YT: any
-
+import { useVideoStore } from '@/stores/video'
+import type { Video } from '@/stores/video'
 const videoStore = useVideoStore()
-
 let player: any
 onMounted(() => {
   const tag = document.createElement('script')
@@ -30,21 +29,36 @@ onMounted(() => {
 
 const playerReady = ref(false)
 const playerState = ref(-2)
-let lastVideoId: any
+let lastVideoId: string
+let videos: Video[] = []
 function onPlayerReady() {
-  playerReady.value = true
-  player.loadPlaylist(videoStore.getSortedVideos().map((video) => video.videoId))
-  setInterval(() => {
-    const currentTime = player.getCurrentTime()
-    const duration = player.getDuration()
-    if (currentTime && duration && duration - currentTime < 3) {
-      const currentVideoId = player.getVideoData().video_id
-      if (currentVideoId !== lastVideoId) {
-        videoStore.addWatchTimes(currentVideoId)
-        lastVideoId = currentVideoId
+  const onReady = () => {
+    playerReady.value = true
+    videos = videoStore.getListenList()
+    player.loadPlaylist(videos.map((video) => video.id))
+    setInterval(() => {
+      const currentTime = player.getCurrentTime()
+      const duration = player.getDuration()
+      if (currentTime && duration && duration - currentTime < 3) {
+        const currentVideoId: string = player.getVideoData().video_id
+        if (currentVideoId !== lastVideoId) {
+          videoStore.addWatchTimes(videos.find((video) => video.id === currentVideoId)!)
+          lastVideoId = currentVideoId
+        }
       }
-    }
-  }, 1000)
+    }, 1000)
+  }
+
+  if (videoStore.entities.length) {
+    onReady()
+  } else {
+    const videoWatch = watch(() => videoStore.entities, () => {
+      if (videoStore.entities.length) {
+        onReady()
+        videoWatch()
+      }
+    })
+  }
 }
 function onPlayerStateChange(event: any) {
   playerState.value = event.data
@@ -53,8 +67,7 @@ function onPlayerStateChange(event: any) {
 const text = ref('speak something')
 
 const downloadVideoInfo = () => {
-  const videos = videoStore.getSortedVideos()
-  const blob = new Blob([videos.map((video) => `${video.videoId},${video.watchTimes}`).join(',\n')], { type: "application/octet-stream" })
+  const blob = new Blob([videos.map((video) => `${video.id},${video.listenedTimes}`).join(',\n')], { type: "application/octet-stream" })
   const url = URL.createObjectURL(blob)
   const a = document.createElement("a")
   a.href = url

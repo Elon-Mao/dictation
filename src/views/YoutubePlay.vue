@@ -1,23 +1,32 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, reactive, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import parseXMLCaption from '@/core/CaptionXMLParser'
-import { getRecommendedVideos, getVideoInfo, getVideosOrderByDate } from '@/fetch/videoData'
 import AutoWidthInput from '@/components/AutoWidthInput.vue'
 import VideoCompact from '@/components/VideoCompact.vue'
 import SpeechToText from '@/components/SpeechToText.vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type CaptionText from '@/types/CaptionText'
-import type { MessageHandler, ScrollbarInstance } from 'element-plus'
-import type VideoInfo from '@/types/VideoInfo'
+import type { FormInstance, FormRules, MessageHandler, ScrollbarInstance } from 'element-plus'
 import { addUnloadConfirm } from '@/core/EventListener'
-import { useWordStore } from '@/stores/wordInfo'
+import customPromise from '@/common/customPromise'
+import { useVideoStore, type Video } from '@/stores/video'
+import { useWordStore } from '@/stores/word'
 declare const YT: any
 
 const router = useRouter()
 const route = useRoute()
+const videoStore = useVideoStore()
 const wordStore = useWordStore()
-let videoId = route.params.videoId as string
+
+const videos = ref<Video[]>([])
+const loadVideos = () => {
+  videos.value = videoStore.getNewVideos()
+  videos.value.sort((v0, v1) => v1.uploadedTime!.getTime() - v0.uploadedTime!.getTime())
+  if (!route.params.videoId && videos.value.length) {
+    router.push(`/youtube/play/${videos.value[0].id}`)
+  }
+}
 
 const scrollbar = ref<ScrollbarInstance>()
 let scrollbarView: HTMLDivElement
@@ -44,6 +53,11 @@ onMounted(() => {
     })
   }
 })
+
+watch(
+  () => route.params.videoId,
+  loadVideo
+)
 
 const playerReady = ref(false)
 const playerState = ref(-2)
@@ -110,20 +124,27 @@ function onKeydown(event: KeyboardEvent) {
 
 const captionTexts = ref<CaptionText[]>([])
 const userInputs = ref<string[][]>([])
-const videoInfo = ref<VideoInfo | undefined>()
-const recommendedVideos = ref<VideoInfo[]>([])
-const lastVideos = ref<VideoInfo[]>([])
-function loadVideo() {
+async function loadVideo() {
+  if (!player) {
+    return
+  }
+  const videoId = route.params.videoId as string
+  if (!videoId) {
+    await loadVideos()
+    return
+  }
+  const video = videos.value.find((v) => v.id === videoId)
+  if (!video) {
+    router.push(`/youtube/play`)
+    return
+  }
+  await videoStore.getDetail(video)
   captionTexts.value = []
   userInputs.value = []
-  parseXMLCaption(videoId).then((parseResult: CaptionText[]) => {
+  parseXMLCaption(video.timedtext!).then((parseResult: CaptionText[]) => {
     for (const captionText of parseResult) {
       captionTexts.value.push(captionText)
       userInputs.value.push([])
-    }
-    videoInfo.value = getVideoInfo(videoId)
-    if (!videoInfo.value) {
-      return
     }
     parseResult.forEach((captionText, i) => {
       captionText.words.forEach((word, j) => {
@@ -133,8 +154,6 @@ function loadVideo() {
       })
     })
   }).finally(() => {
-    recommendedVideos.value = getRecommendedVideos()
-    lastVideos.value = getVideosOrderByDate()
     player.loadVideoById(videoId)
     showCaption.value = true
     showAnswer.value = false
@@ -175,17 +194,14 @@ function captionOnWheel() {
   recentlyWheel = setTimeout(stopWheel, 4000)
 }
 
-
-function moreVideoOnclick(videoInfo: VideoInfo) {
-  if (videoInfo.videoId !== videoId) {
+function moreVideoOnclick(video: Video) {
+  if (video.id !== route.params.videoId) {
     ElMessageBox.confirm('Changes you made may not be saved.', 'Leave site?', {
       customStyle: {
         verticalAlign: 'top'
       }
     }).then(() => {
-      router.push(`/youtube/${videoInfo.videoId}/play`)
-      videoId = videoInfo.videoId
-      loadVideo()
+      router.push(`/youtube/play/${video.id}`)
     })
   }
 }
@@ -223,7 +239,7 @@ const saveWords = async () => {
   })
 
   console.log(JSON.stringify(json))
-  if (json.length === 0) { 
+  if (json.length === 0) {
     ElMessage({
       message: `all right`,
       type: 'success',
@@ -235,15 +251,8 @@ const saveWords = async () => {
 }
 
 const downloadWords = () => {
-  const words = []
-  for (const word in wordStore.wordMap) {
-    words.push({
-      word,
-      ...wordStore.wordMap[word]
-    })
-  }
-  words.sort((w0, w1) => w0.word > w1.word ? 1: -1)
-  const blob = new Blob([words.map((word) => `${word.word},${word.spellDate},${word.spellTimes}`).join(',\n')], { type: "application/octet-stream" })
+  const words = [...wordStore.entities].sort((w0, w1) => w0.id! > w1.id! ? 1 : -1)
+  const blob = new Blob([words.map((word) => `${word.id},${word.speltDate},${word.speltTimes}`).join(',\n')], { type: "application/octet-stream" })
   const url = URL.createObjectURL(blob)
   const a = document.createElement("a")
   a.href = url
@@ -259,37 +268,76 @@ onUnmounted(() => {
   clearInterval(playerTimeInterval.value)
   document.removeEventListener('keydown', onKeydown)
 })
+
+interface AddVideoForm {
+  url: string
+  timedtext: string
+}
+
+const addVideoDialogVisible = ref(false)
+const addVideoForm = reactive<AddVideoForm>({
+  url: '',
+  timedtext: '',
+})
+const addVideoFormRef = ref<FormInstance>()
+const urlPattern = /[?&]v=([^&]+)/
+const rules = reactive<FormRules<AddVideoForm>>({
+  url: [
+    { required: true, message: 'Please input URL', trigger: 'blur' },
+    {
+      validator: (rule: any, value: any, callback: any) => {
+        if (value.match(urlPattern)) {
+          callback()
+        } else {
+          callback(new Error(rule.message))
+        }
+      }, message: 'Can not read video id', trigger: 'blur'
+    },
+  ],
+  timedtext: [
+    { required: true, message: 'Please input timedtext', trigger: 'blur' },
+  ]
+})
+const submitAddVideoForm = () => {
+  addVideoFormRef.value!.validate(async (valid) => {
+    if (valid) {
+      const video = {
+        id: addVideoForm.url.match(urlPattern)![1],
+        uploadedTime: new Date(),
+        listenedTimes: -1,
+        timedtext: addVideoForm.timedtext,
+      } as Video
+      await customPromise(videoStore.setEntity(video))
+      ElMessage({
+        message: 'Video added successfully.',
+        type: 'success',
+      })
+      await loadVideos()
+      addVideoForm.url = ''
+      addVideoForm.timedtext = ''
+      addVideoDialogVisible.value = false
+    } else {
+      return false
+    }
+  })
+}
 </script>
 <template>
-  <el-container class="player-container" v-loading="playerState === -2">
+  <el-container class="player-container">
     <el-aside width="660px" class="player-side">
       <div style="height: 100%;">
-        <div class="player-wrapper">
-          <div id="player"></div>
-          <el-row>
-            <el-col :span="18">
-              <span v-if="videoInfo" class="video-title" :title="videoInfo.title">{{ videoInfo.title }}</span>
-            </el-col>
-            <el-col :span="6">
-              <span class="video-upload-date">upload date: {{ videoInfo?.uploadDate }}</span>
-            </el-col>
-          </el-row>
-        </div>
-        <el-row class="more-video">
-          <el-col :span="12" class="lastest-videos">
-            <el-scrollbar height="100%">
-              <VideoCompact v-for="videoInfo in recommendedVideos" :key="videoInfo.videoId"
-                @click="moreVideoOnclick(videoInfo)" :video-info="videoInfo">
+        <div id="player"></div>
+        <el-row class="videos-container">
+          <el-scrollbar height="100%">
+            <div class="videos-wrapper">
+              <div class="video-cover-wrapper el-card is-always-shadow">
+                <el-button link @click="addVideoDialogVisible = true">Add Video</el-button>
+              </div>
+              <VideoCompact v-for="video in videos" :key="video.id"
+                @click="moreVideoOnclick(video)" :video="video">
               </VideoCompact>
-            </el-scrollbar>
-          </el-col>
-          <el-col :span="12" class="dated-videos">
-            <el-scrollbar height="100%">
-              <VideoCompact v-for="videoInfo in lastVideos" :key="videoInfo.videoId" @click="moreVideoOnclick(videoInfo)"
-                :video-info="videoInfo">
-              </VideoCompact>
-            </el-scrollbar>
-          </el-col>
+            </div>
+          </el-scrollbar>
         </el-row>
       </div>
     </el-aside>
@@ -335,8 +383,23 @@ onUnmounted(() => {
       </el-scrollbar>
     </el-main>
   </el-container>
+  <el-dialog v-model="addVideoDialogVisible" title="Add Video" width="80%">
+    <el-form ref="addVideoFormRef" :model="addVideoForm" :rules="rules" label-width="auto">
+      <el-form-item label="URL" prop="url">
+        <el-input v-model="addVideoForm.url" />
+      </el-form-item>
+      <el-form-item label="Timedtext" prop="timedtext">
+        <el-input v-model="addVideoForm.timedtext" :rows="10" type="textarea" />
+      </el-form-item>
+      <el-form-item class="form-button">
+        <el-button type="primary" @click="submitAddVideoForm()">
+          Add
+        </el-button>
+      </el-form-item>
+    </el-form>
+  </el-dialog>
 </template>
-  
+
 <style scoped>
 .player-container {
   height: calc(100vh - 16px);
@@ -349,46 +412,21 @@ onUnmounted(() => {
   padding: 20px 0 0 20px;
 }
 
-.player-wrapper {
-  line-height: 30px;
-  display: flex;
-  flex-direction: column;
-}
-
-.player-wrapper .el-col {
-  height: 30px;
-}
-
 #player {
   height: 360px;
   width: 640px;
 }
 
-.video-title {
-  display: block;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-.video-upload-date {
-  float: right;
-  font-size: 14px;
-}
-
-.more-video {
+.videos-container {
   margin-top: 20px;
   height: calc(100% - 430px);
 }
 
-.lastest-videos {
-  height: 100%;
-  padding-right: 5px;
-}
-
-.dated-videos {
-  height: 100%;
-  padding-left: 5px;
+.videos-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 5px;
 }
 
 .player-main {
@@ -469,6 +507,20 @@ onUnmounted(() => {
 .caption-word-span {
   padding: 1px 0px;
 }
+
+.video-cover-wrapper {
+  width: 168px;
+  height: 95px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.form-button {
+  justify-content: flex-end;
+}
 </style>
 <style>
 .el-input {
@@ -479,4 +531,13 @@ onUnmounted(() => {
   line-height: 40px;
   font-size: 24px !important;
 }
-</style>
+
+.form-button .el-form-item__content {
+  flex-grow: 0;
+  min-width: auto;
+}
+
+.video-cover-wrapper>div {
+  cursor: pointer;
+}
+</style>@/stores/wordOld

@@ -1,79 +1,81 @@
 <script setup lang="ts">
-import type VideoInfo from '@/types/VideoInfo'
+import { useRoute, useRouter } from 'vue-router'
+import { More } from '@element-plus/icons-vue'
+import { useVideoStore } from '@/stores/video'
+import type { Video } from '@/stores/video'
 
 const props = defineProps<{
-  videoInfo: VideoInfo
+  video: Video
 }>()
+const route = useRoute()
+const router = useRouter()
+const videoStore = useVideoStore()
+const src = `https://i.ytimg.com/vi/${props.video.id}/mqdefault.jpg`
 
-const src = `https://i.ytimg.com/vi/${props.videoInfo.videoId}/mqdefault.jpg`
-const bodyStyle = {
-  padding: '0',
-  display: 'flex',
-  cursor: 'pointer',
-  height: '94px',
+const deleteVideo = async () => {
+  await videoStore.deleteEntity(videoStore.entityMap[props.video.id!])
+  router.push(`/youtube/play`)
+}
+
+const moveToListenlist = async () => {
+  await videoStore.setDetail({
+    id: props.video.id
+  })
+  await videoStore.setBrief({
+    ...props.video,
+    listenedTimes: 0
+  })
+  router.push(`/youtube/play`)
 }
 </script>
 
 <template>
-  <el-card :body-style="bodyStyle" class="video-compact">
-    <div class="video-cover-wrapper">
-      <el-image :src="src" />
-      <span class="video-overplay">{{ props.videoInfo.overplay }}</span>
-    </div>
-    <div class="video-info">
-      <span class="video-title" :title="props.videoInfo.title">{{ props.videoInfo.title }}</span>
-      <span class="video-upload-date">{{ props.videoInfo.uploadDate }}</span>
-    </div>
-  </el-card>
+  <div
+    :class="`video-cover-wrapper el-card is-always-shadow${route.params.videoId === props.video.id ? ' video-selected' : ''}`">
+    <el-image :src="src" />
+    <el-popover placement="bottom" :width="100" trigger="click" :popper-style="{ padding: 0 }">
+      <template #reference>
+        <el-button class="video-more-btn" :icon="More" circle @click.stop />
+      </template>
+      <div class="video-operation">
+        <el-popconfirm title="Are you sure to delete this?" @confirm="deleteVideo">
+          <template #reference>
+            <el-button>Delete</el-button>
+          </template>
+        </el-popconfirm>
+        <el-popconfirm title="Are you sure to delete this?" @confirm="moveToListenlist">
+          <template #reference>
+            <el-button>Move to listen list</el-button>
+          </template>
+        </el-popconfirm>
+      </div>
+    </el-popover>
+  </div>
 </template>
 
 <style scoped>
-.video-compact {
-  margin-bottom: 10px;
-  width: calc(100% - 12px);
+.video-selected {
+  box-shadow: 0 0 10px 2px blue;
+  border: 0;
 }
 
-.video-cover-wrapper {
-  width: 168px;
-  height: 100%;
-  position: relative;
+.video-selected>div {
+  pointer-events: none;
 }
 
-.video-overplay {
+.video-more-btn {
   position: absolute;
-  bottom: 1px;
+  top: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  line-height: 12px;
-  font-size: 12px;
-  border-radius: 4px;
-  padding: 4px;
 }
 
-.video-info {
-  padding-left: 5px;
+.video-operation {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: calc(100% - 168px);
-  height: 100%;
 }
 
-.video-title {
-  font-size: 16px;
-  line-height: 16px;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.video-upload-date {
-  padding-right: 2px;
-  font-size: 14px;
-  line-height: 16px;
-  text-align: right;
+.video-operation>button {
+  width: 100%;
+  margin: 0;
 }
 </style>
