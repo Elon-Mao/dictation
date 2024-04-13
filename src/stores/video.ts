@@ -8,6 +8,14 @@ export interface Video {
   timedtext?: string
 }
 
+const shuffleArray = (array: any[]) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)); // 生成一个随机索引
+    [array[i], array[j]] = [array[j], array[i]] // 交换元素位置
+  }
+  return array
+}
+
 const storeId = 'videos'
 export const useVideoStore = defineStore(storeId, () => {
   const elonStore = useElonStore<Video>(storeId, ['uploadedTime', 'listenedTimes'], ['timedtext'])
@@ -18,9 +26,8 @@ export const useVideoStore = defineStore(storeId, () => {
   }
 
   const getListenList = () => {
-    return elonStore.entities.value
-      .filter((video) => video.listenedTimes !== -1)
-      .sort((v0, v1) => v1.listenedTimes! - v0.listenedTimes!)
+    return shuffleArray(elonStore.entities.value.filter((video) => video.listenedTimes !== -1))
+      .sort((v0, v1) => v0.listenedTimes! - v1.listenedTimes!)
   }
 
   const getNewVideos = () => {

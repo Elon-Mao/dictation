@@ -67,7 +67,8 @@ function onPlayerStateChange(event: any) {
 const text = ref('speak something')
 
 const downloadVideoInfo = () => {
-  const blob = new Blob([videos.map((video) => `${video.id},${video.listenedTimes}`).join(',\n')], { type: "application/octet-stream" })
+  const blob = new Blob([[...videoStore.entities].sort((v0, v1) => v0.id!.localeCompare(v1.id!))
+    .map((video) => `${video.id},${video.listenedTimes}`).join(',\n')], { type: "application/octet-stream" })
   const url = URL.createObjectURL(blob)
   const a = document.createElement("a")
   a.href = url
@@ -86,7 +87,7 @@ const downloadVideoInfo = () => {
     <el-button @click="downloadVideoInfo">Download Videos Info</el-button>
   </div>
 </template>
-  
+
 <style scoped>
 .main-container {
   display: flex;

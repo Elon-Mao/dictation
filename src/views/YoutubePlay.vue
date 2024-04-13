@@ -12,12 +12,14 @@ import { addUnloadConfirm } from '@/core/EventListener'
 import customPromise from '@/common/customPromise'
 import { useVideoStore, type Video } from '@/stores/video'
 import { useWordStore } from '@/stores/word'
+import { useSystemStore } from '@/stores/system'
 declare const YT: any
 
 const router = useRouter()
 const route = useRoute()
 const videoStore = useVideoStore()
 const wordStore = useWordStore()
+const systemStore = useSystemStore()
 
 const videos = ref<Video[]>([])
 const loadVideos = () => {
@@ -58,6 +60,19 @@ watch(
   () => route.params.videoId,
   loadVideo
 )
+
+if (videoStore.entities.length) {
+  loadVideos()
+  loadVideo()
+} else {
+  const videosWatch = watch(() => videoStore.entities, () => {
+    if (videoStore.entities.length) {
+      loadVideos()
+      loadVideo()
+      videosWatch()
+    }
+  })
+}
 
 const playerReady = ref(false)
 const playerState = ref(-2)
@@ -130,7 +145,7 @@ async function loadVideo() {
   }
   const videoId = route.params.videoId as string
   if (!videoId) {
-    await loadVideos()
+    loadVideos()
     return
   }
   const video = videos.value.find((v) => v.id === videoId)
@@ -225,6 +240,7 @@ const saveWords = async () => {
       }
     })
   })
+  systemStore.setLoading(true)
   console.log('correct-----------------------------------------------------')
   Array.from(correctWords).forEach(async correctWord => {
     if (!wrongWords.has(correctWord)) {
@@ -237,6 +253,7 @@ const saveWords = async () => {
     console.log(wrongWord)
     await wordStore.minusWordSpellTimes(wrongWord)
   })
+  systemStore.setLoading(false)
 
   console.log(JSON.stringify(json))
   if (json.length === 0) {
@@ -312,7 +329,7 @@ const submitAddVideoForm = () => {
         message: 'Video added successfully.',
         type: 'success',
       })
-      await loadVideos()
+      loadVideos()
       addVideoForm.url = ''
       addVideoForm.timedtext = ''
       addVideoDialogVisible.value = false
