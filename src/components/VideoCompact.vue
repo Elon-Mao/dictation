@@ -13,18 +13,20 @@ const videoStore = useVideoStore()
 const src = `https://i.ytimg.com/vi/${props.video.id}/mqdefault.jpg`
 
 const deleteVideo = async () => {
-  await videoStore.deleteEntity(videoStore.entityMap[props.video.id!])
+  videoStore.deleteEntity(videoStore.entityMap[props.video.id!])
+  await videoStore.commit()
   router.push(`/youtube/play`)
 }
 
 const moveToListenlist = async () => {
-  await videoStore.setDetail({
+  videoStore.setDetail({
     id: props.video.id
   })
-  await videoStore.setBrief({
+  videoStore.setBrief({
     ...props.video,
     listenedTimes: 0
   })
+  await videoStore.commit()
   router.push(`/youtube/play`)
 }
 </script>

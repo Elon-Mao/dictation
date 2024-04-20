@@ -2,12 +2,6 @@ import { defineStore } from 'pinia'
 import { useElonStore } from './elonStore'
 import formatDate from '@/common/formatDate'
 
-export interface WordOld {
-  id?: string
-  spellDate?: string
-  spellTimes?: number
-}
-
 export interface Word {
   id?: string
   speltDate?: string
@@ -25,7 +19,7 @@ export const useWordStore = defineStore(storeId, () => {
     return !word || word.speltDate! <= today
   }
 
-  const addWordSpellTimes = async (id: string) => {
+  const addWordSpellTimes = (id: string) => {
     id = id.toLowerCase()
     let word = elonStore.entityMap[id]
     if (!word) {
@@ -39,10 +33,10 @@ export const useWordStore = defineStore(storeId, () => {
     speltDate.setDate(speltDate.getDate() + Math.pow(2, word.speltTimes!))
     word.speltDate = formatDate(speltDate)
     word.speltTimes! += 1
-    await elonStore.setBrief(word)
+    elonStore.setBrief(word)
   }
 
-  const minusWordSpellTimes = async (id: string) => {
+  const minusWordSpellTimes = (id: string) => {
     id = id.toLowerCase()
     const word = elonStore.entityMap[id]
     if (word) {
@@ -50,11 +44,11 @@ export const useWordStore = defineStore(storeId, () => {
         return
       }
       if (word.speltTimes! < 3) {
-        await elonStore.deleteEntity(word)
+        elonStore.deleteEntity(word)
       } else {
         word.speltDate = today
         word.speltTimes! -= 2
-        await elonStore.setBrief(word)
+        elonStore.setBrief(word)
       }
     }
   }

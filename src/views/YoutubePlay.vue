@@ -82,7 +82,10 @@ let currentTime = -1
 let volumeMessage: MessageHandler
 function onPlayerReady() {
   playerReady.value = true
-  loadVideo()
+  if (videoStore.entities.length) {
+    loadVideos()
+    loadVideo()
+  }
   playerTimeInterval.value = setInterval(() => {
     currentTime = player.getCurrentTime()
     const findIndex = captionTexts.value.findIndex(captionText => captionText.start <= currentTime && currentTime < captionText.start + captionText.dur)
@@ -140,7 +143,7 @@ function onKeydown(event: KeyboardEvent) {
 const captionTexts = ref<CaptionText[]>([])
 const userInputs = ref<string[][]>([])
 async function loadVideo() {
-  if (!player) {
+  if (!player || !player.loadVideoById) {
     return
   }
   const videoId = route.params.videoId as string
@@ -242,17 +245,18 @@ const saveWords = async () => {
   })
   systemStore.setLoading(true)
   console.log('correct-----------------------------------------------------')
-  Array.from(correctWords).forEach(async correctWord => {
+  Array.from(correctWords).forEach(correctWord => {
     if (!wrongWords.has(correctWord)) {
       console.log(correctWord)
-      await wordStore.addWordSpellTimes(correctWord)
+      wordStore.addWordSpellTimes(correctWord)
     }
   })
   console.log('wrong-----------------------------------------------------')
   Array.from(wrongWords).forEach(async wrongWord => {
     console.log(wrongWord)
-    await wordStore.minusWordSpellTimes(wrongWord)
+    wordStore.minusWordSpellTimes(wrongWord)
   })
+  await wordStore.commit()
   systemStore.setLoading(false)
 
   console.log(JSON.stringify(json))
@@ -324,7 +328,8 @@ const submitAddVideoForm = () => {
         listenedTimes: -1,
         timedtext: addVideoForm.timedtext,
       } as Video
-      await customPromise(videoStore.setEntity(video))
+      videoStore.setEntity(video)
+      await customPromise(videoStore.commit())
       ElMessage({
         message: 'Video added successfully.',
         type: 'success',

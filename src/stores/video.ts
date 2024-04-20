@@ -22,7 +22,8 @@ export const useVideoStore = defineStore(storeId, () => {
 
   const addWatchTimes = async (video: Video) => {
     video.listenedTimes! += 1
-    await elonStore.setBrief(video)
+    elonStore.setBrief(video)
+    await elonStore.commit()
   }
 
   const getListenList = () => {
