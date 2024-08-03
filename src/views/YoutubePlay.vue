@@ -88,7 +88,7 @@ function onPlayerReady() {
   }
   playerTimeInterval.value = setInterval(() => {
     currentTime = player.getCurrentTime()
-    const findIndex = captionTexts.value.findIndex(captionText => captionText.start <= currentTime && currentTime < captionText.start + captionText.dur)
+    const findIndex = captionTexts.value.findLastIndex(captionText => captionText.start <= currentTime && currentTime < captionText.start + captionText.dur)
     if (findIndex === -1 || findIndex === currentIndex) {
       return
     }
@@ -159,23 +159,21 @@ async function loadVideo() {
   await videoStore.getDetail(video)
   captionTexts.value = []
   userInputs.value = []
-  parseXMLCaption(video.timedtext!).then((parseResult: CaptionText[]) => {
-    for (const captionText of parseResult) {
-      captionTexts.value.push(captionText)
-      userInputs.value.push([])
-    }
-    parseResult.forEach((captionText, i) => {
-      captionText.words.forEach((word, j) => {
-        if (wordStore.needSpell(word.value)) {
-          userInputs.value[i][j] = ''
-        }
-      })
+  const parseResult: CaptionText[] = parseXMLCaption(video.timedtext!)
+  for (const captionText of parseResult) {
+    captionTexts.value.push(captionText)
+    userInputs.value.push([])
+  }
+  parseResult.forEach((captionText, i) => {
+    captionText.words.forEach((word, j) => {
+      if (wordStore.needSpell(word.value)) {
+        userInputs.value[i][j] = ''
+      }
     })
-  }).finally(() => {
-    player.loadVideoById(videoId)
-    showCaption.value = true
-    showAnswer.value = false
   })
+  player.loadVideoById(videoId)
+  showCaption.value = true
+  showAnswer.value = false
 }
 
 const showCaption = ref(true)
