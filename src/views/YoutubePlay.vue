@@ -74,6 +74,7 @@ if (videoStore.entities.length) {
   })
 }
 
+const urlPattern = /[?&]v=([^&]+)/
 const playerReady = ref(false)
 const playerState = ref(-2)
 let playerTimeInterval = ref(0)
@@ -87,6 +88,18 @@ function onPlayerReady() {
     loadVideo()
   }
   playerTimeInterval.value = setInterval(() => {
+    // judge if is ads
+    const videoUrl: string = player.getVideoUrl() || ""
+    console.log(videoUrl)
+    const urlMatch = videoUrl.match(urlPattern)
+    if (!urlMatch) {
+      return
+    }
+    const currentVideoId = urlMatch[1]
+    if (currentVideoId !== route.params.videoId) {
+      return
+    }
+
     currentTime = player.getCurrentTime()
     const findIndex = captionTexts.value.findLastIndex(captionText => captionText.start <= currentTime && currentTime < captionText.start + captionText.dur)
     if (findIndex === -1 || findIndex === currentIndex) {
@@ -299,7 +312,6 @@ const addVideoForm = reactive<AddVideoForm>({
   timedtext: '',
 })
 const addVideoFormRef = ref<FormInstance>()
-const urlPattern = /[?&]v=([^&]+)/
 const rules = reactive<FormRules<AddVideoForm>>({
   url: [
     { required: true, message: 'Please input URL', trigger: 'blur' },

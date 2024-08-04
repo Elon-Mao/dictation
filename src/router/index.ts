@@ -6,7 +6,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/youtube/DxR2waii1Ck/play'
+      redirect: '/youtube/play'
     },
     {
       path: '/portal',
