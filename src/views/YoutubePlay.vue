@@ -88,17 +88,8 @@ function onPlayerReady() {
     loadVideo()
   }
   playerTimeInterval.value = setInterval(() => {
-    // judge if is ads
-    const lastCaptionText = captionTexts.value[captionTexts.value.length - 1]
-    const duration = player.getDuration()
-    const lastCaptionDuration = lastCaptionText.start + lastCaptionText.dur
-    console.log("duration", duration)
-    console.log("lastCaptionDuration", lastCaptionDuration)
-    if (duration < lastCaptionDuration) {
-      return
-    }
-
     currentTime = player.getCurrentTime()
+    console.log("currentTime", currentTime)
     const findIndex = captionTexts.value.findLastIndex(captionText => captionText.start <= currentTime && currentTime < captionText.start + captionText.dur)
     if (findIndex === -1 || findIndex === currentIndex) {
       return
