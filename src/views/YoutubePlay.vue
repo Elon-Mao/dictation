@@ -80,6 +80,7 @@ const playerState = ref(-2)
 let playerTimeInterval = ref(0)
 let currentIndex = -1
 let currentTime = -1
+let timeBeforeAds = -1
 let volumeMessage: MessageHandler
 function onPlayerReady() {
   playerReady.value = true
@@ -88,8 +89,19 @@ function onPlayerReady() {
     loadVideo()
   }
   playerTimeInterval.value = setInterval(() => {
+    const lastCurrentTime = currentTime
     currentTime = player.getCurrentTime()
-    console.log("currentTime", currentTime)
+
+    // judge if is ads
+    if (currentTime < 0.1 && lastCurrentTime > 10) {
+      timeBeforeAds = lastCurrentTime
+      return
+    }
+    if (currentTime < timeBeforeAds) {
+      return
+    }
+    timeBeforeAds = -1
+
     const findIndex = captionTexts.value.findLastIndex(captionText => captionText.start <= currentTime && currentTime < captionText.start + captionText.dur)
     if (findIndex === -1 || findIndex === currentIndex) {
       return
@@ -107,7 +119,6 @@ function onPlayerReady() {
 function onPlayerStateChange(event: {
   data: number
 }) {
-  console.log("event.data", event.data)
   playerState.value = event.data
 }
 function onKeydown(event: KeyboardEvent) {
@@ -186,6 +197,7 @@ function captionOnclick(captionText: CaptionText) {
   recentlyWheel = setTimeout(stopWheel, 4000)
   player.playVideo()
   player.seekTo(captionText.start, true)
+  setTimeout(() => timeBeforeAds = -1, 200)
 }
 
 function mouseenterCaption(event: MouseEvent) {
