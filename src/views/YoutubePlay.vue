@@ -107,6 +107,7 @@ function onPlayerReady() {
 function onPlayerStateChange(event: {
   data: number
 }) {
+  console.log("event.data", event.data)
   playerState.value = event.data
 }
 function onKeydown(event: KeyboardEvent) {
