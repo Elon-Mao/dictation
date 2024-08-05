@@ -80,8 +80,14 @@ const playerState = ref(-2)
 let playerTimeInterval = ref(0)
 let currentIndex = -1
 let currentTime = -1
-let timeBeforeAds = -1
 let volumeMessage: MessageHandler
+let seekTimeout = 0
+const playerSeekTo = (time: number) => {
+  clearTimeout(seekTimeout)
+  seekTimeout = setTimeout(() => seekTimeout = 0, 300)
+  player.seekTo(time, true)
+}
+
 function onPlayerReady() {
   playerReady.value = true
   if (videoStore.entities.length) {
@@ -89,23 +95,17 @@ function onPlayerReady() {
     loadVideo()
   }
   playerTimeInterval.value = setInterval(() => {
-    const lastCurrentTime = currentTime
     currentTime = player.getCurrentTime()
-
-    // judge if is ads
-    if (currentTime < 0.1 && lastCurrentTime > 10) {
-      timeBeforeAds = lastCurrentTime
-      return
-    }
-    if (currentTime < timeBeforeAds) {
-      return
-    }
-    timeBeforeAds = -1
-
     const findIndex = captionTexts.value.findLastIndex(captionText => captionText.start <= currentTime && currentTime < captionText.start + captionText.dur)
     if (findIndex === -1 || findIndex === currentIndex) {
       return
     }
+
+    // judge if is ads
+    if (currentTime < 16 && !seekTimeout && findIndex !== currentIndex + 1) {
+      return
+    }
+
     scrollbarView.children[currentIndex]?.children[0].classList.remove('caption-text-current')
     currentIndex = findIndex
     const currentCaption = scrollbarView.children[findIndex].children[0] as HTMLDivElement
@@ -132,10 +132,10 @@ function onKeydown(event: KeyboardEvent) {
     }
   } else if (event.key === 'ArrowLeft') {
     event.preventDefault()
-    player.seekTo(currentTime - 3, true)
+    playerSeekTo(currentTime - 3)
   } else if (event.key === 'ArrowRight') {
     event.preventDefault()
-    player.seekTo(currentTime + 3, true)
+    playerSeekTo(currentTime + 3)
   } else if (event.key === 'ArrowUp') {
     event.preventDefault()
     const volume = Math.min(player.getVolume() + 5, 100)
@@ -186,6 +186,7 @@ async function loadVideo() {
     })
   })
   player.loadVideoById(videoId)
+  currentIndex = -1
   showCaption.value = true
   showAnswer.value = false
 }
@@ -196,8 +197,7 @@ const showAnswer = ref(false)
 function captionOnclick(captionText: CaptionText) {
   recentlyWheel = setTimeout(stopWheel, 4000)
   player.playVideo()
-  player.seekTo(captionText.start, true)
-  setTimeout(() => timeBeforeAds = -1, 200)
+  playerSeekTo(captionText.start)
 }
 
 function mouseenterCaption(event: MouseEvent) {
