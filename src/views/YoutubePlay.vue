@@ -89,14 +89,12 @@ function onPlayerReady() {
   }
   playerTimeInterval.value = setInterval(() => {
     // judge if is ads
-    const videoUrl: string = player.getVideoUrl() || ""
-    console.log(videoUrl)
-    const urlMatch = videoUrl.match(urlPattern)
-    if (!urlMatch) {
-      return
-    }
-    const currentVideoId = urlMatch[1]
-    if (currentVideoId !== route.params.videoId) {
+    const lastCaptionText = captionTexts.value[captionTexts.value.length - 1]
+    const duration = player.getDuration()
+    const lastCaptionDuration = lastCaptionText.start + lastCaptionText.dur
+    console.log("duration", duration)
+    console.log("lastCaptionDuration", lastCaptionDuration)
+    if (duration < lastCaptionDuration) {
       return
     }
 
